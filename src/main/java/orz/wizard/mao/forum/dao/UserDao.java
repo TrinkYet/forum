@@ -5,8 +5,6 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
-
 import orz.wizard.mao.forum.entity.User;
 
 public class UserDao extends JdbcDaoSupport {

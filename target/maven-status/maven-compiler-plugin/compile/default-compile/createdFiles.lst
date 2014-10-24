@@ -1,0 +1,5 @@
+orz/wizard/mao/forum/controller/UserController.class
+orz/wizard/mao/forum/entity/User.class
+orz/wizard/mao/forum/service/UserService.class
+orz/wizard/mao/forum/dao/UserDao$1.class
+orz/wizard/mao/forum/dao/UserDao.class
