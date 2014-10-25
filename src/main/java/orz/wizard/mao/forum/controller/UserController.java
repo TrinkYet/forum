@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import orz.wizard.mao.forum.service.UserService;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
     
     @Autowired
@@ -19,6 +18,12 @@ public class UserController {
     @RequestMapping(value = {"/show"}, method = RequestMethod.GET)
     public String showUser(Map<String, Object> model) {
         model.put("user", userService.getUser(1));
-        return "user/show";
+        return "show";
+    }
+    
+    @RequestMapping(value = {"/login"})
+    public String login(Map<String, Object> model) {
+        System.out.println("login");
+        return "login";
     }
 }
