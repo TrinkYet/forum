@@ -19,4 +19,10 @@ public class UserController {
         model.put("user", userService.getUser(1));
         return "show";
     }
+    
+    @RequestMapping(value = {"/login"})
+    public String login(Map<String, Object> model) {
+        System.out.println("login");
+        return "login";
+    }
 }
