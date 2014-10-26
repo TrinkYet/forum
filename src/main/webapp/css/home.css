@@ -1,0 +1,12 @@
+@font-face{
+	font-family: "redress";
+	src: url('../fonts/Redressed.ttf') format('truetype');
+	src: url('../fonts/Redressed.eot?#iefix') format('embedded-opentype'), url('../fonts/Redressed.woff') format('woff'), url('../fonts/Redressed.svg#Redressed') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body{
+	background-image: url('../images/restaurant.png');
+	padding:15px;
+}

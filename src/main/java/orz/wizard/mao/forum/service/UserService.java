@@ -15,4 +15,8 @@ public class UserService {
     public User getUser(long id) {
         return userDao.getUserById(id);
     }
+    
+    public User saveUser(User user){
+    	return userDao.saveUser(user);
+    }
 }
