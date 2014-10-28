@@ -15,7 +15,7 @@
 	<div class="container col-md-6 col-md-offset-3">
 		<h2 class="form-signin-heading text-center">用户信息</h2>
 		${userInfo.registerTime }<br />
-		<form id="form" action="user/saveinfo" class="form-horizontal form-signin" method="post">
+		<form id="form" action="user" class="form-horizontal form-signin" method="post">
 			<div class="form-group">
 			  <label class="col-sm-2 control-label" for="nickname">昵称：</label>
 			  <div class="col-sm-8">

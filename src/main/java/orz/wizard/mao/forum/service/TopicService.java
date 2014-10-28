@@ -13,6 +13,10 @@ public class TopicService {
     @Autowired
     private TopicDao topicDao;
     
+    public Topic getTopic(long id) {
+        return topicDao.getTopicById(id);
+    }
+    
     public List<Topic> getTopicList(long id) {
         return topicDao.getTopicListById(id);
     }

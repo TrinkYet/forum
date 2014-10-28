@@ -2,17 +2,20 @@ package orz.wizard.mao.forum.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import orz.wizard.mao.forum.entity.Group;
+import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
 
 public class GroupDao extends JdbcDaoSupport {
     
     private static final String SQL_SELECT_GROUP_BY_ID = "select * from group where id = ?";
+    private static final String SQL_SELECT_GROUP_LIST_BY_USER_ID = "select * from group where user_id = ?";
     private static final String SQL_SAVE_USER = "insert into user values(null, ?, ?, 'closed')";
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
     private static final String SQL_SELECT_USER_INFO_BY_ID = "select * from user_info where user_id = ?";
@@ -29,6 +32,22 @@ public class GroupDao extends JdbcDaoSupport {
                         group.setIntro(rs.getString("intro"));
                         group.setName(rs.getString("name"));
                         group.setCreateTime(rs.getTimestamp("create_time"));
+                        return group;
+                    }
+                }, id);
+    }
+    
+    public List<Group> getGroupListById(long id) {
+        return getJdbcTemplate().query(
+                SQL_SELECT_GROUP_LIST_BY_USER_ID,
+                new ParameterizedRowMapper<Group>() {
+                    public Group mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Group group = new Group();
+                        group.setCreateTime(rs.getTimestamp("create_time"));
+                        group.setId(rs.getLong("id"));
+                        group.setIntro(rs.getString("intro"));
+                        group.setName(rs.getString("name"));
+                        group.setUserId(rs.getLong("user_id"));
                         return group;
                     }
                 }, id);

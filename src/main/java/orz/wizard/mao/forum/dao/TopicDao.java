@@ -14,6 +14,17 @@ public class TopicDao extends JdbcDaoSupport {
     private static final String SQL_SELECT_TOPIC_BY_ID = "select * from topic where id = ?";
     private static final String SQL_SELECT_TOPIC_LIST_BY_GROUP_ID = "select * from topic where group_id = ?";
     private static final String SQL_SAVE_TOPIC = "insert into topic values(null, ?, ?, ?, null, ?, now())";
+    private static final String SQL_SELECT_TOPIC_COMMENT_GROUP_LIST_BY_USER_ID =
+            "select topic.title, count(comment.id), max(comment.comment_time), group.name" + 
+            "from topic join comment join group" + 
+            "on topic.id = comment.topic_id and topic.group_id = group.id" +
+            "where topic.group_id in" +
+            "(" + 
+            "select group.id from" +
+            "group join membership on group.id = membership.group_id" +
+            "where membership.user_id = ?" +
+            ")" +
+            "group by topic.title";
     
     public Topic getTopicById(long id){
         return getJdbcTemplate().queryForObject(

@@ -14,7 +14,8 @@
   -->
   <http auto-config="true" use-expressions="true">
     <form-login login-page="/user/login"
-                login-processing-url="/static/j_spring_security_check"  
+                login-processing-url="/static/j_spring_security_check"
+                default-target-url="/user/put_objects_in_session"
                 authentication-failure-url="/user/login?login_error=t"/>
     <logout logout-url="/static/j_spring_security_logout"/>
 <!--     <intercept-url pattern="/favicon.ico" access="permitAll" /> -->
@@ -26,7 +27,6 @@
 
     <remember-me key="forumKey"
         token-validity-seconds="2419200" />    
-        
   </http>
 
 <!--<start id="authentication_manager"/>-->
