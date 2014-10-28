@@ -41,7 +41,7 @@ public class UserController {
         UserInfo userInfo = userService.getUserInfo(user.getId());
         session.setAttribute("user", user);
         session.setAttribute("userInfo", userInfo);
-        return "redirect:/home";
+        return "redirect:/group";
     }
     
     @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
@@ -71,7 +71,8 @@ public class UserController {
         }
         User user = (User) session.getAttribute("user");
         userService.saveUserInfo(userInfo, user.getId());
-        return "redirect:/home";
+        session.setAttribute("userInfo", userInfo);
+        return "redirect:/group";
     }
     
     @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)

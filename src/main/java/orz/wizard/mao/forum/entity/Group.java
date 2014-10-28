@@ -7,6 +7,7 @@ public class Group {
     private long userId;
     private String name;
     private String intro;
+    private String category;
     private Timestamp createTime;
     public long getId() {
         return id;
@@ -37,6 +38,12 @@ public class Group {
     }
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
     }
     
 }

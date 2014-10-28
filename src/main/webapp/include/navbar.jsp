@@ -39,8 +39,8 @@
             </li>
           </c:when>
           <c:otherwise>
-            <li><a href="#">登录</a></li>
-            <li><a href="#">注册</a></li>
+            <li><a href="user/login">登录</a></li>
+            <li><a href="user/register">注册</a></li>
           </c:otherwise>
         </c:choose>
       </ul>

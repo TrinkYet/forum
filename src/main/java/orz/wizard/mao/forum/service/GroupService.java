@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import orz.wizard.mao.forum.dao.GroupDao;
 import orz.wizard.mao.forum.entity.Group;
+import orz.wizard.mao.forum.entity.User;
 
 @Service
 public class GroupService {
@@ -19,5 +20,9 @@ public class GroupService {
     
     public List<Group> getGroupList(long id) {
         return groupDao.getGroupListById(id);
+    }
+    
+    public Group saveGroup(Group group, long userId){
+        return groupDao.saveGroup(group, userId);
     }
 }

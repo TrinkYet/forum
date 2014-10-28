@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import orz.wizard.mao.forum.entity.Group;
 import orz.wizard.mao.forum.entity.Topic;
@@ -26,11 +28,23 @@ public class GroupController {
     @Autowired
     private TopicService topicService;
     
-    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+    @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String showMyGroupTopic(HttpSession session, Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
         // TODO
-        return "group/my";
+        return "group/myGroup";
+    }
+    
+    @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
+    public String showCreateGroup(HttpSession session, Map<String, Object> model) {
+        return "group/createGroup";
+    }
+    
+    @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
+    public String processCreateGroup(@Valid Group group, HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        Group newGroup = groupService.saveGroup(group, user.getId());
+        return "redirect:group/" + newGroup.getId();
     }
     
     @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
@@ -40,7 +54,7 @@ public class GroupController {
         List<Topic> topicList = topicService.getTopicList(id);
         model.put("topicList", topicList);
         // TODO: recent join users
-        return "group/show";
+        return "group/groupHome";
     }
     
     @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.GET)
@@ -53,5 +67,12 @@ public class GroupController {
     public String saveTopic(@PathVariable long id, Map<String, Object> model) {
         model.put("id", id);
         return "redirect:group/show";
+    }
+    
+    @RequestMapping(value = {"/join"}, method = RequestMethod.POST)
+    public @ResponseBody String joinGroup(HttpSession session, long groupId) {
+        User user = (User) session.getAttribute("user");
+        // TODO
+        return "";
     }
 }

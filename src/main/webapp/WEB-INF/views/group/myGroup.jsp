@@ -63,7 +63,7 @@
 			<div class="col-md-3">
 				<div>
 					<h3>我的用户名</h3>
-					<a href="" class="btn btn-primary">申请创建小组</a>
+					<a href="group/create" class="btn btn-primary">申请创建小组</a>
 				</div>
 			</div>
 		</div>
