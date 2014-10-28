@@ -13,12 +13,12 @@
     logout services, remember-me and servlet-api-integration.
   -->
   <http auto-config="true" use-expressions="true">
-    <form-login login-page="/login"
+    <form-login login-page="/user/login"
                 login-processing-url="/static/j_spring_security_check"  
-                authentication-failure-url="/login?login_error=t"/>
+                authentication-failure-url="/user/login?login_error=t"/>
     <logout logout-url="/static/j_spring_security_logout"/>
 <!--     <intercept-url pattern="/favicon.ico" access="permitAll" /> -->
-    <intercept-url pattern="/show" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/user/home" access="hasRole('ROLE_USER')"/>
     <intercept-url pattern="/admin/**" 
         access="isAuthenticated() and hasRole('ROLE_ADMIN')"/>
 <!--     <intercept-url pattern="/login" requires-channel="https"/> -->
