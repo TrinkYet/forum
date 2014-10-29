@@ -69,10 +69,16 @@ public class GroupController {
         return "redirect:group/show";
     }
     
-    @RequestMapping(value = {"/join"}, method = RequestMethod.POST)
-    public @ResponseBody String joinGroup(HttpSession session, long groupId) {
+    @RequestMapping(value = {"/join/{groupId}"}, method = RequestMethod.POST)
+    public @ResponseBody String joinGroup(HttpSession session, @PathVariable long groupId) {
         User user = (User) session.getAttribute("user");
-        // TODO
-        return "";
+        groupService.joinGroup(user.getId(), groupId);
+        return "success";
+    }
+    
+    @RequestMapping(value = {"/can_join/{groupId}"}, method = RequestMethod.POST)
+    public @ResponseBody boolean canJoin(HttpSession session, @PathVariable long groupId) {
+        User user = (User) session.getAttribute("user");
+        return !groupService.isJoined(user.getId(), groupId);
     }
 }

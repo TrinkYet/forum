@@ -25,4 +25,12 @@ public class GroupService {
     public Group saveGroup(Group group, long userId){
         return groupDao.saveGroup(group, userId);
     }
+    
+    public boolean isJoined(long userId, long groupId) {
+        return groupDao.getMembershipByTwoId(userId, groupId) != null;
+    }
+    
+    public void joinGroup(long userId, long groupId) {
+        groupDao.joinGroup(userId, groupId);
+    }
 }

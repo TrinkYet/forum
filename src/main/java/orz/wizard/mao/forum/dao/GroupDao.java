@@ -8,15 +8,15 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import orz.wizard.mao.forum.entity.Group;
-import orz.wizard.mao.forum.entity.Topic;
-import orz.wizard.mao.forum.entity.User;
-import orz.wizard.mao.forum.entity.UserInfo;
+import orz.wizard.mao.forum.entity.Membership;
 
 public class GroupDao extends JdbcDaoSupport {
     
     private static final String SQL_SELECT_GROUP_BY_ID = "select * from `group` where id = ?";
     private static final String SQL_SELECT_GROUP_LIST_BY_USER_ID = "select * from `group` where user_id = ?";
     private static final String SQL_SAVE_GROUP = "insert into `group` values(null, ?, ?, ?, ?, now())";
+    private static final String SQL_SAVE_MEMBERSHIP = "insert into `membership` values(?, ?, now())";
+    private static final String SQL_SELECT_MEMBERSHIP_BY_TWO_ID = "select * from `membership` where group_id = ? and user_id = ?";
     private static final String SQL_SELECT_GROUP_BY_NAME = "select * from `group` where name = ?";
     private static final String SQL_SELECT_USER_INFO_BY_ID = "select * from user_info where user_id = ?";
     private static final String SQL_SAVE_USER_INFO = "update user_info set nickname = ?, phone = ?, address = ?, gender = ?, birthday = ? where user_id = ?";
@@ -70,14 +70,26 @@ public class GroupDao extends JdbcDaoSupport {
     			}, group.getName());
     }
 
-    public void saveUserInfo(UserInfo userInfo, long id) {
-        getJdbcTemplate().update(
-                SQL_SAVE_USER_INFO,
-                userInfo.getNickname(),
-                userInfo.getPhone(),
-                userInfo.getAddress(),
-                userInfo.getGender(),
-                userInfo.getBirthday(),
-                id);
+    public Membership getMembershipByTwoId(long userId, long groupId) {
+        List<Membership> list = getJdbcTemplate().query(
+                SQL_SELECT_MEMBERSHIP_BY_TWO_ID,
+                new ParameterizedRowMapper<Membership>(){
+                    public Membership mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Membership membership = new Membership();
+                        membership.setGroupId(rs.getLong("group_id"));
+                        membership.setUserId(rs.getLong("user_id"));
+                        membership.setJoinTime(rs.getTimestamp("join_time"));
+                        return membership;
+                    }
+                }, groupId, userId);
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            return list.get(0);
+        }
+    }
+    
+    public void joinGroup(long userId, long groupId) {
+        getJdbcTemplate().update(SQL_SAVE_MEMBERSHIP, groupId, userId);
     }
 }
