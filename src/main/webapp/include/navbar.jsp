@@ -33,7 +33,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.userInfo.nickname} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="user/home">我的豆瓣</a></li>
-                <li><a href="user/${sessionScope.user.id}">我的账户</a></li>
+                <li><a href="user">我的账户</a></li>
                 <li><a href="static/j_spring_security_logout">登出</a></li>
               </ul>
             </li>

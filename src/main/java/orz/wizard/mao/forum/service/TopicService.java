@@ -20,4 +20,8 @@ public class TopicService {
     public List<Topic> getTopicList(long id) {
         return topicDao.getTopicListById(id);
     }
+
+    public Topic saveTopic(long groupId, Long userId, Topic topic) {
+        return topicDao.saveTopic(groupId, userId, topic);
+    }
 }

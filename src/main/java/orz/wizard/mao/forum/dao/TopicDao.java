@@ -7,13 +7,15 @@ import java.util.List;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import orz.wizard.mao.forum.entity.Group;
 import orz.wizard.mao.forum.entity.Topic;
 
 public class TopicDao extends JdbcDaoSupport {
     
     private static final String SQL_SELECT_TOPIC_BY_ID = "select * from topic where id = ?";
     private static final String SQL_SELECT_TOPIC_LIST_BY_GROUP_ID = "select * from topic where group_id = ?";
-    private static final String SQL_SAVE_TOPIC = "insert into topic values(null, ?, ?, ?, null, ?, now())";
+    private static final String SQL_SAVE_TOPIC = "insert into topic values(null, ?, ?, null, ?, ?, now())";
+    private static final String SQL_SELECT_TOPIC_BY_TITLE = "select * from topic where title = ?";
     private static final String SQL_SELECT_TOPIC_COMMENT_GROUP_LIST_BY_USER_ID =
             "select topic.title, count(comment.id), max(comment.comment_time), group.name" + 
             "from topic join comment join group" + 
@@ -60,7 +62,21 @@ public class TopicDao extends JdbcDaoSupport {
                 }, id);
     }
     
-    public void saveTopic(final Topic topic){
-    	getJdbcTemplate().update(SQL_SAVE_TOPIC, topic.getUserId(), topic.getTitle(), topic.getText(), topic.getGroupId());
+    public Topic saveTopic(long groupId, long userId, final Topic topic){
+        getJdbcTemplate().update(SQL_SAVE_TOPIC, topic.getTitle(), topic.getText(), userId, groupId);
+        return getJdbcTemplate().queryForObject(
+                SQL_SELECT_TOPIC_BY_TITLE,
+                new ParameterizedRowMapper<Topic>(){
+                    public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Topic topic = new Topic();
+                        topic.setId(rs.getLong("id"));
+                        topic.setUserId(rs.getLong("user_id"));
+                        topic.setGroupId(rs.getLong("group_id"));
+                        topic.setTitle(rs.getString("title"));
+                        topic.setText(rs.getString("text"));
+                        topic.setPublishTime(rs.getTimestamp("publish_time"));
+                        return topic;
+                    }
+                }, topic.getTitle());
     }
 }

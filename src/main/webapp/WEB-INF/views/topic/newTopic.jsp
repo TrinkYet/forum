@@ -20,7 +20,7 @@
 						<h3>发表话题</h3>
 					</div>
 					<div class="panel-body">
-						<form role="form" action="#" method="post">
+						<form role="form" action="" method="post">
 							<div class="form-group">
 								<label for="title">标题</label>
 								<input id="title" name="title" class="form-control" type="text" >
