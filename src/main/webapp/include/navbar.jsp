@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">豆瓣小组</a>
+      <a class="navbar-brand" href="#">豆比小组</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,9 +32,9 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.userInfo.nickname} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="user/home">我的豆瓣</a></li>
+                <li><a href="group">我的豆比</a></li>
                 <li><a href="user">我的账户</a></li>
-                <li><a href="static/j_spring_security_logout">登出</a></li>
+                <li><a href="static/j_spring_security_logout?redirect=index.html">登出</a></li>
               </ul>
             </li>
           </c:when>

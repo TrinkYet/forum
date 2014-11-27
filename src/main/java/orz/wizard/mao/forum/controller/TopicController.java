@@ -31,15 +31,5 @@ public class TopicController {
         return "topic/topicHome";
     }
     
-    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.GET)
-    public String newTopic(@PathVariable long id, Map<String, Object> model) {
-        return "topic/newTopic";
-    }
     
-    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.POST)
-    public String processNewTopic(@PathVariable long groupId, @Valid Topic topic, HttpSession session, Map<String, Object> model) {
-        User user = (User) session.getAttribute("user");
-        Topic newTopic = topicService.saveTopic(groupId, user.getId(), topic);
-        return "redirect:topic/" + newTopic.getId();
-    }
 }

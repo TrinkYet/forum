@@ -77,6 +77,9 @@ $(document).ready(function(){
 						<li>user5</li>
 					</ul>
 				</div>
+				<div>
+				    <a href="group/${group.id}/new_topic" class="btn btn-primary">发表话题</a>
+				</div>
 			</div>
 		</div>
 	</div>

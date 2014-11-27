@@ -44,7 +44,7 @@ public class GroupController {
     public String processCreateGroup(@Valid Group group, HttpSession session, Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
         Group newGroup = groupService.saveGroup(group, user.getId());
-        return "redirect:group/" + newGroup.getId();
+        return "redirect:" + newGroup.getId();
     }
     
     @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
@@ -55,18 +55,6 @@ public class GroupController {
         model.put("topicList", topicList);
         // TODO: recent join users
         return "group/groupHome";
-    }
-    
-    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.GET)
-    public String newTopic(@PathVariable long id, Map<String, Object> model) {
-        model.put("id", id);
-        return "group/new_topic";
-    }
-    
-    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.POST)
-    public String saveTopic(@PathVariable long id, Map<String, Object> model) {
-        model.put("id", id);
-        return "redirect:group/show";
     }
     
     @RequestMapping(value = {"/join/{groupId}"}, method = RequestMethod.POST)
@@ -81,4 +69,17 @@ public class GroupController {
         User user = (User) session.getAttribute("user");
         return !groupService.isJoined(user.getId(), groupId);
     }
+    
+    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.GET)
+    public String newTopic(@PathVariable long id, Map<String, Object> model) {
+        return "topic/newTopic";
+    }
+    
+    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.POST)
+    public String processNewTopic(@PathVariable long groupId, @Valid Topic topic, HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        Topic newTopic = topicService.saveTopic(groupId, user.getId(), topic);
+        return "redirect:topic/" + newTopic.getId();
+    }
+    
 }

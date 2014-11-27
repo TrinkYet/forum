@@ -17,7 +17,8 @@
                 login-processing-url="/static/j_spring_security_check"
                 default-target-url="/user/put_objects_in_session"
                 authentication-failure-url="/user/login?login_error=t"/>
-    <logout logout-url="/static/j_spring_security_logout"/>
+    <logout logout-url="/static/j_spring_security_logout"
+    logout-success-url="/index.html"/>
 <!--     <intercept-url pattern="/favicon.ico" access="permitAll" /> -->
     <intercept-url pattern="/user/home" access="hasRole('ROLE_USER')"/>
     <intercept-url pattern="/admin/**" 
