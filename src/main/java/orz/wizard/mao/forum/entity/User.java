@@ -1,15 +1,33 @@
 package orz.wizard.mao.forum.entity;
 
-public class User {
-    private Long id;
+import java.io.Serializable;
+import java.sql.Timestamp;
+
+public class User implements Serializable {
+    private long userId;
     private String email;
     private String password;
+    private String nickname;
     private String status;
-    public Long getId() {
-        return id;
+    private Timestamp registerTime;
+    
+    public long getUserId() {
+        return userId;
     }
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+    public String getNickname() {
+        return nickname;
+    }
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+    public Timestamp getRegisterTime() {
+        return registerTime;
+    }
+    public void setRegisterTime(Timestamp registerTime) {
+        this.registerTime = registerTime;
     }
     public String getEmail() {
         return email;

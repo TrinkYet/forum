@@ -1,13 +1,10 @@
 package orz.wizard.mao.forum.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import orz.wizard.mao.forum.dao.GroupDao;
 import orz.wizard.mao.forum.entity.Group;
-import orz.wizard.mao.forum.entity.User;
 
 @Service
 public class GroupService {
@@ -16,10 +13,6 @@ public class GroupService {
     
     public Group getGroup(long id) {
         return groupDao.getGroupById(id);
-    }
-    
-    public List<Group> getGroupList(long id) {
-        return groupDao.getGroupListById(id);
     }
     
     public Group saveGroup(Group group, long userId){

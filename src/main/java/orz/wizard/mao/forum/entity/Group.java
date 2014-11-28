@@ -1,25 +1,20 @@
 package orz.wizard.mao.forum.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Group {
-    private long id;
-    private long userId;
+public class Group implements Serializable {
+    private long groupId;
     private String name;
     private String intro;
     private String category;
+    private long userId;
     private Timestamp createTime;
-    public long getId() {
-        return id;
+    public long getGroupId() {
+        return groupId;
     }
-    public void setId(long id) {
-        this.id = id;
-    }
-    public long getUserId() {
-        return userId;
-    }
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
     }
     public String getName() {
         return name;
@@ -33,17 +28,23 @@ public class Group {
     public void setIntro(String intro) {
         this.intro = intro;
     }
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
     public String getCategory() {
         return category;
     }
     public void setCategory(String category) {
         this.category = category;
+    }
+    public long getUserId() {
+        return userId;
+    }
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
     
 }

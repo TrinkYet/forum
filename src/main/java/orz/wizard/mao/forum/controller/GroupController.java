@@ -43,8 +43,8 @@ public class GroupController {
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
     public String processCreateGroup(@Valid Group group, HttpSession session, Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
-        Group newGroup = groupService.saveGroup(group, user.getId());
-        return "redirect:" + newGroup.getId();
+        Group newGroup = groupService.saveGroup(group, user.getUserId());
+        return "redirect:" + newGroup.getGroupId();
     }
     
     @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
@@ -57,17 +57,17 @@ public class GroupController {
         return "group/groupHome";
     }
     
-    @RequestMapping(value = {"/join/{groupId}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/join/{groupId}"})
     public @ResponseBody String joinGroup(HttpSession session, @PathVariable long groupId) {
         User user = (User) session.getAttribute("user");
-        groupService.joinGroup(user.getId(), groupId);
+        groupService.joinGroup(user.getUserId(), groupId);
         return "success";
     }
     
-    @RequestMapping(value = {"/can_join/{groupId}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/can_join/{groupId}"})
     public @ResponseBody boolean canJoin(HttpSession session, @PathVariable long groupId) {
         User user = (User) session.getAttribute("user");
-        return !groupService.isJoined(user.getId(), groupId);
+        return !groupService.isJoined(user.getUserId(), groupId);
     }
     
     @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.GET)
@@ -78,8 +78,8 @@ public class GroupController {
     @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.POST)
     public String processNewTopic(@PathVariable long groupId, @Valid Topic topic, HttpSession session, Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
-        Topic newTopic = topicService.saveTopic(groupId, user.getId(), topic);
-        return "redirect:topic/" + newTopic.getId();
+        Topic newTopic = topicService.saveTopic(groupId, user.getUserId(), topic);
+        return "redirect:topic/" + newTopic.getUserId();
     }
     
 }

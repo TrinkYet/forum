@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-    <bean id="userDao" class="orz.wizard.mao.forum.dao.UserDao">
+    <!-- <bean id="userDao" class="orz.wizard.mao.forum.dao.UserDao">
         <property name="dataSource" ref="dataSource" />
     </bean>
     
@@ -18,5 +18,5 @@
     
     <bean id="commentDao" class="orz.wizard.mao.forum.dao.CommentDao">
         <property name="dataSource" ref="dataSource" />
-    </bean>
+    </bean> -->
 </beans>

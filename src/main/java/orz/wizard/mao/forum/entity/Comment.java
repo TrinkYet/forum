@@ -1,19 +1,20 @@
 package orz.wizard.mao.forum.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Comment {
-    private long id;
+public class Comment implements Serializable {
+    private long commentId;
     private long topicId;
     private long userId;
-    private long toId;
+    private long toCommentId;
     private String text;
     private Timestamp commentTime;
-    public long getId() {
-        return id;
+    public long getCommentId() {
+        return commentId;
     }
-    public void setId(long id) {
-        this.id = id;
+    public void setCommentId(long commentId) {
+        this.commentId = commentId;
     }
     public long getTopicId() {
         return topicId;
@@ -27,11 +28,11 @@ public class Comment {
     public void setUserId(long userId) {
         this.userId = userId;
     }
-    public long getToId() {
-        return toId;
+    public long getToCommentId() {
+        return toCommentId;
     }
-    public void setToId(long toId) {
-        this.toId = toId;
+    public void setToCommentId(long toCommentId) {
+        this.toCommentId = toCommentId;
     }
     public String getText() {
         return text;

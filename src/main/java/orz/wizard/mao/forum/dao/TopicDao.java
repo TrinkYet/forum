@@ -6,11 +6,13 @@ import java.util.List;
 
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import orz.wizard.mao.forum.entity.Group;
 import orz.wizard.mao.forum.entity.Topic;
 
-public class TopicDao extends JdbcDaoSupport {
+@Repository
+public class TopicDao extends BaseDao {
     
     private static final String SQL_SELECT_TOPIC_BY_ID = "select * from topic where id = ?";
     private static final String SQL_SELECT_TOPIC_LIST_BY_GROUP_ID = "select * from topic where group_id = ?";
@@ -29,15 +31,15 @@ public class TopicDao extends JdbcDaoSupport {
             "group by topic.title";
     
     public Topic getTopicById(long id){
-        return getJdbcTemplate().queryForObject(
+        return jdbcTemplate.queryForObject(
                 SQL_SELECT_TOPIC_BY_ID,
                 new ParameterizedRowMapper<Topic>(){
                     public Topic mapRow(ResultSet rs, int rowNum) throws SQLException{
                         Topic topic = new Topic();
-                        topic.setId(rs.getLong("id"));
+                        topic.setTopicId(rs.getLong("topic_id"));
                         topic.setGroupId(rs.getLong("group_id"));
                         topic.setPublishTime(rs.getTimestamp("publish_time"));
-                        topic.setText(rs.getString("text"));
+                        topic.setContent(rs.getString("content"));
                         topic.setTitle(rs.getString("title"));
                         topic.setUserId(rs.getLong("user_id"));
                         return topic;
@@ -46,16 +48,16 @@ public class TopicDao extends JdbcDaoSupport {
     }
     
     public List<Topic> getTopicListById(long id) {
-        return getJdbcTemplate().query(
+        return jdbcTemplate.query(
                 SQL_SELECT_TOPIC_LIST_BY_GROUP_ID,
                 new ParameterizedRowMapper<Topic>() {
                     public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Topic topic = new Topic();
-                        topic.setId(rs.getLong("id"));
+                        topic.setTopicId(rs.getLong("topic_id"));
                         topic.setUserId(rs.getLong("user_id"));
                         topic.setGroupId(rs.getLong("group_id"));
                         topic.setTitle(rs.getString("title"));
-                        topic.setText(rs.getString("text"));
+                        topic.setContent(rs.getString("content"));
                         topic.setPublishTime(rs.getTimestamp("publish_time"));
                         return topic;
                     }
@@ -63,17 +65,17 @@ public class TopicDao extends JdbcDaoSupport {
     }
     
     public Topic saveTopic(long groupId, long userId, final Topic topic){
-        getJdbcTemplate().update(SQL_SAVE_TOPIC, topic.getTitle(), topic.getText(), userId, groupId);
-        return getJdbcTemplate().queryForObject(
+        jdbcTemplate.update(SQL_SAVE_TOPIC, topic.getTitle(), topic.getContent(), userId, groupId);
+        return jdbcTemplate.queryForObject(
                 SQL_SELECT_TOPIC_BY_TITLE,
                 new ParameterizedRowMapper<Topic>(){
                     public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Topic topic = new Topic();
-                        topic.setId(rs.getLong("id"));
+                        topic.setTopicId(rs.getLong("topic_id"));
                         topic.setUserId(rs.getLong("user_id"));
                         topic.setGroupId(rs.getLong("group_id"));
                         topic.setTitle(rs.getString("title"));
-                        topic.setText(rs.getString("text"));
+                        topic.setContent(rs.getString("content"));
                         topic.setPublishTime(rs.getTimestamp("publish_time"));
                         return topic;
                     }

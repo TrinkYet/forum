@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
@@ -26,11 +27,9 @@ public class UserController {
     
     @Autowired
     private UserService userService;
-    @Autowired
-    private GroupService groupService;
     
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String showLogin() {
+    public String showLoginPage() {
     	return "user/login";
     }
     
@@ -38,47 +37,74 @@ public class UserController {
     public String putObjectsInSession(HttpSession session) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUser(userDetails.getUsername());
-        UserInfo userInfo = userService.getUserInfo(user.getId());
+        UserInfo userInfo = userService.getUserInfo(user.getUserId());
         session.setAttribute("user", user);
         session.setAttribute("userInfo", userInfo);
         return "redirect:/group";
     }
     
     @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
-    public String showRegister() {
+    public String showRegisterPage() {
         return "user/register";
     }
     
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String processRegister(@Valid User user, HttpSession session, BindingResult result) throws BindException{
+    public String processRegister(@Valid User user, HttpSession session, BindingResult result) throws BindException {
     	if (result.hasErrors()) {
     		throw new BindException(result);
     	}
-    	userService.saveUser(user);
+    	if (userService.getUser(user.getEmail()).getUserId() != 0) {
+    	    // 邮箱已被注册
+    	}
+    	userService.insertUser(user);
     	session.setAttribute("user", user);
     	return "redirect:";
     }
     
     @RequestMapping(value = {""}, method = RequestMethod.GET)
-    public String showUserInfo() {
+    public String showUserInfo(HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        model.put("userInfo", userService.getUserInfo(user.getUserId()));
         return "user/userinfo";
     }
     
     @RequestMapping(value = {""}, method = RequestMethod.POST)
-    public String saveUserInfo(@Valid UserInfo userInfo, HttpSession session, BindingResult result) throws BindException{
+    public String updateUserInfo(@Valid UserInfo userInfo, HttpSession session, BindingResult result) throws BindException {
         if (result.hasErrors()) {
             throw new BindException(result);
         }
         User user = (User) session.getAttribute("user");
-        userService.saveUserInfo(userInfo, user.getId());
-        session.setAttribute("userInfo", userInfo);
+        userInfo.setUserId(user.getUserId());
+        userService.updateUserInfo(userInfo);
         return "redirect:/group";
     }
     
-    @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
-    public String showUserAll(@PathVariable long id, Map<String, Object> model) {
-        model.put("groupList", groupService.getGroupList(id));
-        model.put("userInfo", userService.getUserInfo(id));
+    @RequestMapping(value = {"/{userId}"}, method = RequestMethod.GET)
+    public String showUserAll(@PathVariable long userId, Map<String, Object> model) {
+        model.put("groupList", userService.getGroupList(userId));
+        model.put("userInfo", userService.getUserInfo(userId));
+        model.put("followerList", userService.getFollowerList(userId));
+        model.put("followeeList", userService.getFolloweeList(userId));
         return "user/userall";
+    }
+    
+    @RequestMapping(value = {"/{userId}/is_followed"})
+    public @ResponseBody boolean isFollowed(@PathVariable long userId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return userService.isFollowed(user.getUserId(), userId);
+    }
+    
+    @RequestMapping(value = {"/{userId}/follow"})
+    public @ResponseBody String doFollow(@PathVariable long userId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        userService.doFollow(user.getUserId(), userId);
+        return "success";
+    }
+    
+    @RequestMapping(value = {"/{userId}/cancel_follow"})
+    public @ResponseBody String cancelFollow(@PathVariable long userId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        userService.cancelFollow(user.getUserId(), userId);
+        return "success";
     }
 }
