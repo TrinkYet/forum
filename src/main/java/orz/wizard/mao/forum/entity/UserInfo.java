@@ -1,46 +1,20 @@
 package orz.wizard.mao.forum.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class UserInfo {
+public class UserInfo implements Serializable {
     private long userId;
-    private String nickname;
-    private String phone;
-    private String address;
-    private Timestamp registerTime;
     private String gender;
     private Date birthday;
-    private boolean isPublic;
+    private String residence;
+    private String hometown;
     public long getUserId() {
         return userId;
     }
     public void setUserId(long userId) {
         this.userId = userId;
-    }
-    public String getNickname() {
-        return nickname;
-    }
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-    public String getPhone() {
-        return phone;
-    }
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    public String getAddress() {
-        return address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
-    public Timestamp getRegisterTime() {
-        return registerTime;
-    }
-    public void setRegisterTime(Timestamp registerTime) {
-        this.registerTime = registerTime;
     }
     public String getGender() {
         return gender;
@@ -54,10 +28,17 @@ public class UserInfo {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
-    public boolean isPublic() {
-        return isPublic;
+    public String getResidence() {
+        return residence;
     }
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
+    public void setResidence(String residence) {
+        this.residence = residence;
     }
+    public String getHometown() {
+        return hometown;
+    }
+    public void setHometown(String hometown) {
+        this.hometown = hometown;
+    }
+    
 }
