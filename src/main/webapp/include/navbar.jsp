@@ -30,7 +30,7 @@
         <c:choose>
           <c:when test="${sessionScope.user != null}">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.userInfo.nickname} <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.user.nickname} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="group">我的豆比</a></li>
                 <li><a href="user">我的账户</a></li>

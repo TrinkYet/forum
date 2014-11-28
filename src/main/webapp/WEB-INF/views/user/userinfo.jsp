@@ -15,22 +15,28 @@
 	<div class="container col-md-6 col-md-offset-3">
 		<h2 class="form-signin-heading text-center">用户信息</h2>
 		<form id="form" action="user" class="form-horizontal form-signin" method="post">
-			<div class="form-group">
-			  <label class="col-sm-2 control-label" for="phone">手机：</label>
-			  <div class="col-sm-8">
-			  	<input id="phone" name="phone" type="phone" class="form-control">
-			  </div>
-			</div>
-			<div class="form-group">
-              <label class="col-sm-2 control-label" for="address">地址：</label>
-              <div class="col-sm-8">
-                <input id="address" name="address" type="address" class="form-control">
-              </div>
-            </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="gender">性别：</label>
               <div class="col-sm-8">
                 <input id="gender" name="gender" type="gender" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="birthday">生日：</label>
+              <div class="col-sm-8">
+                <input id="birthday" name="birthday" type="date" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="residence">现居地：</label>
+              <div class="col-sm-8">
+                <input id="residence" name="residence" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="hometown">故乡：</label>
+              <div class="col-sm-8">
+                <input id="hometown" name="hometown" type="text" class="form-control">
               </div>
             </div>
             <!-- <div class="form-group">

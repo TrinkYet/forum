@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
-import orz.wizard.mao.forum.service.GroupService;
 import orz.wizard.mao.forum.service.UserService;
 
 @Controller
@@ -58,7 +57,7 @@ public class UserController {
     	}
     	userService.insertUser(user);
     	session.setAttribute("user", user);
-    	return "redirect:";
+    	return "redirect:/user";
     }
     
     @RequestMapping(value = {""}, method = RequestMethod.GET)
