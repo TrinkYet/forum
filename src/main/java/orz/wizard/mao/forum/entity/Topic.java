@@ -8,8 +8,12 @@ public class Topic implements Serializable {
     private String title;
     private String content;
     private long userId;
+    private String nickname;
     private long groupId;
+    private String groupName;
     private Timestamp publishTime;
+    private long cmtCount;
+    private Timestamp lastCmtTime;
     public long getTopicId() {
         return topicId;
     }
@@ -34,11 +38,23 @@ public class Topic implements Serializable {
     public void setUserId(long userId) {
         this.userId = userId;
     }
+    public String getNickname() {
+        return nickname;
+    }
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
     public long getGroupId() {
         return groupId;
     }
     public void setGroupId(long groupId) {
         this.groupId = groupId;
+    }
+    public String getGroupName() {
+        return groupName;
+    }
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
     public Timestamp getPublishTime() {
         return publishTime;
@@ -46,5 +62,16 @@ public class Topic implements Serializable {
     public void setPublishTime(Timestamp publishTime) {
         this.publishTime = publishTime;
     }
-    
+    public long getCmtCount() {
+        return cmtCount;
+    }
+    public void setCmtCount(long cmtCount) {
+        this.cmtCount = cmtCount;
+    }
+    public Timestamp getLastCmtTime() {
+        return lastCmtTime;
+    }
+    public void setLastCmtTime(Timestamp lastCmtTime) {
+        this.lastCmtTime = lastCmtTime;
+    }
 }
