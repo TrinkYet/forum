@@ -14,14 +14,7 @@
 <body>
 	<div class="container col-md-6 col-md-offset-3">
 		<h2 class="form-signin-heading text-center">用户信息</h2>
-		${userInfo.registerTime }<br />
 		<form id="form" action="user" class="form-horizontal form-signin" method="post">
-			<div class="form-group">
-			  <label class="col-sm-2 control-label" for="nickname">昵称：</label>
-			  <div class="col-sm-8">
-				  <input id="nickname" name="nickname" type="nickname" class="form-control" required="true">
-			  </div>
-			</div>
 			<div class="form-group">
 			  <label class="col-sm-2 control-label" for="phone">手机：</label>
 			  <div class="col-sm-8">

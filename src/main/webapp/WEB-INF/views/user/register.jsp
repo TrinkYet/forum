@@ -17,6 +17,12 @@
 		<form id="form" action="user/register" class="form-horizontal form-signin" method="post">
 			<input type="hidden" name="op" value="register">
 			<div class="form-group">
+			  <label class="col-sm-2 control-label" for="nickname">Nickname</label>
+			  <div class="col-sm-8">
+				  <input id="nickname" name="nickname" type="text" class="form-control" required="true">
+			  </div>
+			</div>
+			<div class="form-group">
 			  <label class="col-sm-2 control-label" for="account">Email</label>
 			  <div class="col-sm-8">
 				  <input id="account" name="email" type="email" class="form-control" required="true">
