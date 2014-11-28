@@ -10,6 +10,7 @@ import orz.wizard.mao.forum.entity.Topic;
 
 @Service
 public class TopicService {
+    
     @Autowired
     private TopicDao topicDao;
     
@@ -17,8 +18,12 @@ public class TopicService {
         return topicDao.getTopicById(id);
     }
     
-    public List<Topic> getTopicList(long id) {
-        return topicDao.getTopicListById(id);
+    public List<Topic> getGroupTopicList(long userId) {
+        return topicDao.getGroupTopicListByUserId(userId);
+    }
+    
+    public List<Topic> getTopicList(long groupId) {
+        return topicDao.getTopicListByGroupId(groupId);
     }
 
     public Topic saveTopic(long groupId, Long userId, Topic topic) {
