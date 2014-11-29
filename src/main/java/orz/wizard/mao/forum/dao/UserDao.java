@@ -26,7 +26,7 @@ public class UserDao extends BaseDao {
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
     private static final String SQL_SELECT_USER_INFO_BY_ID = "select * from user_info where user_id = ?";
     private static final String SQL_UPDATE_USER_INFO = "update user_info set gender = ?, birthday = ?, residence = ?, hometown = ? where user_id = ?";
-    private static final String SQL_SELECT_GROUP_LIST_BY_USER_ID = "select * frome group where group_id in (select group_id from membership where user_id = ?)";
+    private static final String SQL_SELECT_GROUP_LIST_BY_USER_ID = "select * from `group` where group_id in (select group_id from membership where user_id = ?)";
     private static final String SQL_SELECT_FOLLOWER_LIST = "select * from user where user_id in (select from_user_id from follow where to_user_id = ?)";
     private static final String SQL_SELECT_FOLLOWEE_LIST = "select * from user where user_id in (select to_user_id from follow where from_user_id = ?)";
     private static final String SQL_FIND_FOLLOW = "select count(*) from follow where from_user_id = ? and to_user_id = ?";

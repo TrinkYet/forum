@@ -1,11 +1,11 @@
 body{
 	background-color: #b4daf0;
-	background-image: url("images/body_repeat.png");
+	background-image: url("../images/body_repeat.png");
 	background-repeat: repeat-x;
 	background-position: center 0;
 }
 .bodybg{
-	background:url("images/body_bg.jpg")  no-repeat top center;
+	background:url("../images/body_bg.jpg")  no-repeat top center;
 }
 .infoul li{
 	border-right: solid 1px #d9d9d9;
