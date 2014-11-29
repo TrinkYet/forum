@@ -28,34 +28,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>毛位置你个狗</td>
-								<td>1000</td>
-								<td>3分钟前</td>
-								<td>狗雷</td>
-								<td>狗雷不是狗</td>
-							</tr>
-							<tr>
-								<td>毛位置你个狗</td>
-								<td>1000</td>
-								<td>3分钟前</td>
-								<td>狗雷</td>
-								<td>狗雷不是狗</td>
-							</tr>
-							<tr>
-								<td>毛位置你个狗</td>
-								<td>1000</td>
-								<td>3分钟前</td>
-								<td>狗雷</td>
-								<td>狗雷不是狗</td>
-							</tr>
-							<tr>
-								<td>毛位置你个狗</td>
-								<td>1000</td>
-								<td>3分钟前</td>
-								<td>狗雷</td>
-								<td>狗雷不是狗</td>
-							</tr>
+							<c:forEach var = "topic" items="${topicList }">
+								<tr><td>${topic.title }</td><td>${topic.cmtCount }</td><td>${topic.lastCmtTime }</td><td>${topic.nickname }</td></tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

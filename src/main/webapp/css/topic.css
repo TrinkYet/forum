@@ -1,0 +1,12 @@
+#comments{
+	width: 100%;
+	word-wrap: break-word;
+	overflow: hidden;
+	padding: 20px 0 0;
+}
+
+div.comment-item{
+	margin-bottom: 1em;
+	word-break: break-word;
+}
+

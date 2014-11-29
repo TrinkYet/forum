@@ -40,7 +40,8 @@ public class TopicController {
     
     @RequestMapping(value = {"/{topicId}/post_comment"}, method = RequestMethod.POST)
     public @ResponseBody String postComment(@PathVariable long topicId, @Valid Comment comment) {
-        topicService.insertComment(comment);
+        comment.setTopicId(topicId);
+    	topicService.insertComment(comment);
         return "success";
     }
 }
