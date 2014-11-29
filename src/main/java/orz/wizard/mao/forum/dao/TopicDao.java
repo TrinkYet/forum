@@ -20,7 +20,10 @@ import orz.wizard.mao.forum.entity.Topic;
 @Repository
 public class TopicDao extends BaseDao {
     
-    private static final String SQL_SELECT_TOPIC_BY_ID = "select * from topic where topic_id = ?";
+    private static final String SQL_SELECT_TOPIC_BY_ID = ""
+            + " select topic_id, title, content, topic.user_id, nickname, topic.group_id, name, publish_time"
+            + " from topic, user, `group`"
+            + " where topic_id = ? and topic.user_id = user.user_id and `group`.gourp_id = topic.group_id";
     private static final String SQL_INSERT_TOPIC = "insert into topic values(null, ?, ?, ?, ?, NOW(), 0, null)";
     private static final String SQL_SELECT_GROUP_TOPIC_BY_USER_ID = ""
             + " select topic.topic_id as topic_id, title, cmt_count, last_cmt_time, group.group_id as group_id, `name`"
