@@ -63,29 +63,37 @@ public class GroupController {
         return "group/groupHome";
     }
     
-    @RequestMapping(value = {"/join/{groupId}"})
-    public @ResponseBody String joinGroup(HttpSession session, @PathVariable long groupId) {
+    @RequestMapping(value = {"/{groupId}/join"})
+    public @ResponseBody String joinGroup(@PathVariable long groupId, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        groupService.joinGroup(user.getUserId(), groupId);
+        groupService.joinGroup(groupId, user.getUserId());
         return "success";
     }
     
-    @RequestMapping(value = {"/can_join/{groupId}"})
-    public @ResponseBody boolean canJoin(HttpSession session, @PathVariable long groupId) {
+    @RequestMapping(value = {"/{groupId}/quit"})
+    public @ResponseBody String quitGroup(@PathVariable long groupId, HttpSession session) {
         User user = (User) session.getAttribute("user");
-        return !groupService.isJoined(user.getUserId(), groupId);
+        groupService.quitGroup(groupId, user.getUserId());
+        return "success";
     }
     
-    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.GET)
-    public String newTopic(@PathVariable long id, Map<String, Object> model) {
+    @RequestMapping(value = {"/{groupId}/is_joined"})
+    public @ResponseBody boolean isJoined(@PathVariable long groupId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        return groupService.isJoined(groupId, user.getUserId());
+    }
+    
+    @RequestMapping(value = {"/{groupId}/new_topic"}, method = RequestMethod.GET)
+    public String newTopic(@PathVariable long groupId, Map<String, Object> model) {
         return "topic/newTopic";
     }
     
-    @RequestMapping(value = {"/{id}/new_topic"}, method = RequestMethod.POST)
-    public String processNewTopic(@PathVariable long groupId, @Valid Topic topic, HttpSession session, Map<String, Object> model) {
+    @RequestMapping(value = {"/{groupId}/new_topic"}, method = RequestMethod.POST)
+    public String postNewTopic(@PathVariable long groupId, @Valid Topic topic, HttpSession session, Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
-        Topic newTopic = topicService.saveTopic(groupId, user.getUserId(), topic);
-        return "redirect:topic/" + newTopic.getUserId();
+        topic.setUserId(user.getUserId());
+        topicService.insertTopic(topic);
+        return "redirect:topic/" + topic.getTopicId();
     }
     
 }
