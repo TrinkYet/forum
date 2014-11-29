@@ -26,9 +26,9 @@ public class TopicDao extends BaseDao {
             + " where topic_id = ? and topic.user_id = user.user_id and `group`.gourp_id = topic.group_id";
     private static final String SQL_INSERT_TOPIC = "insert into topic values(null, ?, ?, ?, ?, NOW(), 0, null)";
     private static final String SQL_SELECT_GROUP_TOPIC_BY_USER_ID = ""
-            + " select topic.topic_id as topic_id, title, cmt_count, last_cmt_time, group.group_id as group_id, `name`"
+            + " select topic.topic_id as topic_id, title, cmt_count, last_cmt_time, `group`.group_id as group_id, `name`"
             + " from `group`, topic"
-            + " where group.group_id in (select group_id from membership where user_id = ?) and group.group_id = topic.group_id";
+            + " where `group`.group_id in (select group_id from membership where user_id = ?) and `group`.group_id = topic.group_id";
     private static final String SQL_SELECT_TOPIC_LIST_BY_GROUP_ID = ""
             + " select topic_id, title, cmt_count, last_cmt_time, user.user_id as user_id, nickname"
             + " from topic, user"
