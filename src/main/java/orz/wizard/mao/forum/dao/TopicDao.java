@@ -21,7 +21,7 @@ import orz.wizard.mao.forum.entity.Topic;
 public class TopicDao extends BaseDao {
     
     private static final String SQL_SELECT_TOPIC_BY_ID = ""
-            + " select topic_id, title, content, topic.user_id, nickname, topic.group_id, name, publish_time"
+            + " select topic_id, title, content, topic.user_id, nickname, topic.group_id as group_id, name, publish_time"
             + " from topic, user, `group`"
             + " where topic_id = ? and topic.user_id = user.user_id and `group`.gourp_id = topic.group_id";
     private static final String SQL_INSERT_TOPIC = "insert into topic values(null, ?, ?, ?, ?, NOW(), 0, null)";
@@ -33,7 +33,10 @@ public class TopicDao extends BaseDao {
             + " select topic_id, title, cmt_count, last_cmt_time, user.user_id as user_id, nickname"
             + " from topic, user"
             + " where group_id = ? and topic.user_id = user.user_id";
-    private static final String SQL_SELECT_COMMENT_LIST_BY_TOPIC_ID = "select * from comment where topic_id = ?";
+    private static final String SQL_SELECT_COMMENT_LIST_BY_TOPIC_ID = ""
+            + " select comment_id, topic_id, comment.user_id as user_id, nickname, to_comment_id, text, comment_time"
+            + " from comment, user"
+            + "where topic_id = ? and comment.user_id = user.user_id";
     private static final String SQL_INSERT_COMMENT = "insert into comment values(null, ?, ?, ?, ?, now())";
     
     public List<Topic> getGroupTopicListByUserId(final long userId) {
@@ -105,6 +108,7 @@ public class TopicDao extends BaseDao {
                 comment.setCommentId(rs.getLong("comment_id"));
                 comment.setTopicId(rs.getLong("topic_id"));
                 comment.setUserId(rs.getLong("user_id"));
+                comment.setNickname(rs.getString("nickname"));
                 comment.setToCommentId(rs.getLong("to_comment_id"));
                 comment.setText(rs.getString("text"));
                 comment.setCommentTime(rs.getTimestamp("comment_time"));

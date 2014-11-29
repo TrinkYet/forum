@@ -20,6 +20,7 @@
     <logout logout-url="/static/j_spring_security_logout"
     logout-success-url="/index.html"/>
 <!--     <intercept-url pattern="/favicon.ico" access="permitAll" /> -->
+    <intercept-url pattern="/user/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
     <intercept-url pattern="/user/home" access="hasRole('ROLE_USER')"/>
     <intercept-url pattern="/admin/**" 
         access="isAuthenticated() and hasRole('ROLE_ADMIN')"/>

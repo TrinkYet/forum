@@ -7,6 +7,7 @@ public class Comment implements Serializable {
     private long commentId;
     private long topicId;
     private long userId;
+    private String nickname;
     private long toCommentId;
     private String text;
     private Timestamp commentTime;
@@ -27,6 +28,12 @@ public class Comment implements Serializable {
     }
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+    public String getNickname() {
+        return nickname;
+    }
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
     public long getToCommentId() {
         return toCommentId;
