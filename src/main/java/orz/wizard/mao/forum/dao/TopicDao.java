@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -38,6 +39,7 @@ public class TopicDao extends BaseDao {
             + " from comment, user"
             + "where topic_id = ? and comment.user_id = user.user_id";
     private static final String SQL_INSERT_COMMENT = "insert into comment values(null, ?, ?, ?, ?, now())";
+    private static final String SQL_SELECT_COMMENT_TIME = "select comment_time from comment where comment_id = ?";
     
     public List<Topic> getGroupTopicListByUserId(final long userId) {
         return jdbcTemplate.query(SQL_SELECT_GROUP_TOPIC_BY_USER_ID, new Object[] {userId}, new RowMapper<Topic>() {
@@ -117,6 +119,16 @@ public class TopicDao extends BaseDao {
         });
     }
     
+    public Timestamp getCommentTime(final long commentId) {
+        final Comment comment = new Comment();
+        jdbcTemplate.query(SQL_SELECT_COMMENT_TIME, new Object[] {commentId}, new RowCallbackHandler() {
+            public void processRow(ResultSet rs) throws SQLException {
+                comment.setCommentTime(rs.getTimestamp("comment_time"));
+            }
+        });
+        return comment.getCommentTime();
+    }
+    
     public void insertComment(final Comment comment) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -130,5 +142,6 @@ public class TopicDao extends BaseDao {
             }
         }, keyHolder);
         comment.setCommentId(keyHolder.getKey().intValue());
+        comment.setCommentTime(getCommentTime(comment.getCommentId()));
     }
 }
