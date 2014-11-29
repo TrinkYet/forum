@@ -11,10 +11,10 @@
 <%@ include file="/include/navbar.jsp" %>
 <script>
 $(document).ready(function(){
-	var link = "group/can_join/${group.id}";
+	var link = "group/can_join/${group.groupId}";
 	$.post(link, {}, function(result){
 		if (result == true){
-			$("#joinLink").attr("href", "group/join/${group.id}");
+			$("#joinLink").attr("href", "group/join/${group.groupId}");
 		}
 		else{
 			$("#joinLink").text("已加入");
@@ -41,7 +41,7 @@ $(document).ready(function(){
 					<h2>${group.name }<a id="joinLink" href="#" class="btn btn-info">+加入小组</a></h2>
 				</div>
 				<div class="jumbotron">
-					<h2>${group.intro }</h2>
+					<div id = "intro">${group.intro }</div>
 					<p>欢迎加入小组</p>
 				</div>
 				<div class="">
@@ -55,11 +55,9 @@ $(document).ready(function(){
 							</tr>
 						</thead>
 						<tbody>
-							<tr><td>毛位置</td><td>1000</td><td>3分钟前</td><td>wizard</td></tr>
-							<tr><td>毛位置</td><td>1000</td><td>3分钟前</td><td>wizard</td></tr>
-							<tr><td>毛位置</td><td>1000</td><td>3分钟前</td><td>wizard</td></tr>
-							<tr><td>毛位置</td><td>1000</td><td>3分钟前</td><td>wizard</td></tr>
-							<tr><td>毛位置</td><td>1000</td><td>3分钟前</td><td>wizard</td></tr>
+							<c:forEach var = "topic" items="${topicList }">
+								<tr><td>${topic.title }</td><td>${topic.cmtCount }</td><td>${topic.lastCmtTime }</td><td>${topic.nickname }</td></tr>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
@@ -78,10 +76,16 @@ $(document).ready(function(){
 					</ul>
 				</div>
 				<div>
-				    <a href="group/${group.id}/new_topic" class="btn btn-primary">发表话题</a>
+				    <a href="group/${group.groupId}/new_topic" class="btn btn-primary">发表话题</a>
 				</div>
 			</div>
 		</div>
 	</div>
+<script src="editor/ueditor.parse.js"></script>
+<script>
+	   uParse('#intro',{
+		   rootPath : 'editor'
+	   });
+</script>
 </body>
 </html>

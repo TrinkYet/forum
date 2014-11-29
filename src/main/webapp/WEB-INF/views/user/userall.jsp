@@ -60,7 +60,7 @@
 					</div>
 					<div class="panel-body">
 						<ul class="list-unstyled">
-							<c:forEach var = "team" items="${gorupList }">
+							<c:forEach var = "team" items="${groupList }">
 								<li>${team.name }</li>
 							</c:forEach>
 						</ul>
