@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import orz.wizard.mao.forum.dao.GroupDao;
 import orz.wizard.mao.forum.entity.Group;
-import orz.wizard.mao.forum.entity.User;
 
 @Service
 public class GroupService {
@@ -20,11 +19,15 @@ public class GroupService {
         groupDao.insertGroup(group);
     }
     
-    public boolean isJoined(long userId, long groupId) {
-        return groupDao.getMembershipByTwoId(userId, groupId) != null;
+    public boolean isJoined(long groupId, long userId) {
+        return groupDao.findMembership(groupId, userId) != 0;
     }
     
-    public void joinGroup(long userId, long groupId) {
-        groupDao.joinGroup(userId, groupId);
+    public void joinGroup(long groupId, long userId) {
+        groupDao.joinGroup(groupId, userId);
+    }
+    
+    public void quitGroup(long groupId, long userId) {
+        groupDao.quitGroup(groupId, userId);
     }
 }
