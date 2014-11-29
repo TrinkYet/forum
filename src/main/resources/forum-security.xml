@@ -20,19 +20,25 @@
     <logout logout-url="/static/j_spring_security_logout"
     logout-success-url="/index.html"/>
 <!--     <intercept-url pattern="/favicon.ico" access="permitAll" /> -->
-    <intercept-url pattern="/user/home" access="hasRole('ROLE_USER')"/>
-    <intercept-url pattern="/admin/**" 
-        access="isAuthenticated() and hasRole('ROLE_ADMIN')"/>
-<!--     <intercept-url pattern="/login" requires-channel="https"/> -->
-<!--     <intercept-url pattern="/spitter/form" requires-channel="https"/> -->
-
+    <intercept-url pattern="/user/login" access="permitAll"/>
+    <!-- <intercept-url pattern="/user" access="hasRole('ROLE_USER')"/> -->
+    <!-- <intercept-url pattern="/group" access="hasRole('ROLE_USER')"/> -->
+    <intercept-url pattern="/admin/**" access="isAuthenticated() and hasRole('ROLE_ADMIN')"/>
     <remember-me key="forumKey"
-        token-validity-seconds="2419200" />    
+        token-validity-seconds="2419200" />
+    <session-management>
+      <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+    </session-management>
   </http>
 
 <!--<start id="authentication_manager"/>-->
   <authentication-manager alias="authenticationManager">
-    <authentication-provider user-service-ref="userService" />
+    
+    <authentication-provider user-service-ref="userService">
+      <!-- <password-encoder hash="md5">
+        <salt-source user-property="username"/>
+      </password-encoder> -->
+    </authentication-provider>
   </authentication-manager>
 <!--<end id="authentication_manager"/>-->
 
