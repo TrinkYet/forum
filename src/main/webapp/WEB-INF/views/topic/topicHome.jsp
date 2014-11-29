@@ -30,22 +30,20 @@
 						<div class="well" id = "content">
 							${topic.content }
 						</div>
-						<div>
-						<ul id = "commentlist" class="media-list">
+						<div id = "commentlist">
 						  <c:forEach var = "keyvalue" items="${cmtMap }">
 							  <c:set var = "comment" value="${keyvalue.value }"></c:set>
-							  <li class="media">
-							    <a class="media-left" href="#">
-							      <img src="images/user_normal.jpg" alt="...">
+							  <div class="media">
+							    <a class="media-left" href="user/${comment.userId }">
+							      <img class="media-object" style="width:48px;height:48px" src="images/user_normal.jpg" alt="...">
 							    </a>
-							    <div class="media-body">
-							      <h4 class="media-heading">${comment.userId }&nbsp;${comment.commentTime }<p class="pull-right respond" ref="${comment.commentId }"><a href="#commentform">回应</a></p></h4>
+							    <div class="media-body container">
+							      <p class="bg-info media-heading">${comment.userId }&nbsp;<span class="text-muted">${comment.commentTime }</span><span class="pull-right respond" ref="${comment.commentId }"><a href="#commentform">回应</a></span></p>
 							      <blockquote>${cmtMap[comment.toCommentId].text }</blockquote>
 							      <p>${comment.text }</p>
 							    </div>
-							  </li>
+							  </div>
 						  </c:forEach>
-						</ul>
 						</div>
 						<div>
 							<input id = "tocommentid" type="hidden" value="">
@@ -66,30 +64,32 @@
 	</div>
 <script src="editor/ueditor.parse.js"></script>
 <script>
-   uParse('#content',{
-	   rootPath : 'editor'
-   });
+   
    $(document).ready(function(){
-	   $("p.respond a").click(function(e){
+	   uParse('#content',{
+		   rootPath : 'editor'
+	   });
+	   $("#commentlist").delegate("span.respond a","click",function(e){
 		  var toId = $(this).parent().attr("ref");
 		  $("#tocommentid").val(toId);
+		  $("textarea").focus();
 		  e.preventDefault(); 
 	   });
 	   $("#submitcomment").click(function(e){
 		   $.post($("#commentform").attr("action"),
 				   {userId:${sessionScope.user.userId }, 
 			        text:$("textarea[name='text']").val(),
-			        toCommentId:$("#tocommentid").val()==""?0:long($("#tocommentid").val())}, 
+			        toCommentId:$("#tocommentid").val()==""?0:parseInt($("#tocommentid").val())}, 
 			        function(result){
 			        	if(result){
-			        		$("#commentlist").append("<li class='media'>"+
+			        		$("#commentlist").append("<div class='media'>"+
 			     				   "<a class='media-left' href='#'>"+
 			    				   "<img src='images/user_normal.jpg' alt='...'>"+
 			    		           "</a>"+
-			    		    	   "<div class='media-body'>"+
-			    		           "<h4 class='media-heading'>"+result.userId+"&nbsp;"+"<p class='pull-right respond' ref='"+result.commentId+"'><a href='#commentform'>回应</a></p></h4>"+
+			    		    	   "<div class='media-body container'>"+
+			    		           "<p class='media-heading bg-info'>"+result.userId+"&nbsp;"+"<span class='pull-right respond' ref='"+result.commentId+"'><a href='#commentform'>回应</a></span></p>"+
 			    		           "<p>"+result.text+"</p>"+
-			    		           "</div></li>");
+			    		           "</div></div>");
 			        	}
 			        });
 		   $("textearea[name='text']").val("");

@@ -46,10 +46,10 @@
 						<h3 class="panel-title">个人信息</h3>
 					</div>
 					  <ul class="list-group">
-					    <li class="list-group-item">${userinfo.gender }</li>
-					    <li class="list-group-item">${userinfo.birthday }</li>
-					    <li class="list-group-item">${userinfo.residence }</li>
-					    <li class="list-group-item">${userinfo.hometown }</li>
+					    <li class="list-group-item">${userInfo.gender }</li>
+					    <li class="list-group-item">${userInfo.birthday }</li>
+					    <li class="list-group-item">${userInfo.residence }</li>
+					    <li class="list-group-item">${userInfo.hometown }</li>
 					  </ul>
 				</div>
 			</div>
@@ -61,7 +61,7 @@
 					<div class="panel-body">
 						<ul class="list-unstyled">
 							<c:forEach var = "team" items="${groupList }">
-								<li>${team.name }</li>
+								<li><a href="group/${team.groupId}">${team.name }</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -75,7 +75,7 @@
 					<div class="panel-body">
 						<ul class="list-unstyled">
 							<c:forEach var = "followee" items="${followeeList }">
-								<li>${followee.nickname }</li>
+								<li><a href="user/${followee.userId }">${followee.nickname }</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -89,7 +89,7 @@
 					<div class="panel-body">
 						<ul class="list-unstyled">
 							<c:forEach var = "follower" items="${followerList }">
-								<li>${follower.nickname }</li>
+								<li><a href="user/${follower.userId }">${follower.nickname }</a></li>
 							</c:forEach>
 						</ul>
 					</div>

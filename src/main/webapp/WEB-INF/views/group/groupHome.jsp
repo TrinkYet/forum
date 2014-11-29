@@ -56,7 +56,10 @@ $(document).ready(function(){
 						</thead>
 						<tbody>
 							<c:forEach var = "topic" items="${topicList }">
-								<tr><td>${topic.title }</td><td>${topic.cmtCount }</td><td>${topic.lastCmtTime }</td><td>${topic.nickname }</td></tr>
+								<tr><td><a href="topic/${topic.topicId }">${topic.title }</a></td>
+								    <td>${topic.cmtCount }</td>
+								    <td>${topic.lastCmtTime }</td>
+								    <td><a href = "user/${topic.userId }">${topic.nickname }</a></td></tr>
 							</c:forEach>
 						</tbody>
 					</table>
@@ -64,9 +67,9 @@ $(document).ready(function(){
 			</div>
 			<div class="col-md-4">
 				<div class="text-center bg-info">
-					<h3>最新加入成员</h3>
+					<h5>最新加入成员</h5>
 				</div>
-				<div class="container">
+				<div class="well">
 					<ul>
 						<li>user1</li>
 						<li>user2</li>

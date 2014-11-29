@@ -23,13 +23,15 @@
 								<td>标题</td>
 								<td>回应</td>
 								<td>时间</td>
-								<td>作者</td>
 								<td>小组</td>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var = "topic" items="${topicList }">
-								<tr><td>${topic.title }</td><td>${topic.cmtCount }</td><td>${topic.lastCmtTime }</td><td>${topic.nickname }</td></tr>
+							<c:forEach var = "topic" items="${groupTopicList }">
+								<tr><td><a href="topic/${topic.topicId }">${topic.title }</a></td>
+								    <td>${topic.cmtCount }</td>
+								    <td>${topic.lastCmtTime }</td>
+								    <td><a href="group/${topic.groupId}">${topic.groupName }</a></td></tr>
 							</c:forEach>
 						</tbody>
 					</table>
