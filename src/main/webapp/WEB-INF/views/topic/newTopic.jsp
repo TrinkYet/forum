@@ -26,8 +26,8 @@
 								<input id="title" name="title" class="form-control" type="text" >
 							</div>
 							<div class="form-group">
-								<label for="text">内容</label>
-								<textarea id="text" name="text" rows="10" class="form-control"></textarea>
+								<label for="content">内容</label>
+								<script id = "content" name = "content"></script>
 							</div>
 							<button type="submit" class="btn btn-info">提交</button>
 						</form>
@@ -36,5 +36,12 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="editor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="editor/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var editor = UE.getEditor('content');
+    </script>
 </body>
 </html>
