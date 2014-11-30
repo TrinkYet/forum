@@ -1,8 +1,10 @@
 package orz.wizard.mao.forum.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
 import orz.wizard.mao.forum.service.UserService;
+import orz.wizard.mao.forum.util.ImageUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -73,7 +76,11 @@ public class UserController {
     @RequestMapping(value = "/avatar", method = RequestMethod.POST)
     public @ResponseBody String updateAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) throws Exception {
         if (!avatar.isEmpty()) {
-            avatar.transferTo(new File(request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + avatar.getOriginalFilename()));
+            BufferedImage image = ImageIO.read(avatar.getInputStream());
+            BufferedImage image2 = ImageUtil.selectImageArea(image, 0, 0, 10, 10);
+            String filePath = request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + avatar.getOriginalFilename();
+            //avatar.transferTo(new File(request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + avatar.getOriginalFilename()));
+            ImageIO.write(image2, "jpg", new File(filePath));
             return "success";
         } else {
             return "fail";

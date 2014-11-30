@@ -37,4 +37,12 @@ public class GroupService {
     public List<User> getRecentUserList(long groupId) {
         return groupDao.getRecentUserList(groupId);
     }
+
+    public int getUserCount(long groupId) {
+        return groupDao.getUserCount(groupId);
+    }
+
+    public List<User> getUserList(long groupId) {
+        return groupDao.getUserListById(groupId);
+    }
 }
