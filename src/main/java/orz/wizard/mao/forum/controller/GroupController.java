@@ -60,7 +60,14 @@ public class GroupController {
         List<Topic> topicList = topicService.getTopicList(groupId);
         model.put("topicList", topicList);
         model.put("recentUserList", groupService.getRecentUserList(groupId));
+        model.put("userCount", groupService.getUserCount(groupId));
         return "group/groupHome";
+    }
+    
+    @RequestMapping(value = {"/{groupId}/members"}, method = RequestMethod.GET)
+    public String showMembers(@PathVariable long groupId, Map<String, Object> model) {
+        model.put("userList", groupService.getUserList(groupId));
+        return "group/members";
     }
     
     @RequestMapping(value = {"/{groupId}/join"})
