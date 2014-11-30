@@ -59,7 +59,7 @@ public class GroupController {
         model.put("group", group);
         List<Topic> topicList = topicService.getTopicList(groupId);
         model.put("topicList", topicList);
-        // TODO: recent join users
+        model.put("recentUserList", groupService.getRecentUserList(groupId));
         return "group/groupHome";
     }
     

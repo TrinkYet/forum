@@ -5,14 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import orz.wizard.mao.forum.entity.Group;
+import orz.wizard.mao.forum.entity.Topic;
+import orz.wizard.mao.forum.entity.User;
 
 @Repository
 public class GroupDao extends BaseDao {
@@ -22,6 +26,7 @@ public class GroupDao extends BaseDao {
     private static final String SQL_INSERT_MEMBERSHIP = "insert into `membership` values(?, ?, NOW())";
     private static final String SQL_FIND_MEMBERSHIP = "select count(*) from membership where group_id = ? and user_id = ?";
     private static final String SQL_DELETE_MEMBERSHIP = "delete from membership where group_id = ? and user_id = ?";
+    private static final String SQL_SELECT_RECENT_USER_LIST = "select user.* from membership, user where group_id = 1 and membership.user_id = user.user_id order by join_time desc limit 8";
     
     public Group getGroupById(final long groupId) {
         final Group group = new Group();
@@ -64,5 +69,20 @@ public class GroupDao extends BaseDao {
     
     public void quitGroup(long groupId, long userId) {
         jdbcTemplate.update(SQL_DELETE_MEMBERSHIP, groupId, userId);
+    }
+
+    public List<User> getRecentUserList(long groupId) {
+        return jdbcTemplate.query(SQL_SELECT_RECENT_USER_LIST, new Object[] {groupId}, new RowMapper<User>() {
+            public User mapRow(ResultSet rs, int index) throws SQLException {
+                User user = new User();
+                user.setUserId(rs.getLong("user_id"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setNickname(rs.getString("nickname"));
+                user.setStatus(rs.getString("status"));
+                user.setRegisterTime(rs.getTimestamp("register_time"));
+                return user;
+            }
+        });
     }
 }

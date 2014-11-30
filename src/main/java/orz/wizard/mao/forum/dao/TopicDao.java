@@ -37,7 +37,8 @@ public class TopicDao extends BaseDao {
     private static final String SQL_SELECT_COMMENT_LIST_BY_TOPIC_ID = ""
             + " select comment_id, topic_id, comment.user_id as user_id, nickname, to_comment_id, text, comment_time"
             + " from comment, user"
-            + " where topic_id = ? and comment.user_id = user.user_id";
+            + " where topic_id = ? and comment.user_id = user.user_id"
+            + " order by comment_time";
     private static final String SQL_INSERT_COMMENT = "insert into comment values(null, ?, ?, ?, ?, now())";
     private static final String SQL_SELECT_COMMENT_TIME = "select comment_time from comment where comment_id = ?";
     

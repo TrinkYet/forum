@@ -1,10 +1,13 @@
 package orz.wizard.mao.forum.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import orz.wizard.mao.forum.dao.GroupDao;
 import orz.wizard.mao.forum.entity.Group;
+import orz.wizard.mao.forum.entity.User;
 
 @Service
 public class GroupService {
@@ -29,5 +32,9 @@ public class GroupService {
     
     public void quitGroup(long groupId, long userId) {
         groupDao.quitGroup(groupId, userId);
+    }
+
+    public List<User> getRecentUserList(long groupId) {
+        return groupDao.getRecentUserList(groupId);
     }
 }
