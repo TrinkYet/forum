@@ -1,11 +1,14 @@
 package orz.wizard.mao.forum.controller;
 
+import java.io.File;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -14,7 +17,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
@@ -58,6 +63,21 @@ public class UserController {
     	userService.insertUser(user);
     	session.setAttribute("user", user);
     	return "redirect:/user";
+    }
+    
+    @RequestMapping(value = "/avatar", method = RequestMethod.GET)
+    public String uploadAvatarPage() {
+        return "/user/avatar";
+    }
+    
+    @RequestMapping(value = "/avatar", method = RequestMethod.POST)
+    public @ResponseBody String updateAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) throws Exception {
+        if (!avatar.isEmpty()) {
+            avatar.transferTo(new File(request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + avatar.getOriginalFilename()));
+            return "success";
+        } else {
+            return "fail";
+        }
     }
     
     @RequestMapping(value = {""}, method = RequestMethod.GET)
