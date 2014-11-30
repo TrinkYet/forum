@@ -10,15 +10,32 @@
 <head>
 <%@ include file="/include/header.jsp" %>
 <%@ include file="/include/navbar.jsp" %>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${user.nickname}</title>
 </head>
 <body>
+	<div class="container">
     <h1>请选择上传的头像文件</h1>
-    <form method="post" action="<c:url value="/user/avatar" />" enctype="multipart/form-data">
-        <input type="text" name="name" />
-        <input type="file" name="avatar" />
-        <input type="submit" />
-    </form>
+    <img src="#" id="cropbox" />
+    <div id="preview-pane">
+      <div class="preview-container">
+        <img src="#" id ="previewimg" class="jcrop-preview" alt="Preview" />
+      </div>
+    </div>
+   	<div>
+	    <form method="post" action="<c:url value="/user/avatar" />" enctype="multipart/form-data" onsubmit="return checkCoords();">
+	        <input type="hidden" id="x" name="x" />
+			<input type="hidden" id="y" name="y" />
+			<input type="hidden" id="w" name="w" />
+			<input type="hidden" id="h" name="h" />
+            <input type="file" id="inputimg" name="avatar"/>
+	        <input type="submit" value="上传"/>
+	    </form>
+    </div>
+    </div>
+<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="js/upload.avatar.js"></script>
+<link rel="stylesheet" type="text/css" href="css/upload.avatar.css"/>
 </body>
 </html>
