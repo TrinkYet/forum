@@ -39,7 +39,13 @@
 							    </a>
 							    <div class="media-body container">
 							      <p class="bg-info media-heading">${comment.userId }&nbsp;<span class="text-muted">${comment.commentTime }</span><span class="pull-right respond" ref="${comment.commentId }"><a href="#commentform">回应</a></span></p>
-							      <blockquote>${cmtMap[comment.toCommentId].text }</blockquote>
+							      <c:if test="${comment.toCommentId != 0 }">
+							      	<c:set var = "tocomment" value="${cmtMap[comment.toCommentId] }"></c:set>
+							      	<blockquote>
+							      		<p class="bg-info media-heading">${tocomment.userId }&nbsp;<span class="text-muted">${tocomment.commentTime }</span><span class="pull-right respond" ref="${tocomment.commentId }"><a href="#commentform">回应</a></span></p>   		
+							      		<p>${tocomment.text }</p>
+							      	</blockquote>
+							      </c:if>
 							      <p>${comment.text }</p>
 							    </div>
 							  </div>
@@ -66,15 +72,34 @@
 <script>
    
    $(document).ready(function(){
+	   var quote = "";
 	   uParse('#content',{
 		   rootPath : 'editor'
 	   });
 	   $("#commentlist").delegate("span.respond a","click",function(e){
 		  var toId = $(this).parent().attr("ref");
 		  $("#tocommentid").val(toId);
+		  var header = $(this).parent().parent();
+		  var content = header.parent().children().last();
+		  quote = "<blockquote>"+$("<blockquote></blockquote>").append(header.clone(), content.clone()).html()+"</blockquote>";
 		  $("textarea").focus();
 		  e.preventDefault(); 
 	   });
+	   function padzero(text){
+		   if(text<10){
+			   return "0"+text;
+		   }
+		   return text;
+	   }
+	   function formatDate(now){   
+          var year=now.getFullYear();   
+          var month=padzero(now.getMonth()+1);   
+          var date=padzero(now.getDate());   
+          var hour=padzero(now.getHours());   
+          var minute=padzero(now.getMinutes());   
+          var second=padzero(now.getSeconds());   
+          return year+"-"+month+"-"+date+"   "+hour+":"+minute+":"+second;   
+       }   
 	   $("#submitcomment").click(function(e){
 		   $.post($("#commentform").attr("action"),
 				   {userId:${sessionScope.user.userId }, 
@@ -87,12 +112,14 @@
 			    				   "<img src='images/user_normal.jpg' alt='...'>"+
 			    		           "</a>"+
 			    		    	   "<div class='media-body container'>"+
-			    		           "<p class='media-heading bg-info'>"+result.userId+"&nbsp;"+"<span class='pull-right respond' ref='"+result.commentId+"'><a href='#commentform'>回应</a></span></p>"+
+			    		           "<p class='media-heading bg-info'>"+result.userId+"&nbsp;<span class='text-muted'>"+formatDate(new Date($.now()))+"</span>"+
+			    		           "<span class='pull-right respond' ref='"+result.commentId+"'><a href='#commentform'>回应</a></span></p>"+
+			    		           quote+
 			    		           "<p>"+result.text+"</p>"+
 			    		           "</div></div>");
 			        	}
 			        });
-		   $("textearea[name='text']").val("");
+		   $("textarea[name='text']").val("");
 		   e.preventDefault();
 	   });
    });
