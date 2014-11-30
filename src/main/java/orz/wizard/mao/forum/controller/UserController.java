@@ -73,7 +73,7 @@ public class UserController {
     @RequestMapping(value = "/avatar", method = RequestMethod.POST)
     public @ResponseBody String updateAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) throws Exception {
         if (!avatar.isEmpty()) {
-            avatar.transferTo(new File(request.getServletContext().getRealPath("/") + "avatar/user/" + avatar.getOriginalFilename()));
+            avatar.transferTo(new File(request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + avatar.getOriginalFilename()));
             return "success";
         } else {
             return "fail";
