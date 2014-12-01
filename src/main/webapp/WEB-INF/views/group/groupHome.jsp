@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/include/header.jsp" %>
 <%@ include file="/include/navbar.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/grouphome.css" />
 <script>
 $(document).ready(function(){
 	var link = "group/can_join/${group.groupId}";
@@ -31,7 +32,7 @@ $(document).ready(function(){
 	
 });
 </script>
-<title>XXX小组的主页</title>
+<title>${group.name }</title>
 </head>
 <body>
 	<div class="container">
@@ -69,15 +70,26 @@ $(document).ready(function(){
 				<div class="text-center bg-info">
 					<h5>最新加入成员</h5>
 				</div>
-				<div class="well">
+				<div class="well memberlist">
 					<ul>
-						<li>user1</li>
-						<li>user2</li>
-						<li>user3</li>
-						<li>user4</li>
-						<li>user5</li>
+						<c:forEach var="cur" items="${recentUserList }">
+							<c:forEach var="x" begin="0" end="10">
+							<li>
+								<div class="pic">
+									<img alt="头像" src="images/user_normal.jpg">
+								</div>
+								<div class="nickname">
+									<a href="user/${cur.userId }">${cur.nickname }</a>
+								</div>
+							</li>
+							</c:forEach>
+						</c:forEach>
 					</ul>
 				</div>
+				<div>
+					<a href="group/${group.groupId}/members" class="btn btn-info">浏览小组所有成员(${userCount })</a>
+				</div>
+				<br>
 				<div>
 				    <a href="group/${group.groupId}/new_topic" class="btn btn-primary">发表话题</a>
 				</div>

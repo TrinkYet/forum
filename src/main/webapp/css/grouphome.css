@@ -1,0 +1,24 @@
+div.memberlist{
+	padding: 10px;
+}
+.memberlist li{
+	display: inline-block;
+	*display: inline;
+	zoom: 1;
+	width: 75px;
+	margin-top: 20px;
+	text-align: center;
+	font-size: 12px;
+	vertical-align: top;
+	letter-spacing: normal;
+	word-spacing: normal;
+}
+
+.memberlist ul{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+div.nickname{
+	margin-top: 5px;
+}
