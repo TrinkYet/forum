@@ -8,6 +8,8 @@ public class Group implements Serializable {
     private String name;
     private String intro;
     private String category;
+    private String avatar;
+    private long mbrCount;
     private long userId;
     private Timestamp createTime;
     public long getGroupId() {
@@ -33,6 +35,18 @@ public class Group implements Serializable {
     }
     public void setCategory(String category) {
         this.category = category;
+    }
+    public String getAvatar() {
+        return avatar;
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    public long getMbrCount() {
+        return mbrCount;
+    }
+    public void setMbrCount(long mbrCount) {
+        this.mbrCount = mbrCount;
     }
     public long getUserId() {
         return userId;

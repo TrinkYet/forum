@@ -45,4 +45,8 @@ public class GroupService {
     public List<User> getUserList(long groupId) {
         return groupDao.getUserListById(groupId);
     }
+
+    public List<Group> searchGroup(String q) {
+        return groupDao.searchGroup(q);
+    }
 }

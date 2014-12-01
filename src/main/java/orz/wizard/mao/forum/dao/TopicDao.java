@@ -16,6 +16,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import orz.wizard.mao.forum.entity.Comment;
+import orz.wizard.mao.forum.entity.Group;
 import orz.wizard.mao.forum.entity.Topic;
 
 @Repository
@@ -41,7 +42,11 @@ public class TopicDao extends BaseDao {
             + " order by comment_time";
     private static final String SQL_INSERT_COMMENT = "insert into comment values(null, ?, ?, ?, ?, now())";
     private static final String SQL_SELECT_COMMENT_TIME = "select comment_time from comment where comment_id = ?";
-    
+    private static final String SQL_SEARCH_TOPIC_LIST = ""
+            + " select topic.topic_id as topic_id, title, cmt_count, last_cmt_time, `group`.group_id as group_id, `name`"
+            + " from `group`, topic"
+            + " where topic like '%?%' and `group`.group_id = topic.group_id";
+
     public List<Topic> getGroupTopicListByUserId(final long userId) {
         return jdbcTemplate.query(SQL_SELECT_GROUP_TOPIC_BY_USER_ID, new Object[] {userId}, new RowMapper<Topic>() {
             public Topic mapRow(ResultSet rs, int index) throws SQLException {
@@ -144,5 +149,23 @@ public class TopicDao extends BaseDao {
         }, keyHolder);
         comment.setCommentId(keyHolder.getKey().intValue());
         comment.setCommentTime(getCommentTime(comment.getCommentId()));
+    }
+
+    public List<Topic> searchTopic(String q) {
+        return jdbcTemplate.query(SQL_SEARCH_TOPIC_LIST, new Object[] {q}, new RowMapper<Topic>() {
+            public Topic mapRow(ResultSet rs, int index) throws SQLException {
+                Topic topic = new Topic();
+                topic.setTopicId(rs.getLong("topic_id"));
+                topic.setTitle(rs.getString("title"));
+                topic.setContent(rs.getString("content"));
+                topic.setUserId(rs.getLong("user_id"));
+                topic.setNickname(rs.getString("nickname"));
+                topic.setGroupId(rs.getLong("group_id"));
+                topic.setGroupName(rs.getString("name"));
+                topic.setPublishTime(rs.getTimestamp("publish_time"));
+                return topic;
+            }
+        });
+
     }
 }

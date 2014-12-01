@@ -29,6 +29,7 @@ public class GroupDao extends BaseDao {
     private static final String SQL_SELECT_RECENT_USER_LIST = "select user.* from membership, user where group_id = ? and membership.user_id = user.user_id order by join_time desc limit 8";
     private static final String SQL_SELECT_USER_LIST = "select user.* from membership, user where group_id = ? and membership.user_id = user.user_id";
     private static final String SQL_SELECT_USER_COUNT = "select count(*) from membership where group_id = ?";
+    private static final String SQL_SEARCH_GROUP_LIST = "select * from `group` where like '%?%'";
     
     public Group getGroupById(final long groupId) {
         final Group group = new Group();
@@ -81,6 +82,7 @@ public class GroupDao extends BaseDao {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
                 user.setStatus(rs.getString("status"));
                 user.setRegisterTime(rs.getTimestamp("register_time"));
                 return user;
@@ -101,9 +103,27 @@ public class GroupDao extends BaseDao {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
                 user.setStatus(rs.getString("status"));
                 user.setRegisterTime(rs.getTimestamp("register_time"));
                 return user;
+            }
+        });
+    }
+
+    public List<Group> searchGroup(String q) {
+        return jdbcTemplate.query(SQL_SEARCH_GROUP_LIST, new Object[] {q}, new RowMapper<Group>() {
+            public Group mapRow(ResultSet rs, int index) throws SQLException {
+                Group group = new Group();
+                group.setGroupId(rs.getLong("group_id"));
+                group.setName(rs.getString("name"));
+                group.setIntro(rs.getString("intro"));
+                group.setCategory(rs.getString("category"));
+                group.setAvatar(rs.getString("avatar"));
+                group.setMbrCount(rs.getLong("mbr_count"));
+                group.setUserId(rs.getLong("user_id"));
+                group.setCreateTime(rs.getTimestamp("create_time"));
+                return group;
             }
         });
     }
