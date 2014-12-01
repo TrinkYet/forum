@@ -8,6 +8,7 @@ public class User implements Serializable {
     private String email;
     private String password;
     private String nickname;
+    private String avatar;
     private String status;
     private Timestamp registerTime;
     
@@ -22,6 +23,12 @@ public class User implements Serializable {
     }
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+    public String getAvatar() {
+        return avatar;
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     public Timestamp getRegisterTime() {
         return registerTime;

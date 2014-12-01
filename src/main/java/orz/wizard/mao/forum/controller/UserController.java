@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -74,17 +73,18 @@ public class UserController {
     }
     
     @RequestMapping(value = "/avatar", method = RequestMethod.POST)
-    public @ResponseBody String updateAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) throws Exception {
+    public @ResponseBody String updateAvatar(HttpSession session, HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) throws Exception {
         if (!avatar.isEmpty()) {
         	Integer x = Integer.valueOf(request.getParameter("x"));
         	Integer y = Integer.valueOf(request.getParameter("y"));
         	Integer w = Integer.valueOf(request.getParameter("w"));
         	Integer h = Integer.valueOf(request.getParameter("h"));
+            User user = (User) session.getAttribute("user");
             BufferedImage image = ImageIO.read(avatar.getInputStream());
             BufferedImage image2 = ImageUtil.selectImageArea(image, x, y, w, h);
-            String filePath = request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + avatar.getOriginalFilename();
-            //avatar.transferTo(new File(request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + avatar.getOriginalFilename()));
+            String filePath = request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + user.getUserId() + ".jpg";
             ImageIO.write(image2, "jpg", new File(filePath));
+            userService.updateAvatar(user.getUserId());
             return "success";
         } else {
             return "fail";

@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import orz.wizard.mao.forum.entity.Group;
@@ -103,4 +104,8 @@ public class GroupController {
         return "redirect:topic/" + topic.getTopicId();
     }
     
+    @RequestMapping(value = {"/search"}, method = RequestMethod.POST)
+    public String search(@RequestParam String key) {
+        return "result";
+    }
 }

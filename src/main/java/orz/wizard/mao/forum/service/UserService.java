@@ -59,4 +59,8 @@ public class UserService {
     public void cancelFollow(long fromUserId, long toUserId) {
         userDao.cancelFollow(fromUserId, toUserId);
     }
+
+    public void updateAvatar(long userId) {
+        userDao.updateAvatar(userId);
+    }
 }

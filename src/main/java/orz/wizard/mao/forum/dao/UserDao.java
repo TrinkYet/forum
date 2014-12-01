@@ -22,7 +22,7 @@ import orz.wizard.mao.forum.entity.UserInfo;
 public class UserDao extends BaseDao {
     
     private static final String SQL_SELECT_USER_BY_ID = "select * from user where user_id = ?";
-    private static final String SQL_INSERT_USER = "insert into user values(null, ?, ?, ?, 'unactivated', NOW())";
+    private static final String SQL_INSERT_USER = "insert into user values(null, ?, ?, ?, 'images/user_normal.jpg', 'unactivated', NOW())";
     private static final String SQL_SELECT_USER_BY_EMAIL = "select * from user where email = ?";
     private static final String SQL_SELECT_USER_INFO_BY_ID = "select * from user_info where user_id = ?";
     private static final String SQL_UPDATE_USER_INFO = "update user_info set gender = ?, birthday = ?, residence = ?, hometown = ? where user_id = ?";
@@ -32,6 +32,7 @@ public class UserDao extends BaseDao {
     private static final String SQL_FIND_FOLLOW = "select count(*) from follow where from_user_id = ? and to_user_id = ?";
     private static final String SQL_INSERT_FOLLOW = "insert into follow values(null, ?, ?)";
     private static final String SQL_DELETE_FOLLOW = "delete from follow where from_user_id = ? and to_user_id = ?";
+    private static final String SQL_UPDATE_USER_AVATAR = "update user set avatar = ? where user_id = ?";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -41,6 +42,7 @@ public class UserDao extends BaseDao {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
                 user.setStatus(rs.getString("status"));
                 user.setRegisterTime(rs.getTimestamp("register_time"));
             }
@@ -56,6 +58,7 @@ public class UserDao extends BaseDao {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
                 user.setStatus(rs.getString("status"));
                 user.setRegisterTime(rs.getTimestamp("register_time"));
     	    }
@@ -124,6 +127,7 @@ public class UserDao extends BaseDao {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
                 user.setStatus(rs.getString("status"));
                 user.setRegisterTime(rs.getTimestamp("register_time"));
                 return user;
@@ -139,6 +143,7 @@ public class UserDao extends BaseDao {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
                 user.setStatus(rs.getString("status"));
                 user.setRegisterTime(rs.getTimestamp("register_time"));
                 return user;
@@ -157,5 +162,9 @@ public class UserDao extends BaseDao {
     
     public void cancelFollow(long fromUserId, long toUserId) {
         jdbcTemplate.update(SQL_DELETE_FOLLOW, fromUserId, toUserId);
+    }
+
+    public void updateAvatar(long userId) {
+        jdbcTemplate.update(SQL_UPDATE_USER_AVATAR, "avatar/user/" + userId + ".jpg", userId);
     }
 }
