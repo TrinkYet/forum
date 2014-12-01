@@ -104,8 +104,13 @@ public class GroupController {
         return "redirect:topic/" + topic.getTopicId();
     }
     
-    @RequestMapping(value = {"/search"}, method = RequestMethod.POST)
-    public String search(@RequestParam String key) {
+    @RequestMapping(value = {"/search"})
+    public String search(@RequestParam String cat, @RequestParam String q, Map<String, Object> model) {
+        if (cat.endsWith("group")) {
+            model.put("result", groupService.searchGroup(q));
+        } else if (cat.endsWith("topic")) {
+            model.put("result", topicService.searchTopic(q));
+        }
         return "result";
     }
 }

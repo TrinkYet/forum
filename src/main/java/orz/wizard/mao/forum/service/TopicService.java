@@ -38,4 +38,8 @@ public class TopicService {
     public void insertComment(Comment comment) {
         topicDao.insertComment(comment);
     }
+
+    public List<Topic> searchTopic(String q) {
+        return topicDao.searchTopic(q);
+    }
 }

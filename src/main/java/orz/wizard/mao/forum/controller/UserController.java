@@ -85,6 +85,7 @@ public class UserController {
             String filePath = request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + user.getUserId() + ".jpg";
             ImageIO.write(image2, "jpg", new File(filePath));
             userService.updateAvatar(user.getUserId());
+            user.setAvatar("avatar/user/" + user.getUserId() + ".jpg");
             return "success";
         } else {
             return "fail";
