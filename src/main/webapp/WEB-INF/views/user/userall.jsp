@@ -18,7 +18,7 @@
 	<div class="container bodybg">
 		<div class="page-header text-center clearfix">
 			<div class="col-md-4 bg-info">
-				<div><img src="images/user_normal.jpg"></div>
+				<div><img src="${user.avatar }"></div>
 				<div><h3>${user.nickname }</h3></div>
 				<div>
 					<ul class="list-inline infoul">
@@ -37,7 +37,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-8"><div></div></div>
+			<div class="col-md-8"><a href="user/avatar" class="btn btn-success">上传头像</a><div></div></div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">

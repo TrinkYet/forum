@@ -81,7 +81,7 @@ public class UserController {
         	Integer h = Integer.valueOf(request.getParameter("h"));
             User user = (User) session.getAttribute("user");
             BufferedImage image = ImageIO.read(avatar.getInputStream());
-            BufferedImage image2 = ImageUtil.selectImageArea(image, x, y, w, h);
+            BufferedImage image2 = ImageUtil.selectImageArea(image, x, y, x+w, y+h);
             String filePath = request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + user.getUserId() + ".jpg";
             ImageIO.write(image2, "jpg", new File(filePath));
             userService.updateAvatar(user.getUserId());

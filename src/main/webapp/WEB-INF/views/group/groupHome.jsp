@@ -12,10 +12,10 @@
 <link rel="stylesheet" type="text/css" href="css/grouphome.css" />
 <script>
 $(document).ready(function(){
-	var link = "group/can_join/${group.groupId}";
+	var link = "group/${group.groupId}/is_joined";
 	$.post(link, {}, function(result){
-		if (result == true){
-			$("#joinLink").attr("href", "group/join/${group.groupId}");
+		if (result == "true"){
+			$("#joinLink").attr("href", link);
 		}
 		else{
 			$("#joinLink").text("已加入");
@@ -76,7 +76,7 @@ $(document).ready(function(){
 							<c:forEach var="x" begin="0" end="10">
 							<li>
 								<div class="pic">
-									<img alt="头像" src="images/user_normal.jpg">
+									<img alt="头像" src="${cur.avatar }">
 								</div>
 								<div class="nickname">
 									<a href="user/${cur.userId }">${cur.nickname }</a>
