@@ -22,3 +22,8 @@ div.memberlist{
 div.nickname{
 	margin-top: 5px;
 }
+
+.pic img{
+	width:48px;
+	height:48px;
+}

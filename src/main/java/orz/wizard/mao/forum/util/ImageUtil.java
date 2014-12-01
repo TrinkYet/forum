@@ -21,7 +21,7 @@ public class ImageUtil {
             }
             BufferedImage image2 = new BufferedImage(w, h, image.getType());
             Graphics g = image2.getGraphics();
-            g.drawImage(image, 0, 0, w, h, x, y, Math.min(x + w, srcW), Math.max(y + h, srcH), null);
+            g.drawImage(image, 0, 0, w, h, x, y, Math.min(x + w, srcW), Math.min(y + h, srcH), null);
             return image2;
         }
     }
