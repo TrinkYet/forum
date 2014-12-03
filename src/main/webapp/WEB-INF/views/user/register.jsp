@@ -10,6 +10,8 @@
 <meta charset="UTF-8">
 <%@ include file="/include/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="css/home.css">
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/register.js"></script>
 </head>
 <body>
 

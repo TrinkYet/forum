@@ -18,7 +18,7 @@
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <%-- <script src="../../assets/js/ie-emulation-modes-warning.js"></script> --%>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -32,7 +32,7 @@
     <div class="container">
       <s:url var="authUrl" 
           value="/static/j_spring_security_check" />
-      <form class="form-signin" role="form" method="post" action="${authUrl}">
+      <form id="loginform" class="form-signin" role="form" method="post" action="${authUrl}">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input name="j_username" type="email" class="form-control" placeholder="Email address" required autofocus>
         <input name="j_password" type="password" class="form-control" placeholder="Password" required>
@@ -45,9 +45,25 @@
       </form>
 
     </div> <!-- /container -->
-
-
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+	<script>
+	$(document).ready(function(){
+		$("#loginform").validate({
+			rules:{
+				j_username:{
+					required:true,
+					email:true,
+					maxlength:50
+				},
+				j_password:{
+					minlength:3,
+					maxlength:50
+				}
+			}
+		});
+	});
+	</script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+   <%--  <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> --%>
   </body>
 </html>

@@ -54,6 +54,17 @@ public class UserController {
         return "user/register";
     }
     
+    
+    @RequestMapping(value = {"/hasregistered"}, method = RequestMethod.POST)
+    public @ResponseBody boolean hasRegistered(HttpServletRequest request){
+    	String email = request.getParameter("email");
+    	if (userService.getUser(email).getUserId() != 0){
+    		return false;
+    	}
+    	return true;
+    }
+    
+    
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
     public String processRegister(@Valid User user, HttpSession session, BindingResult result) throws BindException {
     	if (result.hasErrors()) {
@@ -61,6 +72,7 @@ public class UserController {
     	}
     	if (userService.getUser(user.getEmail()).getUserId() != 0) {
     	    // 邮箱已被注册
+    		return "redirect:/user/register";
     	}
     	userService.insertUser(user);
     	session.setAttribute("user", user);
