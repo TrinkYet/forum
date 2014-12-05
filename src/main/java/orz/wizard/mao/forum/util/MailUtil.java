@@ -14,14 +14,14 @@ public class MailUtil {
     @Autowired
     private JavaMailSender sender;
     
-    public void send() {
+    public void send(String to, String subject, String text) {
         try {
             MimeMessage message = sender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-            helper.setTo("hygu11@fudan.edu.cn");
+            helper.setTo(to);
             helper.setFrom("fudangroup@163.com");
-            helper.setSubject("账户激活邮件");
-            helper.setText("<h1>Hello</h1>");
+            helper.setSubject(subject);
+            helper.setText(text, true);
             sender.send(message);
         } catch (Exception e) {
             // TODO Auto-generated catch block

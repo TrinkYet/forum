@@ -14,7 +14,7 @@ public class User implements Serializable {
     @Email(message = "邮箱格式错误")
     private String email;
     
-    @Size(min = 6, max = 20, message = "密码长度必须在6到20之间")
+    @Size(min = 3, max = 20, message = "密码长度必须在3到20之间")
     private String password;
     
     @NotNull(message = "昵称不能为空")
