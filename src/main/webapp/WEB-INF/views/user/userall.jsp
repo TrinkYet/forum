@@ -18,7 +18,7 @@
 	<div class="container bodybg">
 		<div class="page-header text-center clearfix">
 			<div class="col-md-4 bg-info">
-				<div><img src="${user.avatar }"></div>
+				<div><img src="${user.avatar }" style="width:70px; height:70px"></div>
 				<div><h3>${user.nickname }</h3></div>
 				<div>
 					<ul class="list-inline infoul">
