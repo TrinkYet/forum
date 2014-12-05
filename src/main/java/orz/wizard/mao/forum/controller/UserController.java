@@ -26,6 +26,7 @@ import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
 import orz.wizard.mao.forum.service.UserService;
 import orz.wizard.mao.forum.util.ImageUtil;
+import orz.wizard.mao.forum.util.MailUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -33,6 +34,9 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private MailUtil mailUtil;
     
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String showLoginPage() {
@@ -51,13 +55,14 @@ public class UserController {
     
     @RequestMapping(value = {"/register"}, method = RequestMethod.GET)
     public String showRegisterPage() {
+        mailUtil.send();
         return "user/register";
     }
     
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String processRegister(@Valid User user, HttpSession session, BindingResult result) throws BindException {
+    public String processRegister(@Valid User user, HttpSession session, BindingResult result) {
     	if (result.hasErrors()) {
-    		throw new BindException(result);
+    		return "user/register";
     	}
     	if (userService.getUser(user.getEmail()).getUserId() != 0) {
     	    // 邮箱已被注册
