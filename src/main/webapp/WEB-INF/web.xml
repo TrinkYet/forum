@@ -17,6 +17,7 @@
         <param-value>
             classpath:dataSource-context.xml
             classpath:forum-security.xml
+            classpath:spring-mail.xml
         </param-value>
     </context-param>
     <filter>

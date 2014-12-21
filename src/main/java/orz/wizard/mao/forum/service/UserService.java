@@ -63,4 +63,8 @@ public class UserService {
     public void updateAvatar(long userId) {
         userDao.updateAvatar(userId);
     }
+
+    public void insertCode(long userId, String code) {
+        userDao.insertCode(userId, code);
+    }
 }

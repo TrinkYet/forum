@@ -3,11 +3,23 @@ package orz.wizard.mao.forum.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 public class User implements Serializable {
     private long userId;
+    
+    @Email(message = "邮箱格式错误")
     private String email;
+    
+    @Size(min = 3, max = 20, message = "密码长度必须在3到20之间")
     private String password;
+    
+    @NotNull(message = "昵称不能为空")
     private String nickname;
+    
     private String avatar;
     private String status;
     private Timestamp registerTime;

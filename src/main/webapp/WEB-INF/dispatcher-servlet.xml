@@ -43,8 +43,8 @@
         <property name="maxUploadSize" value="5242880" />
         <property name="uploadTempDir" value="upload/temp" />
     </bean>
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
-    
     <!-- <bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
         <property name="definitions">
             <list>

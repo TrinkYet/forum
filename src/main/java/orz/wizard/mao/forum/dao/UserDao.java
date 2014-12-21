@@ -33,6 +33,7 @@ public class UserDao extends BaseDao {
     private static final String SQL_INSERT_FOLLOW = "insert into follow values(null, ?, ?)";
     private static final String SQL_DELETE_FOLLOW = "delete from follow where from_user_id = ? and to_user_id = ?";
     private static final String SQL_UPDATE_USER_AVATAR = "update user set avatar = ? where user_id = ?";
+    private static final String SQL_INSERT_CODE = "insert into activation_code values(?, ?)";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -166,5 +167,9 @@ public class UserDao extends BaseDao {
 
     public void updateAvatar(long userId) {
         jdbcTemplate.update(SQL_UPDATE_USER_AVATAR, "avatar/user/" + userId + ".jpg", userId);
+    }
+
+    public void insertCode(long userId, String code) {
+        jdbcTemplate.update(SQL_INSERT_CODE, userId, code);
     }
 }

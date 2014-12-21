@@ -25,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
 import orz.wizard.mao.forum.service.UserService;
+import orz.wizard.mao.forum.util.GenerateLinkUtil;
 import orz.wizard.mao.forum.util.ImageUtil;
+import orz.wizard.mao.forum.util.MailUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -33,6 +35,9 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private MailUtil mailUtil;
     
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String showLoginPage() {
@@ -54,7 +59,6 @@ public class UserController {
         return "user/register";
     }
     
-    
     @RequestMapping(value = {"/hasregistered"}, method = RequestMethod.POST)
     public @ResponseBody boolean hasRegistered(HttpServletRequest request){
     	String email = request.getParameter("email");
@@ -66,17 +70,22 @@ public class UserController {
     
     
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String processRegister(@Valid User user, HttpSession session, BindingResult result) throws BindException {
+    public String processRegister(@Valid User user, HttpSession session, BindingResult result) {
     	if (result.hasErrors()) {
-    		throw new BindException(result);
+    		return "user/register";
     	}
     	if (userService.getUser(user.getEmail()).getUserId() != 0) {
     	    // 邮箱已被注册
     		return "redirect:/user/register";
     	}
+    	System.out.println("now in processRegister");
     	userService.insertUser(user);
     	session.setAttribute("user", user);
-    	return "redirect:/user";
+    	String code = GenerateLinkUtil.generateCode(user);
+    	userService.insertCode(user.getUserId(), code);
+    	mailUtil.send(user.getEmail(), "欢迎加入复旦小组，请尽快完成注册",
+    	        "http://localhost:8080/forum/user/activate?code=" + code + "&userId=" + user.getUserId());
+    	return "user/regsuc";
     }
     
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
