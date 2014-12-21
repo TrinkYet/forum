@@ -124,6 +124,7 @@ public class UserController {
     
     @RequestMapping(value = {"/{userId}"}, method = RequestMethod.GET)
     public String showUserAll(@PathVariable long userId, Map<String, Object> model) {
+    	model.put("pageuser", userService.getUser(userId));
         model.put("groupList", userService.getGroupList(userId));
         model.put("userInfo", userService.getUserInfo(userId));
         model.put("followerList", userService.getFollowerList(userId));

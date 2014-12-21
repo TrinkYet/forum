@@ -4,7 +4,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:set var="user" value="${sessionScope.user }" scope="page"></c:set>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +18,13 @@
 	<div class="container bodybg">
 		<div class="page-header text-center clearfix">
 			<div class="col-md-4 bg-info">
-				<div><img src="${user.avatar }" style="width:70px; height:70px"></div>
-				<div><h3>${user.nickname }</h3></div>
+				<div><img src="${pageuser.avatar }" style="width:70px; height:70px"></div>
+				<div>
+					<h3>${pageuser.nickname }</h3>
+					<c:if test="${pageuser.userId != sessionScope.user.userId }">
+						<a class="btn btn-info" href="">关注此人</a>
+					</c:if>
+				</div>
 				<div>
 					<ul class="list-inline infoul">
 						<li>
