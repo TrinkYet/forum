@@ -15,7 +15,6 @@ $(document).ready(function(){
 						dataType: "json",
 						data:{
 							'email': function(){
-								console.log("user/hasregistered?email="+$("#account").val());
 								return $("#account").val();
 							}
 						}
@@ -25,12 +24,24 @@ $(document).ready(function(){
 					required:true,
 					maxlength:50,
 					minlength:3
+				},
+				password2:{
+					required:true,
+					maxlength:50,
+					minlength:3,
+					equalTo: "#password"
 				}
 			},
 			messages:{
 				"email":{
 					remote:"该邮箱已经被注册！"
 				}
-			}
+			},
+			errorPlacement:
+				function(error, element){
+					error.appendTo(element.parent().parent());
+					error.css("color", "red");
+					error.css("padding-top", "5px");
+			    }
 		});
 	});

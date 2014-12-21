@@ -21,31 +21,37 @@
         <form id="form" action="user/register" class="form-horizontal form-signin" method="post">
             <input type="hidden" name="op" value="register">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="nickname">Nickname</label>
+              <label class="col-sm-2 control-label" for="nickname">昵称</label>
               <div class="col-sm-8">
                   <input id="nickname" name="nickname" type="text" class="form-control" required="true">
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="account">Email</label>
+              <label class="col-sm-2 control-label" for="account">邮箱</label>
               <div class="col-sm-8">
                   <input id="account" name="email" type="email" class="form-control" required="true">
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="passwd">Password</label>
+              <label class="col-sm-2 control-label" for="passwd">密码</label>
               <div class="col-sm-8">
                 <input id="passwd" name="password" type="password" class="form-control">
               </div>
             </div>
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <input type="submit" value="注册" class="btn btn-default">
-                    <a href="index.html" class="btn btn-info">返回</a>
+              <label class="col-sm-2 control-label" for="passwd2">确认密码</label>
+              <div class="col-sm-8">
+                <input id="passwd2" name="password2" type="password" class="form-control">
+              </div>
+            </div>
+            <div class="form-group text-center">
+                <div class="col-sm-offset-2 col-sm-8 clearfix">
+                    <input type="submit" value="注册" class="btn btn-primary col-sm-4 col-sm-offset-4">
+                   
                 </div>
             </div>
         </form>
     </div>
-
+<script src="js/messages_zh.min.js"></script>
 </body>
 </html>
