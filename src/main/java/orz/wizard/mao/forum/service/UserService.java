@@ -67,4 +67,8 @@ public class UserService {
     public void insertCode(long userId, String code) {
         userDao.insertCode(userId, code);
     }
+    
+    public boolean activate(long userId, String code) {
+        return userDao.activate(userId, code);
+    }
 }
