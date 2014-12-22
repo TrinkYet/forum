@@ -42,7 +42,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-8"><a href="user/avatar" class="btn btn-success">上传头像</a><div></div></div>
+			<div class="col-md-8"><a href="user/userinfo" class="btn btn-success">修改信息</a><a href="user/avatar" class="btn btn-success">上传头像</a><div></div></div>
 		</div>
 		<div class="row">
 			<div class="col-md-6">
@@ -109,10 +109,7 @@
 					<input type="submit" class="btn btn-info" value="留言">
 				</div>
 			</form>
-		</div>		
-		
+		</div>				
 	</div>
-
-
 </body>
 </html>

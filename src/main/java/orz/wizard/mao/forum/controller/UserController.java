@@ -113,14 +113,14 @@ public class UserController {
         }
     }
     
-    @RequestMapping(value = {""}, method = RequestMethod.GET)
+    @RequestMapping(value = {"／userinfo"}, method = RequestMethod.GET)
     public String showUserInfo(HttpSession session, Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
         model.put("userInfo", userService.getUserInfo(user.getUserId()));
         return "user/userinfo";
     }
     
-    @RequestMapping(value = {""}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/userinfo"}, method = RequestMethod.POST)
     public String updateUserInfo(@Valid UserInfo userInfo, HttpSession session, BindingResult result) throws BindException {
         if (result.hasErrors()) {
             throw new BindException(result);
