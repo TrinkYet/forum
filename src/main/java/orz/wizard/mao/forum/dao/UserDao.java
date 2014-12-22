@@ -34,6 +34,8 @@ public class UserDao extends BaseDao {
     private static final String SQL_DELETE_FOLLOW = "delete from follow where from_user_id = ? and to_user_id = ?";
     private static final String SQL_UPDATE_USER_AVATAR = "update user set avatar = ? where user_id = ?";
     private static final String SQL_INSERT_CODE = "insert into activation_code values(?, ?)";
+    private static final String SQL_FIND_CODE = "select count(*) from activation_code where user_id = ? and code = ?";
+    private static final String SQL_UPDATE_USER_STATUS = "update user set status = 'activated' where user_id = ?";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -171,5 +173,14 @@ public class UserDao extends BaseDao {
 
     public void insertCode(long userId, String code) {
         jdbcTemplate.update(SQL_INSERT_CODE, userId, code);
+    }
+
+    public boolean activate(long userId, String code) {
+        Integer count = jdbcTemplate.queryForObject(SQL_FIND_CODE, Integer.class, userId, code);
+        if (count == null || count < 1) {
+            return false;
+        }
+        jdbcTemplate.update(SQL_UPDATE_USER_STATUS, userId);
+        return true;
     }
 }
