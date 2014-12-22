@@ -29,7 +29,7 @@ $(document).ready(function(){
 					required:true,
 					maxlength:50,
 					minlength:3,
-					equalTo: "#password"
+					equalTo: "#passwd"
 				}
 			},
 			messages:{
