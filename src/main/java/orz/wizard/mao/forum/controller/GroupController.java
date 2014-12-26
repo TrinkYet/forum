@@ -1,5 +1,6 @@
 package orz.wizard.mao.forum.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -106,13 +107,20 @@ public class GroupController {
     
     @RequestMapping(value = {"/search"})
     public String search(@RequestParam String cat, @RequestParam String q, Map<String, Object> model) {
-        if (cat.endsWith("group")) {
-            model.put("result", groupService.searchGroup(q));
+    	String qr = "";
+    	try {
+		    qr = new String(q.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	if (cat.endsWith("group")) {
+            model.put("result", groupService.searchGroup(qr));
         } else if (cat.endsWith("topic")) {
-            model.put("result", topicService.searchTopic(q));
+            model.put("result", topicService.searchTopic(qr));
         }
         model.put("cat", cat);
-        model.put("q", q);
+        model.put("q", qr);
         return "group/result";
     }
 }

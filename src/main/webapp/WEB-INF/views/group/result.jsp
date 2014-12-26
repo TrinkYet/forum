@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <%@ include file="/include/header.jsp" %>
 <%@ include file="/include/navbar.jsp" %>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -60,8 +61,8 @@
 						<table class="table table-striped">
 							<tbody>
 								<c:forEach var = "group" items="${result }">
-									<tr><td><a href="group/${group.groupId }">${group.groupName }</a></td>
-									    <td>${group.mbrCount }</td>
+									<tr><td><a href="group/${group.groupId }">${group.name }</a></td>
+									    <td>${group.mbrCount }成员</td>
 									    <td>${topic.intro }</td>
 									    <td><a href = "#">${group.category }</a></td></tr>
 								</c:forEach>

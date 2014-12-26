@@ -160,6 +160,7 @@ public class TopicDao extends BaseDao {
                 //topic.setContent(rs.getString("content"));
                 //topic.setUserId(rs.getLong("user_id"));
                 //topic.setNickname(rs.getString("nickname"));
+                topic.setCmtCount(rs.getLong("cmt_count"));
                 topic.setGroupId(rs.getLong("group_id"));
                 topic.setGroupName(rs.getString("name"));
                 topic.setPublishTime(rs.getTimestamp("publish_time"));

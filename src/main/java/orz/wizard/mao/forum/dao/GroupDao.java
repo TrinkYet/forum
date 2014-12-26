@@ -15,7 +15,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import orz.wizard.mao.forum.entity.Group;
-import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
 
 @Repository
@@ -29,7 +28,8 @@ public class GroupDao extends BaseDao {
     private static final String SQL_SELECT_RECENT_USER_LIST = "select user.* from membership, user where group_id = ? and membership.user_id = user.user_id order by join_time desc limit 8";
     private static final String SQL_SELECT_USER_LIST = "select user.* from membership, user where group_id = ? and membership.user_id = user.user_id";
     private static final String SQL_SELECT_USER_COUNT = "select count(*) from membership where group_id = ?";
-    private static final String SQL_SEARCH_GROUP_LIST = "select * from `group` where `group`.`name` like ?";
+    //private static final String SQL_SEARCH_GROUP_LIST = "select * from `group` where `group`.`name` like ?";
+    private static final String SQL_SEARCH_GROUP_LIST = "select *, count(distinct(membership.`user_id`)) as mbr_count from `group` left join membership on `group`.group_id = membership.group_id where `group`.`name` like ? group by `group`.`group_id`";
     
     public Group getGroupById(final long groupId) {
         final Group group = new Group();
@@ -111,7 +111,7 @@ public class GroupDao extends BaseDao {
         });
     }
 
-    public List<Group> searchGroup(String q) {
+    public List<Group> searchGroup(String q){
         return jdbcTemplate.query(SQL_SEARCH_GROUP_LIST, new Object[] {"%%"+q+"%%"}, new RowMapper<Group>() {
             public Group mapRow(ResultSet rs, int index) throws SQLException {
                 Group group = new Group();
@@ -119,7 +119,7 @@ public class GroupDao extends BaseDao {
                 group.setName(rs.getString("name"));
                 group.setIntro(rs.getString("intro"));
                 group.setCategory(rs.getString("category"));
-                group.setAvatar(rs.getString("avatar"));
+               // group.setAvatar(rs.getString("avatar"));
                 group.setMbrCount(rs.getLong("mbr_count"));
                 group.setUserId(rs.getLong("user_id"));
                 group.setCreateTime(rs.getTimestamp("create_time"));
