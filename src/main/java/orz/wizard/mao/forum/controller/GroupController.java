@@ -111,6 +111,6 @@ public class GroupController {
         } else if (cat.endsWith("topic")) {
             model.put("result", topicService.searchTopic(q));
         }
-        return "result";
+        return "group/result";
     }
 }

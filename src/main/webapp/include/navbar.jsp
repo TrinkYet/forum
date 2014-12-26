@@ -20,7 +20,7 @@
         <li><a href="#">文化</a></li>
         <li><a href="#">科技</a></li>
       </ul>
-      <form class="navbar-form navbar-left" role="search">
+      <form class="navbar-form navbar-left" action="group/search" method="get" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="小组、话题">
         </div>
@@ -32,8 +32,10 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.user.nickname} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="group">我的豆比</a></li>
-                <li><a href="user/userinfo">我的账户</a></li>
+                <li><a href="group">我的小组</a></li>
+                <li><a href="user/${sessionScope.user.userId }">我的主页</a>
+                <li><a href="user/userinfo">修改个人信息</a></li>
+                <li><a href="user/avatar">修改／上传头像</a></li>
                 <li><a href="static/j_spring_security_logout?redirect=index.html">登出</a></li>
               </ul>
             </li>

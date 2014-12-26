@@ -18,37 +18,66 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="gender">性别：</label>
               <div class="col-sm-8">
-                <input id="gender" name="gender" type="gender" class="form-control">
+              <c:choose>
+                <c:when test="${userInfo == null}">
+                	<input id="gender" name="gender" type="gender" class="form-control">
+                </c:when>
+                <c:otherwise>
+                	<input id="gender" name="gender" type="gender" class="form-control" value="${userInfo.gender }">
+                </c:otherwise>
+               </c:choose>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="birthday">生日：</label>
               <div class="col-sm-8">
-                <input id="birthday" name="birthday" type="date" class="form-control">
+              <c:choose>
+              	<c:when test="${userInfo == null }">
+                	<input id="birthday" name="birthday" type="date" class="form-control">
+                </c:when>
+                <c:otherwise>
+                	<input id="birthday" name="birthday" type="date" class="form-control" value="${userInfo.birthday }">
+                </c:otherwise>
+              </c:choose>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="residence">现居地：</label>
               <div class="col-sm-8">
+              <c:choose>
+              <c:when test="${userInfo == null }">
                 <input id="residence" name="residence" type="text" class="form-control">
+              </c:when>
+              <c:otherwise>
+                <input id="residence" name="residence" type="text" class="form-control" value="${userInfo.residence }">
+              </c:otherwise>
+              </c:choose>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="hometown">故乡：</label>
               <div class="col-sm-8">
-                <input id="hometown" name="hometown" type="text" class="form-control">
+              <c:choose>
+              	<c:when test="${userInfo == null }">
+                	<input id="hometown" name="hometown" type="text" class="form-control">
+                </c:when>
+                <c:otherwise>
+                	<input id="hometown" name="hometown" type="text" class="form-control" value="${userInfo.hometown }">
+                </c:otherwise>
+              </c:choose>
               </div>
             </div>
-            <!-- <div class="form-group">
-              <label class="col-sm-2 control-label" for="birthday">生日：</label>
-              <div class="col-sm-8">
-                <input id="birthday" name="birthday" type="birthday" class="form-control">
-              </div>
-            </div> -->
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-8">
 					<input type="submit" value="保存" class="btn btn-default">
-					<a href="index.html" class="btn btn-info">返回</a>
+					<c:choose>
+						<c:when test="${userInfo == null }">
+	 	 					<a href="index.html" class="btn btn-info">返回</a>
+	 	 				</c:when>
+ 	 					<c:otherwise>
+ 	 						<a href="user/${userInfo.userId }" class="btn btn-info">取消</a>
+ 	 					</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</form>

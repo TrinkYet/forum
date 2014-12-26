@@ -13,20 +13,25 @@
 <script>
 $(document).ready(function(){
 	var link = "group/${group.groupId}/is_joined";
+	var quit = "group/${group.groupId}/quit";
+	var join = "group/${group.groupId}/join";
 	$.post(link, {}, function(result){
-		if (result == "true"){
-			$("#joinLink").attr("href", link);
+		if (result == true){
+			$("#joinLink").attr("href", quit);
+			$("#joinLink").text("退出");
 		}
 		else{
-			$("#joinLink").text("已加入");
+			$("#joinLink").attr("href", join);
 		}
 	});
 	$("#joinLink").click(function(e){
 		var joinLink = $("#joinLink").attr("href");
-		$.post(joinLink, {}, function(result){
-			$("#joinLink").attr("href","#");
-			$("#joinLink").text("已加入");
-		});
+		if (joinLink != "#"){
+			$.post(joinLink, {}, function(result){
+				$("#joinLink").attr("href", joinLink == join? quit : join);
+				$("#joinLink").text(joinLink == join ? "退出":"＋加入小组");
+			});
+		}
 		e.preventDefault();
 	});
 	
@@ -73,7 +78,7 @@ $(document).ready(function(){
 				<div class="well memberlist">
 					<ul>
 						<c:forEach var="cur" items="${recentUserList }">
-							<c:forEach var="x" begin="0" end="10">
+							<%-- <c:forEach var="x" begin="0" end="10"> --%>
 							<li>
 								<div class="pic">
 									<img alt="头像" src="${cur.avatar }">
@@ -82,7 +87,7 @@ $(document).ready(function(){
 									<a href="user/${cur.userId }">${cur.nickname }</a>
 								</div>
 							</li>
-							</c:forEach>
+							<%-- </c:forEach> --%>
 						</c:forEach>
 					</ul>
 				</div>

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.entity.UserInfo;
+import orz.wizard.mao.forum.service.TopicService;
 import orz.wizard.mao.forum.service.UserService;
 import orz.wizard.mao.forum.util.GenerateLinkUtil;
 import orz.wizard.mao.forum.util.ImageUtil;
@@ -35,6 +36,9 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private TopicService topicService;
     
     @Autowired
     private MailUtil mailUtil;
@@ -70,7 +74,7 @@ public class UserController {
     
     
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    public String processRegister(@Valid User user, HttpSession session, BindingResult result) {
+    public String processRegister(@Valid User user, HttpServletRequest request, HttpSession session, BindingResult result) {
     	if (result.hasErrors()) {
     		return "user/register";
     	}
@@ -82,9 +86,10 @@ public class UserController {
     	userService.insertUser(user);
     	session.setAttribute("user", user);
     	String code = GenerateLinkUtil.generateCode(user);
+    	String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     	userService.insertCode(user.getUserId(), code);
     	mailUtil.send(user.getEmail(), "欢迎加入复旦小组，请尽快完成注册",
-    	        "http://localhost:8080/forum/user/activate?code=" + code + "&userId=" + user.getUserId());
+    	       baseUrl+"/user/activate?code=" + code + "&userId=" + user.getUserId());
     	return "user/regsuc";
     }
     
@@ -113,7 +118,7 @@ public class UserController {
         }
     }
     
-    @RequestMapping(value = {"／userinfo"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/userinfo"}, method = RequestMethod.GET)
     public String showUserInfo(HttpSession session, Map<String, Object> model) {
         User user = (User) session.getAttribute("user");
         model.put("userInfo", userService.getUserInfo(user.getUserId()));
@@ -135,6 +140,7 @@ public class UserController {
     public String showUserAll(@PathVariable long userId, Map<String, Object> model) {
     	model.put("pageuser", userService.getUser(userId));
         model.put("groupList", userService.getGroupList(userId));
+        model.put("topicList", topicService.getGroupTopicList(userId));
         model.put("userInfo", userService.getUserInfo(userId));
         model.put("followerList", userService.getFollowerList(userId));
         model.put("followeeList", userService.getFolloweeList(userId));

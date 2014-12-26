@@ -18,7 +18,7 @@
 			<div class="col-md-9">
 			<div class="container">
 				<div class="media">
-					<div class="pull-left"><img src="images/user_normal.jpg" class="media-object" width="48" height="48"></div>
+					<div class="pull-left"><img src="avatar/user/${topic.userId }.jpg" alt="images/user_normal.jpg" class="media-object" width="48" height="48"></div>
 					<div class="media-body">
 						<h3 class="media-heading">${topic.nickname}的话题</h3>
 					</div>
@@ -35,14 +35,14 @@
 							  <c:set var = "comment" value="${keyvalue.value }"></c:set>
 							  <div class="media">
 							    <a class="media-left" href="user/${comment.userId }">
-							      <img class="media-object" style="width:48px;height:48px" src="images/user_normal.jpg" alt="...">
+							      <img class="media-object" style="width:48px;height:48px" src="avatar/user/${comment.userId }.jpg" alt="...">
 							    </a>
 							    <div class="media-body container">
-							      <p class="bg-info media-heading">${comment.userId }&nbsp;<span class="text-muted">${comment.commentTime }</span><span class="pull-right respond" ref="${comment.commentId }"><a href="#commentform">回应</a></span></p>
+							      <p class="bg-info media-heading">${comment.nickname }&nbsp;<span class="text-muted">${comment.commentTime }</span><span class="pull-right respond" ref="${comment.commentId }"><a href="#commentform">回应</a></span></p>
 							      <c:if test="${comment.toCommentId != 0 }">
 							      	<c:set var = "tocomment" value="${cmtMap[comment.toCommentId] }"></c:set>
 							      	<blockquote>
-							      		<p class="bg-info media-heading">${tocomment.userId }&nbsp;<span class="text-muted">${tocomment.commentTime }</span><span class="pull-right respond" ref="${tocomment.commentId }"><a href="#commentform">回应</a></span></p>   		
+							      		<p class="bg-info media-heading">${tocomment.nickname }&nbsp;<span class="text-muted">${tocomment.commentTime }</span><span class="pull-right respond" ref="${tocomment.commentId }"><a href="#commentform">回应</a></span></p>   		
 							      		<p>${tocomment.text }</p>
 							      	</blockquote>
 							      </c:if>
@@ -109,10 +109,10 @@
 			        	if(result){
 			        		$("#commentlist").append("<div class='media'>"+
 			     				   "<a class='media-left' href='#'>"+
-			    				   "<img src='images/user_normal.jpg' alt='...'>"+
+			    				   "<img src='${sessionScope.user.avatar }' alt='...'>"+
 			    		           "</a>"+
 			    		    	   "<div class='media-body container'>"+
-			    		           "<p class='media-heading bg-info'>"+result.userId+"&nbsp;<span class='text-muted'>"+formatDate(new Date($.now()))+"</span>"+
+			    		           "<p class='media-heading bg-info'>"+${sessionScope.user.nickname }+"&nbsp;<span class='text-muted'>"+formatDate(new Date($.now()))+"</span>"+
 			    		           "<span class='pull-right respond' ref='"+result.commentId+"'><a href='#commentform'>回应</a></span></p>"+
 			    		           quote+
 			    		           "<p>"+result.text+"</p>"+
