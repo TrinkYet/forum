@@ -29,7 +29,7 @@ public class GroupDao extends BaseDao {
     private static final String SQL_SELECT_RECENT_USER_LIST = "select user.* from membership, user where group_id = ? and membership.user_id = user.user_id order by join_time desc limit 8";
     private static final String SQL_SELECT_USER_LIST = "select user.* from membership, user where group_id = ? and membership.user_id = user.user_id";
     private static final String SQL_SELECT_USER_COUNT = "select count(*) from membership where group_id = ?";
-    private static final String SQL_SEARCH_GROUP_LIST = "select * from `group` where like '%?%'";
+    private static final String SQL_SEARCH_GROUP_LIST = "select * from `group` where `group`.`name` like ?";
     
     public Group getGroupById(final long groupId) {
         final Group group = new Group();
@@ -112,7 +112,7 @@ public class GroupDao extends BaseDao {
     }
 
     public List<Group> searchGroup(String q) {
-        return jdbcTemplate.query(SQL_SEARCH_GROUP_LIST, new Object[] {q}, new RowMapper<Group>() {
+        return jdbcTemplate.query(SQL_SEARCH_GROUP_LIST, new Object[] {"%%"+q+"%%"}, new RowMapper<Group>() {
             public Group mapRow(ResultSet rs, int index) throws SQLException {
                 Group group = new Group();
                 group.setGroupId(rs.getLong("group_id"));

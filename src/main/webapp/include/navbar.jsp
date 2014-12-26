@@ -22,7 +22,8 @@
       </ul>
       <form class="navbar-form navbar-left" action="group/search" method="get" role="search">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="小组、话题">
+          <input type="hidden" name="cat" value="topic">
+          <input type="text" name="q" class="form-control" placeholder="小组、话题">
         </div>
         <button type="submit" class="btn btn-default">搜索</button>
       </form>
