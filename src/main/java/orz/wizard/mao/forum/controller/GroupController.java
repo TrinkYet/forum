@@ -66,6 +66,21 @@ public class GroupController {
         return "group/groupHome";
     }
     
+    @RequestMapping(value = {"/{groupId/modify}"}, method = RequestMethod.GET)
+    public String showModifyGroup(@PathVariable long groupId, Map<String, Object> model) {
+        Group group = groupService.getGroup(groupId);
+        model.put("group", group);
+        return "group/modifyGroup";
+    }
+    
+    @RequestMapping(value = {"/{groupId/modify}"}, method = RequestMethod.POST)
+    public String modifyGroup(@PathVariable long groupId, @Valid Group group, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        group.setUserId(user.getUserId());
+        groupService.saveGroup(group);
+        return "redirect:group/" + group.getGroupId();
+    }
+    
     @RequestMapping(value = {"/{groupId}/members"}, method = RequestMethod.GET)
     public String showMembers(@PathVariable long groupId, Map<String, Object> model) {
         model.put("userList", groupService.getUserList(groupId));
