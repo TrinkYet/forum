@@ -39,7 +39,7 @@ $(document).ready(function(){
 			},
 			errorPlacement:
 				function(error, element){
-					error.appendTo(element.parent().parent());
+					error.appendTo(element.parent());
 					error.css("color", "red");
 					error.css("padding-top", "5px");
 			    }

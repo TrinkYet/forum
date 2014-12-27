@@ -17,10 +17,12 @@
 <body>
 	<div class="container">
     <h1>请选择上传的头像文件</h1>
-    <img src="#" id="cropbox" />
+    <div>
+    	<img src="images/avatar_default.png" id="cropbox" />
+    </div>
     <div id="preview-pane">
       <div class="preview-container">
-        <img src="#" id ="previewimg" class="jcrop-preview" alt="Preview" />
+        <img src="images/avatar_default.png" id ="previewimg" class="jcrop-preview" alt="Preview" />
       </div>
     </div>
    	<div>
@@ -30,7 +32,7 @@
 			<input type="hidden" id="w" name="w" />
 			<input type="hidden" id="h" name="h" />
             <input type="file" id="inputimg" name="avatar"/>
-	        <input type="submit" value="上传"/>
+	        <input type="submit" class="btn btn-info" value="上传"/>
 	    </form>
     </div>
     </div>

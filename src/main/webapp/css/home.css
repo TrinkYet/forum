@@ -7,6 +7,9 @@
 }
 
 body{
-	
 	padding:15px;
+	background-color: #b4daf0;
+	background-image: url("../images/body_bg.jpg");
+	background-repeat: repeat-x;
+	background-position: center 0;
 }

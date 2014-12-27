@@ -10,78 +10,100 @@
 <meta charset="UTF-8">
 <%@ include file="/include/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css">
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.datetimepicker.js"></script>
 </head>
 <body>
-	<div class="container col-md-6 col-md-offset-3">
-		<h2 class="form-signin-heading text-center">用户信息</h2>
-		<form id="form" action="user" class="form-horizontal form-signin" method="post">
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="gender">性别：</label>
-              <div class="col-sm-8">
-              <c:choose>
-                <c:when test="${userInfo == null}">
-                	<input id="gender" name="gender" type="gender" class="form-control">
-                </c:when>
-                <c:otherwise>
-                	<input id="gender" name="gender" type="gender" class="form-control" value="${userInfo.gender }">
-                </c:otherwise>
-               </c:choose>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="birthday">生日：</label>
-              <div class="col-sm-8">
-              <c:choose>
-              	<c:when test="${userInfo == null }">
-                	<input id="birthday" name="birthday" type="date" class="form-control">
-                </c:when>
-                <c:otherwise>
-                	<input id="birthday" name="birthday" type="date" class="form-control" value="${userInfo.birthday }">
-                </c:otherwise>
-              </c:choose>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="residence">现居地：</label>
-              <div class="col-sm-8">
-              <c:choose>
-              <c:when test="${userInfo == null }">
-                <input id="residence" name="residence" type="text" class="form-control">
-              </c:when>
-              <c:otherwise>
-                <input id="residence" name="residence" type="text" class="form-control" value="${userInfo.residence }">
-              </c:otherwise>
-              </c:choose>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="hometown">故乡：</label>
-              <div class="col-sm-8">
-              <c:choose>
-              	<c:when test="${userInfo == null }">
-                	<input id="hometown" name="hometown" type="text" class="form-control">
-                </c:when>
-                <c:otherwise>
-                	<input id="hometown" name="hometown" type="text" class="form-control" value="${userInfo.hometown }">
-                </c:otherwise>
-              </c:choose>
-              </div>
-            </div>
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8">
-					<input type="submit" value="保存" class="btn btn-default">
-					<c:choose>
-						<c:when test="${userInfo == null }">
-	 	 					<a href="index.html" class="btn btn-info">返回</a>
-	 	 				</c:when>
- 	 					<c:otherwise>
- 	 						<a href="user/${userInfo.userId }" class="btn btn-info">取消</a>
- 	 					</c:otherwise>
-					</c:choose>
+	<div class="container">
+		<div id="signupbox" style="margin-top: 50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">个人信息</div>
+				</div>
+				<div class="panel-body">
+					<form id="form" action="user/userinfo" method="post" class="form-horizontal" role="form">
+
+						<div id="signupalert" style="display: none"
+							class="alert alert-danger">
+							<p>Error:</p>
+							<span></span>
+						</div>
+
+						<div class="form-group">
+							<label for="gender" class="col-md-3 control-label">性别</label>
+							<div class="col-md-9">
+								<c:choose>
+					              <c:when test="${userInfo == null}">
+					                <input id="gender" name="gender" type="gender" class="form-control">
+					              </c:when>
+					              <c:otherwise>
+					                <input id="gender" name="gender" type="gender" class="form-control" value="${userInfo.gender }">
+					              </c:otherwise>
+					            </c:choose>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="birthday" class="col-md-3 control-label">生日</label>
+							<div class="col-md-9">
+							  <c:choose>
+				              	<c:when test="${userInfo == null }">
+				                	<input id="birthday" name="birthday" type="date" class="form-control">
+				                </c:when>
+				                <c:otherwise>
+				                	<input id="birthday" name="birthday" type="date" class="form-control" value="${userInfo.birthday }">
+				                </c:otherwise>
+				              </c:choose>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="residence" class="col-md-3 control-label">现居地</label>
+							<div class="col-md-9">
+								<c:choose>
+					              <c:when test="${userInfo == null }">
+					                <input id="residence" name="residence" type="text" class="form-control">
+					              </c:when>
+					              <c:otherwise>
+					                <input id="residence" name="residence" type="text" class="form-control" value="${userInfo.residence }">
+					              </c:otherwise>
+					            </c:choose>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="hometown" class="col-md-3 control-label">确认密码</label>
+							<div class="col-md-9">
+						      <c:choose>
+				              	<c:when test="${userInfo == null }">
+				                	<input id="hometown" name="hometown" type="text" class="form-control">
+				                </c:when>
+				                <c:otherwise>
+				                	<input id="hometown" name="hometown" type="text" class="form-control" value="${userInfo.hometown }">
+				                </c:otherwise>
+				              </c:choose>
+							</div>
+						</div>
+						<div class="form-group">
+							<!-- Button -->
+							<div class="col-md-offset-3 col-md-9">
+								<input id="btn-signup" type="submit" class="btn btn-info" value="提交">
+							</div>
+						</div>
+
+					</form>
 				</div>
 			</div>
-		</form>
+		</div>
 	</div>
-
+<script>
+$(document).ready(function(e){
+	$('#birthday').datetimepicker({
+		lang:'en',
+		timepicker: false,
+		format: 'Y-m-d'
+	});
+});
+</script>
 </body>
 </html>

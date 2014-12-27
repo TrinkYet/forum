@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <div class="container col-md-6 col-md-offset-3">
+  <%--   <div class="container col-md-6 col-md-offset-3">
         <h2 class="form-signin-heading text-center">请注册</h2>
         <form id="form" action="user/register" class="form-horizontal form-signin" method="post">
             <input type="hidden" name="op" value="register">
@@ -51,7 +51,72 @@
                 </div>
             </div>
         </form>
-    </div>
-<script src="js/messages_zh.min.js"></script>
+    </div> --%>
+
+	<div class="container">
+		<div id="signupbox" style="margin-top: 50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">注册</div>
+					<div style="float: right; font-size: 85%; position: relative; top: -10px">
+						<a id="signinlink" href="user/login">登陆</a>
+					</div>
+				</div>
+				<div class="panel-body">
+					<form id="form" action="user/register" method="post" class="form-horizontal" role="form">
+
+						<div id="signupalert" style="display: none"
+							class="alert alert-danger">
+							<p>Error:</p>
+							<span></span>
+						</div>
+
+						<div class="form-group">
+							<label for="email" class="col-md-3 control-label">邮箱</label>
+							<div class="col-md-9">
+								<input id="account" type="email" class="form-control" name="email"
+									placeholder="Email Address">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="nickname" class="col-md-3 control-label">昵称</label>
+							<div class="col-md-9">
+								<input id="nickname" type="text" class="form-control" name="nickname"
+									placeholder="Nickname">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="passwd" class="col-md-3 control-label">密码</label>
+							<div class="col-md-9">
+								<input id="passwd" type="password" class="form-control" name="password"
+									placeholder="Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="passwd2" class="col-md-3 control-label">确认密码</label>
+							<div class="col-md-9">
+								<input id="passwd2" type="password" class="form-control" name="password2"
+									placeholder="Confirm Password">
+							</div>
+						</div>
+						<div class="form-group">
+							<!-- Button -->
+							<div class="col-md-offset-3 col-md-9">
+								<input id="btn-signup" type="submit" class="btn btn-info" value="注册">
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script src="js/messages_zh.min.js"></script>
 </body>
 </html>
