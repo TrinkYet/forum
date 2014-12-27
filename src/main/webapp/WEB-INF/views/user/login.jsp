@@ -32,7 +32,7 @@
     <div class="container">
       <s:url var="authUrl" 
           value="/static/j_spring_security_check" />
-      <form id="loginform" class="form-signin" role="form" method="post" action="${authUrl}">
+      <%-- <form id="loginform" class="form-signin" role="form" method="post" action="${authUrl}">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input name="j_username" type="email" class="form-control" placeholder="Email address" required autofocus>
         <input name="j_password" type="password" class="form-control" placeholder="Password" required>
@@ -42,9 +42,64 @@
           </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+      </form> --%>
 
-    </div> <!-- /container -->
+		<div id="loginbox" style="margin-top:50px" class="mainbox col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">Sign In</div>
+					<div style="float: right; font-size: 80%; position: relative; top: -10px">
+						<a href="#">Forgot password?</a>
+					</div>
+				</div>
+
+				<div style="padding-top: 30px" class="panel-body">
+					<div style="display: none" id="login-alert" class="alert alert-danger col-sm-12">
+					
+					</div>
+
+					<form id="loginform" class="form-horizontal" role="form" method="post" action="${authUrl}">
+
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-user"></i>
+							</span>
+						    <input id="login-username" type="email" class="form-control" name="j_username" placeholder="email">
+						</div>
+
+						<div style="margin-bottom: 25px" class="input-group">
+							<span class="input-group-addon">
+								<i class="glyphicon glyphicon-lock"></i>
+							</span> 
+							<input id="login-password" type="password" class="form-control" name="j_password"
+								placeholder="password">
+						</div>
+						<div style="margin-top: 10px" class="form-group">
+							<!-- Button -->
+							<div class="col-sm-12 controls">
+								<div class="col-md-6" style="padding-top:5px">
+									<label> 
+										<input id="login-remember" type="checkbox" name="_spring_security_remember_me" value="remember-me"> Remember me
+									</label>
+								</div>
+								<input id="btn-login" type="submit" class="btn btn-success col-md-6" value="login">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-12 control">
+								<div style="border-top: 1px solid #888; padding-top: 15px; font-size: 85%">
+									Don't have an account! 
+									<a href="#"> <!-- onClick="$('#loginbox').hide(); $('#signupbox').show()" -->
+										Sign Up Here </a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</div> <!-- /container -->
 	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
 	<script>
 	$(document).ready(function(){
@@ -59,7 +114,12 @@
 					minlength:3,
 					maxlength:50
 				}
-			}
+			},
+			errorPlacement:
+				function(error, element){
+					error.insertAfter(element.parent());
+					error.css("color", "red");
+			    }
 		});
 	});
 	</script>
