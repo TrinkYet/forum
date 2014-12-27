@@ -42,4 +42,8 @@ public class TopicService {
     public List<Topic> searchTopic(String q) {
         return topicDao.searchTopic(q);
     }
+
+    public void saveTopic(Topic topic) {
+        topicDao.saveTopic(topic);
+    }
 }

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import orz.wizard.mao.forum.entity.Comment;
+import orz.wizard.mao.forum.entity.Topic;
+import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.service.TopicService;
 
 @Controller
@@ -42,5 +45,19 @@ public class TopicController {
     public @ResponseBody Comment postComment(@PathVariable long topicId, @Valid Comment comment) {
         topicService.insertComment(comment);
         return comment;
+    }
+    
+    @RequestMapping(value = {"/{topicId}/modify"}, method = RequestMethod.GET)
+    public String showModifyTopic(@PathVariable long topicId, Map<String, Object> model) {
+        model.put("topic", topicService.getTopic(topicId));
+        return "topic/modifyTopic";
+    }
+    
+    @RequestMapping(value = {"/{topicId}/modify"}, method = RequestMethod.POST)
+    public String modifyTopic(@PathVariable long topicId, @Valid Topic topic, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        topic.setUserId(user.getUserId());
+        topicService.saveTopic(topic);
+        return "redirect:topic/" + topic.getTopicId();
     }
 }

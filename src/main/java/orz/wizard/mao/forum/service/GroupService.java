@@ -49,4 +49,8 @@ public class GroupService {
     public List<Group> searchGroup(String q) {
         return groupDao.searchGroup(q);
     }
+
+    public void saveGroup(Group group) {
+        groupDao.saveGroup(group);
+    }
 }
