@@ -30,7 +30,7 @@ public class GroupDao extends BaseDao {
     private static final String SQL_SELECT_USER_COUNT = "select count(*) from membership where group_id = ?";
     //private static final String SQL_SEARCH_GROUP_LIST = "select * from `group` where `group`.`name` like ?";
     private static final String SQL_SEARCH_GROUP_LIST = "select *, count(distinct(membership.`user_id`)) as mbr_count from `group` left join membership on `group`.group_id = membership.group_id where `group`.`name` like ? group by `group`.`group_id`";
-    private static final String SQL_UPDATE_GROUP = "update group set name = ?, intro = ?, category = ?, avatar = ? where group_id = ?";
+    private static final String SQL_UPDATE_GROUP = "update `group` set name = ?, intro = ?, category = ?, avatar = ? where group_id = ?";
     
     public Group getGroupById(final long groupId) {
         final Group group = new Group();
@@ -129,7 +129,18 @@ public class GroupDao extends BaseDao {
         });
     }
 
-    public void saveGroup(Group group) {
-        jdbcTemplate.update(SQL_UPDATE_GROUP, group.getName(), group.getIntro(), group.getCategory(), group.getAvatar());
+    public void saveGroup(final Group group) {
+       // jdbcTemplate.update(SQL_UPDATE_GROUP, group.getName(), group.getIntro(), group.getCategory(), group.getAvatar(), group.getGroupId());
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+                PreparedStatement ps = conn.prepareStatement(SQL_UPDATE_GROUP);
+                ps.setString(1, group.getName());
+                ps.setString(2, group.getIntro());
+                ps.setString(3, group.getCategory());
+                ps.setString(4, group.getAvatar());
+                ps.setLong(5, group.getGroupId());
+                return ps;
+            }
+        });
     }
 }

@@ -171,7 +171,16 @@ public class TopicDao extends BaseDao {
 
     }
 
-    public void saveTopic(Topic topic) {
-        jdbcTemplate.update(SQL_UPDATE_TOPIC, topic.getTitle(), topic.getContent(), topic.getTopicId());
+    public void saveTopic(final Topic topic) {
+      //  jdbcTemplate.update(SQL_UPDATE_TOPIC, topic.getTitle(), topic.getContent(), topic.getTopicId());
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+                PreparedStatement ps = conn.prepareStatement(SQL_UPDATE_TOPIC);
+                ps.setString(1, topic.getTitle());
+                ps.setString(2, topic.getContent());
+                ps.setLong(3, topic.getTopicId());
+                return ps;
+            }
+        });
     }
 }

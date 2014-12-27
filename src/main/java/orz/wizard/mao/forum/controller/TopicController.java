@@ -58,6 +58,6 @@ public class TopicController {
         User user = (User) session.getAttribute("user");
         topic.setUserId(user.getUserId());
         topicService.saveTopic(topic);
-        return "redirect:topic/" + topic.getTopicId();
+        return "redirect:/topic/" + topic.getTopicId();
     }
 }

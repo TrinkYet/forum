@@ -43,8 +43,8 @@ $(document).ready(function(){
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">
-				<div class="text-center bg-primary">
-					<h2>${group.name }<a id="joinLink" href="#" class="btn btn-info">+加入小组</a></h2>
+				<div class="text-center">
+					<h3 style="display:inline">${group.name }</h3>&nbsp;&nbsp;<a id="joinLink" href="#" style="display:inline-block; margin-top:-5px; margin-bottom:5px" class="btn btn-xs btn-info"><span>+加入小组</span></a>
 				</div>
 				<div class="jumbotron">
 					<div id = "intro">${group.intro }</div>
@@ -71,8 +71,8 @@ $(document).ready(function(){
 					</table>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="text-center bg-info">
+			<div class="col-md-4" style="padding-top:30px">
+				<div>
 					<h5>最新加入成员</h5>
 				</div>
 				<div class="well memberlist">

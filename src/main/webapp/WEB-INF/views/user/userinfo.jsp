@@ -72,7 +72,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="hometown" class="col-md-3 control-label">确认密码</label>
+							<label for="hometown" class="col-md-3 control-label">故乡</label>
 							<div class="col-md-9">
 						      <c:choose>
 				              	<c:when test="${userInfo == null }">

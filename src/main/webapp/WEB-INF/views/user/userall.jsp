@@ -97,6 +97,9 @@
 							<td>回应</td>
 							<td>时间</td>
 							<td>小组</td>
+							<c:if test="${pageuser.userId == sessionScope.user.userId }">
+							<td>操作</td>
+							</c:if>
 						</tr>
 					</thead>
 					<tbody>
@@ -104,7 +107,11 @@
 							<tr><td><a href="topic/${topic.topicId }">${topic.title }</a></td>
 							    <td>${topic.cmtCount }</td>
 							    <td>${topic.lastCmtTime }</td>
-							    <td><a href = "group/${topic.groupId }">${topic.groupName }</a></td></tr>
+							    <td><a href = "group/${topic.groupId }">${topic.groupName }</a></td>
+							    <c:if test="${pageuser.userId == sessionScope.user.userId }">
+							    <td><a href="topic/${topic.topicId }/modify">修改</a></td>
+							    </c:if>
+							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
