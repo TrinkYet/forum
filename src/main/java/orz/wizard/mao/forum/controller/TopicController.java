@@ -69,7 +69,7 @@ public class TopicController {
         return "redirect:/topic/" + topic.getTopicId();
     }
     
-    @RequestMapping(value = {"/{topicId}/delete"})
+    @RequestMapping(value = {"/{topicId}/delete"}, method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable long topicId, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {

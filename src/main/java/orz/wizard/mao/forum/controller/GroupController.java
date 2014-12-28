@@ -89,7 +89,7 @@ public class GroupController {
         return "redirect:/group/" + group.getGroupId();
     }
     
-    @RequestMapping(value = {"/{groupId}/delete"})
+    @RequestMapping(value = {"/{groupId}/delete"}, method = RequestMethod.POST)
     public @ResponseBody String delete(@PathVariable long groupId, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {

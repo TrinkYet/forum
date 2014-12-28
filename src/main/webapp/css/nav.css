@@ -6,7 +6,6 @@
 	font-style: normal;
 }
 
-body{
-	padding:15px;
-	
+#globalnav.navbar a{
+	color: rgb(3, 123, 130);
 }

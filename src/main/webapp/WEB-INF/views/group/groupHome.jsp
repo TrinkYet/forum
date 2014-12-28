@@ -43,15 +43,15 @@ $(document).ready(function(){
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">
-				<div class="text-center">
-					<h3 style="display:inline">${group.name }</h3>&nbsp;&nbsp;<a id="joinLink" href="#" style="display:inline-block; margin-top:-5px; margin-bottom:5px" class="btn btn-xs btn-info"><span>+加入小组</span></a>
+				<div class="">
+					<h3 style="display:inline">${group.name }</h3>&nbsp;&nbsp;<a id="joinLink" href="#" style="display:inline-block; margin-top:-7px " class="btn btn-xs btn-info"><span>+加入小组</span></a>
 				</div>
-				<div class="jumbotron">
+				<div class="jumbotron" style="margin-top:20px">
 					<div id = "intro">${group.intro }</div>
 					<p>欢迎加入小组</p>
 				</div>
 				<div class="">
-					<table class="table table-striped">
+					<table class="table">
 						<thead>
 							<tr>
 								<td>标题</td>
@@ -71,7 +71,7 @@ $(document).ready(function(){
 					</table>
 				</div>
 			</div>
-			<div class="col-md-4" style="padding-top:30px">
+			<div class="col-md-4" style="padding-top:40px">
 				<div>
 					<h5>最新加入成员</h5>
 				</div>
@@ -92,11 +92,11 @@ $(document).ready(function(){
 					</ul>
 				</div>
 				<div>
-					<a href="group/${group.groupId}/members" class="btn btn-info">浏览小组所有成员(${userCount })</a>
+					<a href="group/${group.groupId}/members" class="">浏览小组所有成员(${userCount })</a>
 				</div>
 				<br>
 				<div>
-				    <a href="group/${group.groupId}/new_topic" class="btn btn-primary">发表话题</a>
+				    <a href="group/${group.groupId}/new_topic" class="">发表话题</a>
 				</div>
 			</div>
 		</div>

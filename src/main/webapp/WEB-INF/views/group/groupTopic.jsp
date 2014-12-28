@@ -15,7 +15,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9">
-				<div class="text-center bg-info"><h3>小组话题</h3></div>
+				<div class=""><h3>小组话题</h3></div>
 				<div>
 					<table class="table table-striped table-hover">
 						<thead>
@@ -38,8 +38,7 @@
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div>
-					<h3>${user.nickname }</h3>
+				<div style="padding-top:50px">
 					<a href="group/create" class="btn btn-primary">申请创建小组</a>
 				</div>
 			</div>

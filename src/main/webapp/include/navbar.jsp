@@ -1,23 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-<nav class="navbar navbar-default" role="navigation">
+<link rel="stylesheet" type="text/css" href="css/nav.css">
+<nav id="globalnav" class="navbar navbar-default" role="navigation" style="margin-bottom:50px;background-color: rgb(240, 246, 243);font-color: rgb(3, 123, 130);">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">豆比小组</a>
+    <div class="navbar-header" style="padding-left:55px">
+      <a class="navbar-brand" href="#"><strong style="font-size:2em">豆比小组</strong></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="" id="bs-example-navbar-collapse-1" style="padding-right:50px">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">精选</a></li>
+        <li ><a href="#">精选</a></li>
         <li><a href="#">文化</a></li>
         <li><a href="#">科技</a></li>
       </ul>

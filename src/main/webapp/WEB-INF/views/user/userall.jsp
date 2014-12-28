@@ -48,9 +48,11 @@
 </c:choose>
 <body>
 	<div class="container bodybg">
-		<div class="page-header text-center clearfix">
-			<div class="col-md-4 bg-info">
-				<div><img src="${pageuser.avatar }" style="width:70px; height:70px"></div>
+		<%-- <div class="page-header  clearfix">
+			<div class="col-md-4 bg-info text-center">
+				<div>
+					<img src="${pageuser.avatar }" style="width: 70px; height: 70px">
+				</div>
 				<div>
 					<h3>${pageuser.nickname }</h3>
 					<c:if test="${pageuser.userId != sessionScope.user.userId }">
@@ -60,21 +62,24 @@
 				<div>
 					<ul class="list-inline infoul">
 						<li>
-							<h4><strong>${fn:length(followeeList) }</strong></h4>
-							<span class="text-muted">关注</span>
+							<h4>
+								<strong>${fn:length(followeeList) }</strong>
+							</h4> <span class="text-muted">关注</span>
 						</li>
 						<li>
-							<h4><strong>${fn:length(followerList) }</strong></h4>
-							<span class="text-muted">粉丝</span>
+							<h4>
+								<strong>${fn:length(followerList) }</strong>
+							</h4> <span class="text-muted">粉丝</span>
 						</li>
 						<li>
-							<h4><strong>${fn:length(topicList) }</strong></h4>
-							<span class="text-muted">话题</span>
+							<h4>
+								<strong>${fn:length(topicList) }</strong>
+							</h4> <span class="text-muted">话题</span>
 						</li>
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-4 col-md-offset-4" style="padding-right:0">
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<h3 class="panel-title">个人信息</h3>
@@ -88,10 +93,10 @@
 				</div>
 			</div>
 			<!-- <div class="col-md-8"><a href="user/userinfo" class="btn btn-success">修改信息</a><a href="user/avatar" class="btn btn-success">上传头像</a><div></div></div> -->
-		</div>
+		</div> --%>
 		<div class="row">
-			<div class="col-md-8 bg-info" style="min-height:500px">
-				<table class="table table-striped">
+			<div class="col-md-8" style="min-height:500px;padding-top:50px">
+				<table class="table">
 					<thead>
 						<tr>
 							<td>标题</td>
@@ -110,16 +115,52 @@
 							    <td>${topic.lastCmtTime }</td>
 							    <td><a href = "group/${topic.groupId }">${topic.groupName }</a></td>
 							    <c:if test="${pageuser.userId == sessionScope.user.userId }">
-							    <td><a href="topic/${topic.topicId }/modify">修改</a></td>
+							    <td>
+							    	<a href="topic/${topic.topicId }/modify">修改</a>/
+							    	<a href="topic/${topic.topicId }/delete"  class="deletebutton" data-toggle="modal" data-target="#deleteModal">删除</a>
+							    </td>
 							    </c:if>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
-			<div class="col-md-4">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
+			<div class="col-md-4" style="padding-top:50px">
+				<div class=" text-center" style="background: #fff4e8;padding-top:10px; padding-bottom:10px; margin-bottom:10px">
+				<div>
+					<img src="${pageuser.avatar }" style="height: 170px; border-radius:5px">
+				</div>
+				<div>
+					<h3 class="text-muted">${pageuser.nickname }</h3>
+					<c:if test="${pageuser.userId != sessionScope.user.userId }">
+						<a id="followLink" class="btn btn-info" href="#">关注此人</a>
+					</c:if>
+				</div>
+				<div style="margin-top:10px;margin-bottom:10px">
+					常居：${userInfo.residence }
+				</div>
+				<div class="text-primary">
+					<ul class="list-inline infoul">
+						<li>
+							<h4>
+								<strong>${fn:length(followeeList) }</strong>
+							</h4> <span class="text-muted">关注</span>
+						</li>
+						<li>
+							<h4>
+								<strong>${fn:length(followerList) }</strong>
+							</h4> <span class="text-muted">粉丝</span>
+						</li>
+						<li>
+							<h4>
+								<strong>${fn:length(topicList) }</strong>
+							</h4> <span class="text-muted">话题</span>
+						</li>
+					</ul>
+				</div>
+				</div>
+				<div class="">
+					<div class="panel-heading" style="padding-left:30px">
 						<h3 class="panel-title">创建的小组</h3>
 					</div>
 					<div class="panel-body">
@@ -127,7 +168,12 @@
 							<c:forEach var = "team" items="${createdList }">
 								<li>
 									<div class="col-md-6"><a href="group/${team.groupId}">${team.name }</a></div>
-									<div class="col-md-6"></div><a href="group/${team.groupId }/modify" class="btn btn-xs btn-info">修改</a></
+									<c:if test="${pageuser.userId == sessionScope.user.userId }">
+									<div class="col-md-6">
+										<a href="group/${team.groupId }/modify">修改</a>
+										<a href="group/${team.groupId }/delete" class="deletebutton" data-toggle="modal" data-target="#deleteModal">删除</a>
+									</div>
+									</c:if>
 								</li>
 							</c:forEach>
 						</ul>
@@ -149,7 +195,7 @@
 					<div class="panel-heading">
 						<h3 class="panel-title">关注的人</h3>
 					</div>
-					<div class="panel-body">
+					<div class="panel-body memberlist">
 						<ul class="list-unstyled">
 							<c:forEach var = "followee" items="${followeeList }">
 								<li>
@@ -195,5 +241,62 @@
 			</form>
 		</div>				
 	</div>
+	<c:if test="${pageuser.userId == sessionScope.user.userId }">
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Warning</h4>
+				</div>
+				<div class="modal-body">
+					<p>确定要删除吗？</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button id="confirmdelete" type="button" class="btn btn-primary">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Message</h4>
+				</div>
+				<div class="modal-body">
+					<p id="deletemessage"></p>
+				</div>
+				<div class="modal-footer">
+					<a href="user/${sessionScope.user.userId }" type="button" class="btn btn-primary">确认</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	$(document).ready(function(e){
+		$(".deletebutton").click(function(e){
+			$("#confirmdelete").attr("href", $(this).attr("href"));
+			e.preventDefault();
+		});
+		
+		$("#confirmdelete").click(function(e){
+			var link = $(this).attr("href");
+			$.post(link, {}, function(result){
+				$('#deleteModal').modal('hide');
+				$('#deletemessage').text(result);
+				$('#messageModal').modal('show');
+			});
+		});
+		
+	});
+	</script>
+	</c:if>
 </body>
 </html>
