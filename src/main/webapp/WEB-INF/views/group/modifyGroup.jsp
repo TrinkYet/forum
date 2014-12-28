@@ -14,7 +14,7 @@
 		<div class="col-md-8 clearfix">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title">创建小组</h3>
+				<h3 class="panel-title">修改小组</h3>
 			</div>
 			<div class="panel-body">
 				<form role = "form" action="" method="post">
