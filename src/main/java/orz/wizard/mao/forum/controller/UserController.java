@@ -88,8 +88,9 @@ public class UserController {
     	String code = GenerateLinkUtil.generateCode(user);
     	String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     	userService.insertCode(user.getUserId(), code);
+    	String activeUrl = baseUrl + "/user/activate?code=" + code + "&userId=" + user.getUserId();
     	mailUtil.send(user.getEmail(), "欢迎加入复旦小组，请尽快完成注册",
-    	       baseUrl+"/user/activate?code=" + code + "&userId=" + user.getUserId());
+    	       "<a href='" + activeUrl + "'>" + activeUrl + "</a>");
     	return "user/regsuc";
     }
     
