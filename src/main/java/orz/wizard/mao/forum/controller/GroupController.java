@@ -53,7 +53,7 @@ public class GroupController {
         User user = (User) session.getAttribute("user");
         group.setUserId(user.getUserId());
         groupService.insertGroup(group);
-        return "redirect:" + group.getGroupId();
+        return "redirect:/group/" + group.getGroupId();
     }
     
     @RequestMapping(value = {"/{groupId}"}, method = RequestMethod.GET)
@@ -68,8 +68,15 @@ public class GroupController {
     }
     
     @RequestMapping(value = {"/{groupId}/modify"}, method = RequestMethod.GET)
-    public String showModifyGroup(@PathVariable long groupId, Map<String, Object> model) {
+    public String showModifyGroup(@PathVariable long groupId, HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "noPermission";
+        }
         Group group = groupService.getGroup(groupId);
+        if (group.getUserId() != user.getUserId()) {
+            return "noPermission";
+        }
         model.put("group", group);
         return "group/modifyGroup";
     }
@@ -118,7 +125,7 @@ public class GroupController {
         User user = (User) session.getAttribute("user");
         topic.setUserId(user.getUserId());
         topicService.insertTopic(topic);
-        return "redirect:topic/" + topic.getTopicId();
+        return "redirect:/topic/" + topic.getTopicId();
     }
     
     @RequestMapping(value = {"/search"})

@@ -36,6 +36,7 @@ public class UserDao extends BaseDao {
     private static final String SQL_INSERT_CODE = "insert into activation_code values(?, ?)";
     private static final String SQL_FIND_CODE = "select count(*) from activation_code where user_id = ? and code = ?";
     private static final String SQL_UPDATE_USER_STATUS = "update user set status = 'activated' where user_id = ?";
+    private static final String SQL_SELECT_CREATED_LIST = "select * from `group` where user_id = ?";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -182,5 +183,20 @@ public class UserDao extends BaseDao {
         }
         jdbcTemplate.update(SQL_UPDATE_USER_STATUS, userId);
         return true;
+    }
+
+    public List<Group> getCreatedList(long userId) {
+        return jdbcTemplate.query(SQL_SELECT_CREATED_LIST, new Object[] {userId}, new RowMapper<Group>() {
+            public Group mapRow(ResultSet rs, int index) throws SQLException {
+                Group group = new Group();
+                group.setGroupId(rs.getLong("group_id"));
+                group.setName(rs.getString("name"));
+                group.setIntro(rs.getString("intro"));
+                group.setCategory(rs.getString("category"));
+                group.setUserId(rs.getLong("user_id"));
+                group.setCreateTime(rs.getTimestamp("create_time"));
+                return group;
+            }
+        });
     }
 }

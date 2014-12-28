@@ -21,7 +21,7 @@ import orz.wizard.mao.forum.entity.User;
 public class GroupDao extends BaseDao {
     
     private static final String SQL_SELECT_GROUP_BY_ID = "select * from `group` where group_id = ?";
-    private static final String SQL_INSERT_GROUP = "insert into `group` values(null, ?, ?, ?, ?, ?, NOW())";
+    private static final String SQL_INSERT_GROUP = "insert into `group` values(null, ?, ?, ?, 'default', 0, ?, NOW())";
     private static final String SQL_INSERT_MEMBERSHIP = "insert into `membership` values(?, ?, NOW())";
     private static final String SQL_FIND_MEMBERSHIP = "select count(*) from membership where group_id = ? and user_id = ?";
     private static final String SQL_DELETE_MEMBERSHIP = "delete from membership where group_id = ? and user_id = ?";
@@ -54,9 +54,9 @@ public class GroupDao extends BaseDao {
                 PreparedStatement ps = conn.prepareStatement(SQL_INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, group.getName());
                 ps.setString(2, group.getIntro());
-                ps.setString(3, group.getAvatar());
-                ps.setString(4, group.getCategory());
-                ps.setLong(5, group.getUserId());
+//                ps.setString(3, group.getAvatar());
+                ps.setString(3, group.getCategory());
+                ps.setLong(4, group.getUserId());
                 return ps;
             }
         }, keyHolder);

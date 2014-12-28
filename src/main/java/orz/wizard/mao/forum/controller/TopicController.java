@@ -48,8 +48,16 @@ public class TopicController {
     }
     
     @RequestMapping(value = {"/{topicId}/modify"}, method = RequestMethod.GET)
-    public String showModifyTopic(@PathVariable long topicId, Map<String, Object> model) {
-        model.put("topic", topicService.getTopic(topicId));
+    public String showModifyTopic(@PathVariable long topicId, HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "noPermission";
+        }
+        Topic topic = topicService.getTopic(topicId);
+        if (topic.getUserId() != user.getUserId()) {
+            return "noPermission";
+        }
+        model.put("topic", topic);
         return "topic/modifyTopic";
     }
     

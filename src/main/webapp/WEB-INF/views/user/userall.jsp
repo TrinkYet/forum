@@ -11,6 +11,7 @@
 <%@ include file="/include/header.jsp" %>
 <%@ include file="/include/navbar.jsp" %>
 <link rel = "stylesheet" type="text/css" href = "css/userall.css" />
+<link rel="stylesheet" type="text/css" href="css/grouphome.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${pageuser.nickname}</title>
 </head>
@@ -119,6 +120,21 @@
 			<div class="col-md-4">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
+						<h3 class="panel-title">创建的小组</h3>
+					</div>
+					<div class="panel-body">
+						<ul class="list-unstyled">
+							<c:forEach var = "team" items="${createdList }">
+								<li>
+									<div class="col-md-6"><a href="group/${team.groupId}">${team.name }</a></div>
+									<div class="col-md-6"></div><a href="group/${team.groupId }/modify" class="btn btn-xs btn-info">修改</a></
+								</li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
 						<h3 class="panel-title">关注的小组</h3>
 					</div>
 					<div class="panel-body">
@@ -136,7 +152,14 @@
 					<div class="panel-body">
 						<ul class="list-unstyled">
 							<c:forEach var = "followee" items="${followeeList }">
-								<li><a href="user/${followee.userId }">${followee.nickname }</a></li>
+								<li>
+									<div class="pic">
+										<img alt="头像" src="${followee.avatar }">
+									</div>
+									<div class="nickname">
+										<a href="user/${followee.userId }">${followee.nickname }</a>
+									</div>
+								</li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -145,10 +168,17 @@
 					<div class="panel-heading">
 						<h3 class="panel-title">谁关注我</h3>
 					</div>
-					<div class="panel-body">
+					<div class="panel-body memberlist">
 						<ul class="list-unstyled">
 							<c:forEach var = "follower" items="${followerList }">
-								<li><a href="user/${follower.userId }">${follower.nickname }</a></li>
+								<li>
+									<div class="pic">
+										<img alt="头像" src="${follower.avatar }">
+									</div>
+									<div class="nickname">
+										<a href="user/${follower.userId }">${follower.nickname }</a>
+									</div>
+								</li>
 							</c:forEach>
 						</ul>
 					</div>
