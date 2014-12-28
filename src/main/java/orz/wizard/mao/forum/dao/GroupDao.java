@@ -57,6 +57,7 @@ public class GroupDao extends BaseDao {
                 PreparedStatement ps = conn.prepareStatement(SQL_INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, group.getName());
                 ps.setString(2, group.getIntro());
+//                ps.setString(3, group.getAvatar());
                 ps.setString(3, group.getCategory());
                 ps.setLong(4, group.getUserId());
                 return ps;

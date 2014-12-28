@@ -53,7 +53,7 @@ public class GroupController {
         User user = (User) session.getAttribute("user");
         group.setUserId(user.getUserId());
         groupService.insertGroup(group);
-        return "redirect:" + group.getGroupId();
+        return "redirect:/group/" + group.getGroupId();
     }
     
     @RequestMapping(value = {"/{groupId}"}, method = RequestMethod.GET)
@@ -139,7 +139,7 @@ public class GroupController {
         User user = (User) session.getAttribute("user");
         topic.setUserId(user.getUserId());
         topicService.insertTopic(topic);
-        return "redirect:topic/" + topic.getTopicId();
+        return "redirect:/topic/" + topic.getTopicId();
     }
     
     @RequestMapping(value = {"/search"})
