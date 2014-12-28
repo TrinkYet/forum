@@ -68,8 +68,15 @@ public class GroupController {
     }
     
     @RequestMapping(value = {"/{groupId}/modify"}, method = RequestMethod.GET)
-    public String showModifyGroup(@PathVariable long groupId, Map<String, Object> model) {
+    public String showModifyGroup(@PathVariable long groupId, HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "noPermission";
+        }
         Group group = groupService.getGroup(groupId);
+        if (group.getUserId() != user.getUserId()) {
+            return "noPermission";
+        }
         model.put("group", group);
         return "group/modifyGroup";
     }

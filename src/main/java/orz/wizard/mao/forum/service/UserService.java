@@ -71,4 +71,8 @@ public class UserService {
     public boolean activate(long userId, String code) {
         return userDao.activate(userId, code);
     }
+
+    public List<Group> getCreatedList(long userId) {
+        return userDao.getCreatedList(userId);
+    }
 }

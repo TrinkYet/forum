@@ -141,6 +141,7 @@ public class UserController {
     	model.put("pageuser", userService.getUser(userId));
         model.put("groupList", userService.getGroupList(userId));
         model.put("topicList", topicService.getGroupTopicList(userId));
+        model.put("createdList", userService.getCreatedList(userId));
         model.put("userInfo", userService.getUserInfo(userId));
         model.put("followerList", userService.getFollowerList(userId));
         model.put("followeeList", userService.getFolloweeList(userId));

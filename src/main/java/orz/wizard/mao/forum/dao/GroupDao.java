@@ -21,7 +21,7 @@ import orz.wizard.mao.forum.entity.User;
 public class GroupDao extends BaseDao {
     
     private static final String SQL_SELECT_GROUP_BY_ID = "select * from `group` where group_id = ?";
-    private static final String SQL_INSERT_GROUP = "insert into `group` values(null, ?, ?, ?, ?, NOW())";
+    private static final String SQL_INSERT_GROUP = "insert into `group` values(null, ?, ?, ?, 'default', 0, ?, NOW())";
     private static final String SQL_INSERT_MEMBERSHIP = "insert into `membership` values(?, ?, NOW())";
     private static final String SQL_FIND_MEMBERSHIP = "select count(*) from membership where group_id = ? and user_id = ?";
     private static final String SQL_DELETE_MEMBERSHIP = "delete from membership where group_id = ? and user_id = ?";
