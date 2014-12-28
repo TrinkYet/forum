@@ -89,6 +89,20 @@ public class GroupController {
         return "redirect:/group/" + group.getGroupId();
     }
     
+    @RequestMapping(value = {"/{groupId}/delete"})
+    public @ResponseBody String delete(@PathVariable long groupId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "noPermission";
+        }
+        Group group = groupService.getGroup(groupId);
+        if (!user.getEmail().equals("admin@fudangroup.com") && group.getUserId() != user.getUserId()) {
+            return "noPermission";
+        }
+        groupService.delete(groupId);
+        return "success";
+    }
+    
     @RequestMapping(value = {"/{groupId}/members"}, method = RequestMethod.GET)
     public String showMembers(@PathVariable long groupId, Map<String, Object> model) {
         model.put("userList", groupService.getUserList(groupId));

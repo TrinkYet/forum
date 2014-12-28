@@ -20,6 +20,7 @@ public class GroupService {
     
     public void insertGroup(Group group){
         groupDao.insertGroup(group);
+        joinGroup(group.getGroupId(), group.getUserId());
     }
     
     public boolean isJoined(long groupId, long userId) {
@@ -52,5 +53,9 @@ public class GroupService {
 
     public void saveGroup(Group group) {
         groupDao.saveGroup(group);
+    }
+
+    public void delete(long groupId) {
+        groupDao.delete(groupId);
     }
 }
