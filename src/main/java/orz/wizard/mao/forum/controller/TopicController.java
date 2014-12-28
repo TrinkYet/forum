@@ -68,4 +68,18 @@ public class TopicController {
         topicService.saveTopic(topic);
         return "redirect:/topic/" + topic.getTopicId();
     }
+    
+    @RequestMapping(value = {"/{topicId}/delete"})
+    public @ResponseBody String delete(@PathVariable long topicId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "noPermission";
+        }
+        Topic topic = topicService.getTopic(topicId);
+        if (!user.getEmail().equals("admin@fudangroup.com") && topic.getUserId() != user.getUserId()) {
+            return "noPermission";
+        }
+        topicService.delete(topicId);
+        return "success";
+    }
 }

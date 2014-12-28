@@ -46,4 +46,8 @@ public class TopicService {
     public void saveTopic(Topic topic) {
         topicDao.saveTopic(topic);
     }
+
+    public void delete(long topicId) {
+        topicDao.delete(topicId);
+    }
 }

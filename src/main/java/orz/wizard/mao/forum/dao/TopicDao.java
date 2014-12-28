@@ -47,6 +47,7 @@ public class TopicDao extends BaseDao {
             + " from `group`, topic"
             + " where title like ? and `group`.group_id = topic.group_id";
     private static final String SQL_UPDATE_TOPIC = "update topic set title = ?, content = ? where topic_id = ?";
+    private static final String SQL_DELETE_TOPIC = "delete from topic where topic_id = ?";
 
     public List<Topic> getGroupTopicListByUserId(final long userId) {
         return jdbcTemplate.query(SQL_SELECT_GROUP_TOPIC_BY_USER_ID, new Object[] {userId}, new RowMapper<Topic>() {
@@ -182,5 +183,9 @@ public class TopicDao extends BaseDao {
                 return ps;
             }
         });
+    }
+
+    public void delete(long topicId) {
+        jdbcTemplate.update(SQL_DELETE_TOPIC, topicId);
     }
 }
