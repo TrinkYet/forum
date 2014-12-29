@@ -21,4 +21,8 @@ public class MessageService {
     public List<Topic> getTopicMsgList(long userId) {
         return messageDao.getTopicMsgList(userId);
     }
+
+    public void setRead(long topicId, long userId) {
+        messageDao.setRead(topicId, userId);
+    }
 }

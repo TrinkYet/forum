@@ -24,8 +24,9 @@ public class MessageDao extends BaseDao {
     private static final String SQL_SELECT_MSG_TOPIC_LIST = ""
             + " select topic.topic_id as topic_id, topic.user_id as user_id, nickname"
             + " from topic, msg_topic"
-            + " where to_user_id = ? and msg_topic.topic_id = topic.topic_id"
+            + " where to_user_id = ? and is_readed = 0 and msg_topic.topic_id = topic.topic_id"
             + " order by msg_time desc";
+    private static final String SQL_SET_TOPIC_READ = "update msg_topic set is_readed = 1 where topic_id = ? and to_user_id = ?";
 
     public List<Topic> getTopicMsgList(long userId) {
         return jdbcTemplate.query(SQL_SELECT_MSG_TOPIC_LIST, new Object[] {userId}, new RowMapper<Topic>() {
@@ -37,5 +38,9 @@ public class MessageDao extends BaseDao {
                 return topic;
             }
         });
+    }
+
+    public void setRead(long topicId, long userId) {
+        jdbcTemplate.update(SQL_SET_TOPIC_READ, topicId, userId);
     }
 }
