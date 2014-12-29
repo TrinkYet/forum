@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 <%@ include file="/include/header.jsp" %>
 <%@ include file="/include/navbar.jsp" %>
 <link rel="stylesheet" type="text/css" href="css/grouphome.css" />
+<c:if test="${founder.userId != sessionScope.user.userId }">
 <script>
 $(document).ready(function(){
 	var link = "group/${group.groupId}/is_joined";
@@ -37,6 +39,7 @@ $(document).ready(function(){
 	
 });
 </script>
+</c:if>
 <title>${group.name }</title>
 </head>
 <body>
@@ -44,34 +47,64 @@ $(document).ready(function(){
 		<div class="row">
 			<div class="col-md-8">
 				<div class="">
-					<h3 style="display:inline">${group.name }</h3>&nbsp;&nbsp;<a id="joinLink" href="#" style="display:inline-block; margin-top:-7px " class="btn btn-xs btn-info"><span>+加入小组</span></a>
+					<h3 style="display:inline">${group.name }</h3>&nbsp;&nbsp;
+					<c:if test="${founder.userId != sessionScope.user.userId }">
+						<a id="joinLink" href="#" style="display:inline-block; margin-top:-7px " class="btn btn-xs btn-info"><span>+加入小组</span></a>
+					</c:if>
 				</div>
 				<div class="jumbotron" style="margin-top:20px">
 					<div id = "intro">${group.intro }</div>
 					<p>欢迎加入小组</p>
 				</div>
 				<div class="">
-					<table class="table">
-						<thead>
-							<tr>
-								<td>标题</td>
-								<td>回应</td>
-								<td>时间</td>
-								<td>作者</td>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var = "topic" items="${topicList }">
-								<tr><td><a href="topic/${topic.topicId }">${topic.title }</a></td>
-								    <td>${topic.cmtCount }</td>
-								    <td>${topic.lastCmtTime }</td>
-								    <td><a href = "user/${topic.userId }">${topic.nickname }</a></td></tr>
-							</c:forEach>
-						</tbody>
-					</table>
+					<div>
+						<h4>${group.name }的话题</h4>
+					</div>
+					<c:choose>
+						<c:when test="${fn:length(topicList) != 0 }">
+							<table class="table">
+								<thead>
+									<tr>
+										<td>标题</td>
+										<td>回应</td>
+										<td>时间</td>
+										<td>作者</td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="topic" items="${topicList }">
+										<tr>
+											<td><a href="topic/${topic.topicId }">${topic.title }</a></td>
+											<td>${topic.cmtCount }</td>
+											<td>${topic.lastCmtTime }</td>
+											<td><a href="user/${topic.userId }">${topic.nickname }</a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:when>
+						<c:otherwise>
+							暂无话题
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<div class="col-md-4" style="padding-top:40px">
+				<div>
+					<h5>创建者</h5>
+				</div>
+				<div class="well memberlist">
+					<ul>
+						<li>
+							<div class="pic">
+								<img alt="头像" src="${founder.avatar }">
+							</div>
+							<div class="nickname">
+								<a href="user/${founder.userId }">${founder.nickname }</a>
+							</div>
+						</li>
+					</ul>
+				</div>
 				<div>
 					<h5>最新加入成员</h5>
 				</div>

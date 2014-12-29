@@ -17,8 +17,8 @@
 			<div class="col-md-9">
 				<div class=""><h3>小组话题</h3></div>
 				<div>
-					<table class="table table-striped table-hover">
-						<thead>
+					<table class="table table-hover">
+						<thead class="text-muted">
 							<tr>
 								<td>标题</td>
 								<td>回应</td>
@@ -29,8 +29,8 @@
 						<tbody>
 							<c:forEach var = "topic" items="${groupTopicList }">
 								<tr><td><a href="topic/${topic.topicId }">${topic.title }</a></td>
-								    <td>${topic.cmtCount }</td>
-								    <td>${topic.lastCmtTime }</td>
+								    <td class="text-muted">${topic.cmtCount }</td>
+								    <td class="text-muted">${topic.lastCmtTime }</td>
 								    <td><a href="group/${topic.groupId}">${topic.groupName }</a></td></tr>
 							</c:forEach>
 						</tbody>

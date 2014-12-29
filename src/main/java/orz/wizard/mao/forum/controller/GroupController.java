@@ -22,6 +22,7 @@ import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.service.GroupService;
 import orz.wizard.mao.forum.service.TopicService;
+import orz.wizard.mao.forum.service.UserService;
 
 @Controller
 @RequestMapping("/group")
@@ -31,6 +32,8 @@ public class GroupController {
     private GroupService groupService;
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private UserService userService;
     
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String showGroupTopic(HttpSession session, Map<String, Object> model) {
@@ -59,7 +62,9 @@ public class GroupController {
     @RequestMapping(value = {"/{groupId}"}, method = RequestMethod.GET)
     public String showGroup(@PathVariable long groupId, Map<String, Object> model) {
         Group group = groupService.getGroup(groupId);
+        User founder = userService.getUser(group.getUserId());
         model.put("group", group);
+        model.put("founder", founder);
         List<Topic> topicList = topicService.getTopicList(groupId);
         model.put("topicList", topicList);
         model.put("recentUserList", groupService.getRecentUserList(groupId));
@@ -105,6 +110,7 @@ public class GroupController {
     
     @RequestMapping(value = {"/{groupId}/members"}, method = RequestMethod.GET)
     public String showMembers(@PathVariable long groupId, Map<String, Object> model) {
+    	model.put("group", groupService.getGroup(groupId));
         model.put("userList", groupService.getUserList(groupId));
         return "group/members";
     }

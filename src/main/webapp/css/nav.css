@@ -9,3 +9,13 @@
 #globalnav.navbar a{
 	color: rgb(3, 123, 130);
 }
+
+div>table.table>tbody>tr>td{
+	border-top: 0;
+	border-bottom: 1px dashed #ddd;
+}
+
+div>table.table>thead>tr>td{
+	border-top: 0;
+	border-bottom: 1px dashed #ddd;
+}

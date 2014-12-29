@@ -141,7 +141,7 @@ public class UserController {
     public String showUserAll(@PathVariable long userId, Map<String, Object> model) {
     	model.put("pageuser", userService.getUser(userId));
         model.put("groupList", userService.getGroupList(userId));
-        model.put("topicList", topicService.getGroupTopicList(userId));
+        model.put("topicList", topicService.getUserTopicList(userId));
         model.put("createdList", userService.getCreatedList(userId));
         model.put("userInfo", userService.getUserInfo(userId));
         model.put("followerList", userService.getFollowerList(userId));

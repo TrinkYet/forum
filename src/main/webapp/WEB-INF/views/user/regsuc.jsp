@@ -54,13 +54,13 @@ h3{
 </head>
 <body>
     <div class="container col-md-6 col-md-offset-3">
-        <h2 class="msg_ok">请立即登录邮箱<a href="http://mail.google.com" target="_blank"> guhanya1@gmail.com </a>激活帐号</h2>
+        <h2 class="msg_ok">请立即登录邮箱<a href="#" target="_blank">${sessionScope.user.email } </a>激活帐号</h2>
         <div class="msg_wrapper">
             <h3>如果你没有收到激活邮件：</h3>
             <ul class="msg_list">
                 <li>1. 请检查邮箱的垃圾邮件(广告邮件)目录</li>
                 <li>2. 如果还是没有找到，请<a href="#" class="resend_email"> 重新发送激活邮件</a>，稍后到邮箱查收</li>
-                <li>3. 通过邮件联系我们：service@xueqiu.com</li>
+                <li>3. 通过邮件联系我们：fudangroup@163.com</li>
             </ul>
         </div>
     </div>
