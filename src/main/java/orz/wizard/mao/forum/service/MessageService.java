@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import orz.wizard.mao.forum.dao.MessageDao;
 import orz.wizard.mao.forum.dao.UserDao;
+import orz.wizard.mao.forum.entity.Comment;
 import orz.wizard.mao.forum.entity.Group;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
@@ -22,7 +23,15 @@ public class MessageService {
         return messageDao.getTopicMsgList(userId);
     }
 
-    public void setRead(long topicId, long userId) {
-        messageDao.setRead(topicId, userId);
+    public void setReadTopic(long topicId, long userId) {
+        messageDao.setReadTopic(topicId, userId);
+    }
+
+    public List<Comment> getCmtMsgList(long userId) {
+        return messageDao.getCmtMsgList(userId);
+    }
+    
+    public void setReadCmt(long cmtId, long userId) {
+        messageDao.setReadCmt(cmtId, userId);
     }
 }
