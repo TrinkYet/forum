@@ -127,7 +127,7 @@ public class TopicDao extends BaseDao {
                 comment.setCommentId(rs.getLong("comment_id"));
                 comment.setTopicId(rs.getLong("topic_id"));
                 comment.setUserId(rs.getLong("user_id"));
-                comment.setNickname(rs.getString("nickname"));
+                //comment.setNickname(rs.getString("nickname"));
                 comment.setToCommentId(rs.getLong("to_comment_id"));
                 comment.setText(rs.getString("text"));
                 comment.setCommentTime(rs.getTimestamp("comment_time"));
