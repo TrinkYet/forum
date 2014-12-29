@@ -19,6 +19,7 @@ import orz.wizard.mao.forum.entity.Comment;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.service.TopicService;
+import orz.wizard.mao.forum.service.UserService;
 
 @Controller
 @RequestMapping("/topic")
@@ -26,10 +27,15 @@ public class TopicController {
     
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private UserService userService;
     
     @RequestMapping(value = {"/{topicId}"}, method = RequestMethod.GET)
     public String showTopic(@PathVariable long topicId, Map<String, Object> model) {
-        model.put("topic", topicService.getTopic(topicId));
+        Topic topic = topicService.getTopic(topicId);
+        User pageuser = userService.getUser(topic.getUserId());
+    	model.put("topic", topic);
+    	model.put("pageuser", pageuser);
         List<Comment> cmtList = topicService.getCommentList(topicId);
         Map<Long, Comment> cmtMap = new HashMap<Long, Comment>();
         Iterator<Comment> it = cmtList.iterator();

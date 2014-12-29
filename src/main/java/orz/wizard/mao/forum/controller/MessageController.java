@@ -32,7 +32,7 @@ public class MessageController {
 	    return null;
 	}
 	
-	@RequestMapping(value = {"/topic/read"})
+	@RequestMapping(value = {"/topic/read"}, method = RequestMethod.POST)
     public @ResponseBody String read(HttpSession session, @RequestParam long topicId){
         User user = (User) session.getAttribute("user");
         if (user != null) {

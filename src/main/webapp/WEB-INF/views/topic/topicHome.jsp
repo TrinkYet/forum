@@ -18,7 +18,7 @@
 			<div class="col-md-9">
 			<div class="container">
 				<div class="media">
-					<div class="pull-left"><img src="avatar/user/${topic.userId }.jpg" alt="images/user_normal.jpg" class="media-object" width="48" height="48"></div>
+					<div class="pull-left"><img src="${pageuser.avatar }" alt="images/user_normal.jpg" class="media-object" width="48" height="48"></div>
 					<div class="media-body">
 						<h3 class="media-heading">${topic.nickname}的话题</h3>
 					</div>

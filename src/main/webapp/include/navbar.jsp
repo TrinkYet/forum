@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <link rel="stylesheet" type="text/css" href="css/nav.css">
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/message.js"></script>
 <nav id="globalnav" class="navbar navbar-default" role="navigation" style="margin-bottom:50px;background-color: rgb(240, 246, 243);font-color: rgb(3, 123, 130);">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -27,12 +29,11 @@
         <c:choose>
           <c:when test="${sessionScope.user != null}">
           	<li class="dropdown">
-          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          		<a id="msgreminder" href="#" class="dropdown-toggle" data-toggle="dropdown">
           			<span class="glyphicon glyphicon-comment"></span>
-          			<span class="badge">1000</span>
           		</a>
-          		<ul class="dropdown-menu" role="menu">
-          			<li>顾寒羊发表了一个话题</li>
+          		<ul id="msgcontainer" class="dropdown-menu" role="menu">
+          			
           		</ul>
           	</li>
             <li class="dropdown">

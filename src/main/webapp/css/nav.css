@@ -6,6 +6,12 @@
 	font-style: normal;
 }
 
+#msgcontainer{
+	padding-left:10px;
+	padding-right:10px;
+}
+
+
 #globalnav.navbar a{
 	color: rgb(3, 123, 130);
 }
