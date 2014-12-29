@@ -32,7 +32,7 @@
           		<a id="msgreminder" href="#" class="dropdown-toggle" data-toggle="dropdown">
           			<span class="glyphicon glyphicon-comment"></span>
           		</a>
-          		<ul id="msgcontainer" class="dropdown-menu" role="menu">
+          		<ul id="msgcontainer" class="dropdown-menu" role="menu" style="min-width:200px">
           			
           		</ul>
           	</li>

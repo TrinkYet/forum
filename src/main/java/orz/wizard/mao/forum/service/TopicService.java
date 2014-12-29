@@ -49,6 +49,13 @@ public class TopicService {
 
     public void insertComment(Comment comment) {
         topicDao.insertComment(comment);
+        if (comment.getToCommentId() > 0) {
+            Comment toCmt = topicDao.getCommentById(comment.getToCommentId());
+            topicDao.insertMsgCmt(comment.getCommentId(), toCmt.getUserId());
+        } else {
+            Topic topic = topicDao.getTopicById(comment.getTopicId());
+            topicDao.insertMsgCmt(comment.getCommentId(), topic.getUserId());
+        }
     }
 
     public List<Topic> searchTopic(String q) {

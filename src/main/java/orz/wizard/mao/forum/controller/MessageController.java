@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import orz.wizard.mao.forum.entity.Comment;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.service.MessageService;
@@ -32,11 +33,30 @@ public class MessageController {
 	    return null;
 	}
 	
-	@RequestMapping(value = {"/topic/read"}, method = RequestMethod.POST)
-    public @ResponseBody String read(HttpSession session, @RequestParam long topicId){
+
+    public @ResponseBody String readTopic(HttpSession session, @RequestParam long topicId){
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            messageService.setRead(topicId, user.getUserId());
+            messageService.setReadTopic(topicId, user.getUserId());
+            return "success";
+        }
+        return null;
+    }
+	
+	@RequestMapping(value = {"/cmt"}, method = RequestMethod.GET)
+    public @ResponseBody List<Comment> getCommentMsg(HttpSession session, Map<String, Object> model){
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            return messageService.getCmtMsgList(user.getUserId());
+        }
+        return null;
+    }
+	
+	@RequestMapping(value = {"/cmt/read"})
+    public @ResponseBody String readCmt(HttpSession session, @RequestParam long cmtId){
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            messageService.setReadCmt(cmtId, user.getUserId());
             return "success";
         }
         return null;

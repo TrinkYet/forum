@@ -53,6 +53,8 @@ public class TopicDao extends BaseDao {
     private static final String SQL_UPDATE_TOPIC = "update topic set title = ?, content = ? where topic_id = ?";
     private static final String SQL_DELETE_TOPIC = "delete from topic where topic_id = ?";
     private static final String SQL_INSERT_MSG_TOPIC = "insert into msg_topic values(?, ?, 0, NOW())";
+    private static final String SQL_INSERT_MSG_CMT = "insert into msg_cmt values(?, ?, 0, NOW())";
+    private static final String SQL_SELECT_COMMENT_BY_ID = "select * from comment where comment_id = ?";
 
     public List<Topic> getGroupTopicListByUserId(final long userId) {
         return jdbcTemplate.query(SQL_SELECT_GROUP_TOPIC_BY_USER_ID, new Object[] {userId}, new RowMapper<Topic>() {
@@ -116,6 +118,22 @@ public class TopicDao extends BaseDao {
             }
         });
         return topic;
+    }
+    
+    public Comment getCommentById(final long commentId) {
+        final Comment comment = new Comment();
+        jdbcTemplate.query(SQL_SELECT_COMMENT_BY_ID, new Object[] {commentId}, new RowCallbackHandler() {
+            public void processRow(ResultSet rs) throws SQLException {
+                comment.setCommentId(rs.getLong("comment_id"));
+                comment.setTopicId(rs.getLong("topic_id"));
+                comment.setUserId(rs.getLong("user_id"));
+                comment.setNickname(rs.getString("nickname"));
+                comment.setToCommentId(rs.getLong("to_comment_id"));
+                comment.setText(rs.getString("text"));
+                comment.setCommentTime(rs.getTimestamp("comment_time"));
+            }
+        });
+        return comment;
     }
     
     public void insertTopic(final Topic topic) {
@@ -213,5 +231,9 @@ public class TopicDao extends BaseDao {
 
     public void insertMsgTopic(long topicId, long userId) {
         jdbcTemplate.update(SQL_INSERT_MSG_TOPIC, topicId, userId);
+    }
+
+    public void insertMsgCmt(long commentId, long userId) {
+        jdbcTemplate.update(SQL_INSERT_MSG_CMT, commentId, userId);
     }
 }
