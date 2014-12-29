@@ -27,3 +27,12 @@ div.nickname{
 	width:48px;
 	height:48px;
 }
+
+div.well{
+	background-color: #f1f6fb;
+	border: 1px solid #d0e5f8;
+}
+
+div.jumbotron{
+	background-color: #fff4e8;
+}

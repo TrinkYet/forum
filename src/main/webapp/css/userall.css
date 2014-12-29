@@ -6,3 +6,24 @@
 .infoul > li:last-child{
 	border-right:none;
 }
+
+
+div.panel-primary{
+	border-color:#d0e5f8;
+}
+
+div.panel-primary>.panel-heading{
+	color: #244f79;
+	background-color: #f1f6fb;
+	border-color: #d0e5f8;
+}
+
+div>table.table>tbody>tr>td{
+	border-top: 0;
+	border-bottom: 1px dashed #ddd;
+}
+
+div>table.table>thead>tr>td{
+	border-top: 0;
+	border-bottom: 1px dashed #ddd;
+}

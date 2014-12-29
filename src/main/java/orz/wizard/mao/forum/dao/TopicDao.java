@@ -31,6 +31,10 @@ public class TopicDao extends BaseDao {
             + " select topic.topic_id as topic_id, title, cmt_count, last_cmt_time, `group`.group_id as group_id, `name`"
             + " from `group`, topic"
             + " where `group`.group_id in (select group_id from membership where user_id = ?) and `group`.group_id = topic.group_id";
+    private static final String SQL_SELECT_USER_TOPIC_LIST = ""
+    		+ " select topic_id, topic.group_id as group_id, `name`, title, cmt_count, last_cmt_time, user.user_id as user_id, nickname"
+    		+ " from topic, user, `group`"
+    		+ " where topic.user_id = ? and topic.user_id = user.user_id and `group`.group_id = topic.group_id";
     private static final String SQL_SELECT_TOPIC_LIST_BY_GROUP_ID = ""
             + " select topic_id, title, cmt_count, last_cmt_time, user.user_id as user_id, nickname"
             + " from topic, user"
@@ -78,6 +82,23 @@ public class TopicDao extends BaseDao {
                 return topic;
             }
         });
+    }
+    
+    public List<Topic> getUserTopicListByUserId(long userId){
+    	return jdbcTemplate.query(SQL_SELECT_USER_TOPIC_LIST, new Object[] {userId}, new RowMapper<Topic>(){
+    		public Topic mapRow(ResultSet rs, int index) throws SQLException {
+    			Topic topic = new Topic();
+                topic.setTopicId(rs.getLong("topic_id"));
+                topic.setGroupId(rs.getLong("group_id"));
+                topic.setGroupName(rs.getString("name"));
+                topic.setTitle(rs.getString("title"));
+                topic.setUserId(rs.getLong("user_id"));
+                topic.setNickname(rs.getString("nickname"));
+                topic.setCmtCount(rs.getLong("cmt_count"));
+                topic.setLastCmtTime(rs.getTimestamp("last_cmt_time"));
+                return topic;
+    		}
+    	});
     }
     
     public Topic getTopicById(final long topicId) {

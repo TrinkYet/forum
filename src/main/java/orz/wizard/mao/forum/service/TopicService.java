@@ -27,6 +27,10 @@ public class TopicService {
         return topicDao.getGroupTopicListByUserId(userId);
     }
     
+    public List<Topic> getUserTopicList(long userId) {
+    	return topicDao.getUserTopicListByUserId(userId);
+    }
+    
     public List<Topic> getTopicList(long groupId) {
         return topicDao.getTopicListByGroupId(groupId);
     }

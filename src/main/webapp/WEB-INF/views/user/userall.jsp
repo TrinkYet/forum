@@ -48,56 +48,10 @@
 </c:choose>
 <body>
 	<div class="container bodybg">
-		<%-- <div class="page-header  clearfix">
-			<div class="col-md-4 bg-info text-center">
-				<div>
-					<img src="${pageuser.avatar }" style="width: 70px; height: 70px">
-				</div>
-				<div>
-					<h3>${pageuser.nickname }</h3>
-					<c:if test="${pageuser.userId != sessionScope.user.userId }">
-						<a id="followLink" class="btn btn-info" href="#">关注此人</a>
-					</c:if>
-				</div>
-				<div>
-					<ul class="list-inline infoul">
-						<li>
-							<h4>
-								<strong>${fn:length(followeeList) }</strong>
-							</h4> <span class="text-muted">关注</span>
-						</li>
-						<li>
-							<h4>
-								<strong>${fn:length(followerList) }</strong>
-							</h4> <span class="text-muted">粉丝</span>
-						</li>
-						<li>
-							<h4>
-								<strong>${fn:length(topicList) }</strong>
-							</h4> <span class="text-muted">话题</span>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-4 col-md-offset-4" style="padding-right:0">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h3 class="panel-title">个人信息</h3>
-					</div>
-					  <ul class="list-group">
-					    <li class="list-group-item">${userInfo.gender }</li>
-					    <li class="list-group-item">${userInfo.birthday }</li>
-					    <li class="list-group-item">${userInfo.residence }</li>
-					    <li class="list-group-item">${userInfo.hometown }</li>
-					  </ul>
-				</div>
-			</div>
-			<!-- <div class="col-md-8"><a href="user/userinfo" class="btn btn-success">修改信息</a><a href="user/avatar" class="btn btn-success">上传头像</a><div></div></div> -->
-		</div> --%>
 		<div class="row">
 			<div class="col-md-8" style="min-height:500px;padding-top:50px">
 				<table class="table">
-					<thead>
+					<thead class="text-muted">
 						<tr>
 							<td>标题</td>
 							<td>回应</td>
@@ -159,8 +113,8 @@
 					</ul>
 				</div>
 				</div>
-				<div class="">
-					<div class="panel-heading" style="padding-left:30px">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
 						<h3 class="panel-title">创建的小组</h3>
 					</div>
 					<div class="panel-body">

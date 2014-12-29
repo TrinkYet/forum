@@ -26,6 +26,15 @@
       <ul class="nav navbar-nav navbar-right">
         <c:choose>
           <c:when test="${sessionScope.user != null}">
+          	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          			<span class="glyphicon glyphicon-comment"></span>
+          			<span class="badge">1000</span>
+          		</a>
+          		<ul class="dropdown-menu" role="menu">
+          			<li>顾寒羊发表了一个话题</li>
+          		</ul>
+          	</li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">${sessionScope.user.nickname} <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

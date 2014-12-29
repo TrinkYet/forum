@@ -36,9 +36,10 @@
 	    </form>
     </div>
     </div>
-<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
-<script type="text/javascript" src="js/upload.avatar.js"></script>
 <link rel="stylesheet" type="text/css" href="css/jquery.Jcrop.min.css"/>
 <link rel="stylesheet" type="text/css" href="css/upload.avatar.css"/>
+<script type="text/javascript" src="js/jquery.Jcrop.min.js"></script>
+<script type="text/javascript" src="js/upload.avatar.js"></script>
+
 </body>
 </html>
