@@ -87,4 +87,8 @@ public class UserService {
     public long count() {
         return userDao.count();
     }
+    
+    public List<User> searchUser(String q) {
+        return userDao.searchUser(q);
+    }
 }
