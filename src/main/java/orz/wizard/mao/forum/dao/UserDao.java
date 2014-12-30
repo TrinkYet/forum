@@ -42,6 +42,10 @@ public class UserDao extends BaseDao {
     private static final String SQL_SELECT_ALL_USER = "select * from user";
     private static final String SQL_COUNT_USER = "select count(*) from user";
     private static final String SQL_SEARCH_USER_LIST = "select * from user where nickname like ?";
+    private static final String SQL_SELECT_INVITE_USER_LIST = ""
+            + " select from_user_id as user_id, email, nickname, avatar, status, register_time"
+            + " from user, follow, membership"
+            + " where to_user_id = ? and from_user_id not in (select user_id from membership where group_id = ?) and user.user_id = from_user_id";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -247,5 +251,20 @@ public class UserDao extends BaseDao {
 
     public void unforbid(long userId) {
         jdbcTemplate.update(SQL_SET_UNFORBIDDEN, userId);
+    }
+
+    public List<User> getInviteWhoList(long userId, long groupId) {
+        return jdbcTemplate.query(SQL_SELECT_INVITE_USER_LIST, new Object[] {userId, groupId}, new RowMapper<User>() {
+            public User mapRow(ResultSet rs, int index) throws SQLException {
+                User user = new User();
+                user.setUserId(rs.getLong("user_id"));
+                user.setEmail(rs.getString("email"));
+                user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setStatus(rs.getString("status"));
+                user.setRegisterTime(rs.getTimestamp("register_time"));
+                return user;
+            }
+        });
     }
 }

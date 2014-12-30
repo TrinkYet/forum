@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import orz.wizard.mao.forum.dao.GroupDao;
 import orz.wizard.mao.forum.dao.MessageDao;
 import orz.wizard.mao.forum.dao.UserDao;
 import orz.wizard.mao.forum.entity.Comment;
+import orz.wizard.mao.forum.entity.Group;
+import orz.wizard.mao.forum.entity.InviteMsg;
 import orz.wizard.mao.forum.entity.SysMsg;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
@@ -19,6 +22,8 @@ public class MessageService {
     private MessageDao messageDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private GroupDao groupDao;
 
     public List<Topic> getTopicMsgList(long userId) {
         return messageDao.getTopicMsgList(userId);
@@ -62,5 +67,24 @@ public class MessageService {
             ++cnt;
         }
         return cnt;
+    }
+
+    public void sendInviteMsg(long userId, String toUsers, long groupId) {
+        String[] users = toUsers.split(",");
+        for (String s : users) {
+            InviteMsg msg = new InviteMsg();
+            msg.setFromUserId(userId);
+            msg.setToUserId(Long.parseLong(s));
+            msg.setGroupId(groupId);
+            messageDao.insertInviteMsg(msg);
+        }
+    }
+
+    public List<InviteMsg> getInviteMsgList(long userId) {
+        return messageDao.getInviteMsgList(userId);
+    }
+
+    public void setReadInviteMsg(long msgId) {
+        messageDao.setReadInviteMsg(msgId);
     }
 }

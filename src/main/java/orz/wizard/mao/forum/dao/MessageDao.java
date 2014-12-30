@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import orz.wizard.mao.forum.entity.Comment;
+import orz.wizard.mao.forum.entity.InviteMsg;
 import orz.wizard.mao.forum.entity.SysMsg;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
@@ -33,9 +34,16 @@ public class MessageDao extends BaseDao {
             + " where to_user_id = ? and is_readed = 0 and cmt_id = comment_id and comment.topic_id = topic.topic_id and comment.user_id = user.user_id"
             + " order by msg_time desc";
     private static final String SQL_SET_CMT_READ = "update msg_cmt set is_readed = 1 where cmt_id = ? and to_user_id = ?";
-    private static final String SQL_SELECT_MSG_SYS_LIST = "select * from msg_sys where to_user_id = ? and is_readed = 0";
+    private static final String SQL_SELECT_MSG_SYS_LIST = "select * from msg_sys where to_user_id = ? and is_readed = 0 order by msg_time desc";
     private static final String SQL_SET_SYS_MSG_READ = "update msg_sys set is_readed = 1 where msg_id = ?";
     protected static final String SQL_INSERT_SYS_MSG = "insert into msg_sys values(null, ?, ?, 0, NOW())";
+    protected static final String SQL_INSERT_INVITE_MSG = "insert into msg_invite values(null, ?, ?, ?, 0, NOW())";
+    private static final String SQL_SELECT_MSG_INVITE_LIST = ""
+            + " select msg_id, from_user_id as user_id, nickname, msg_invite.group_id as group_id, name"
+            + " from msg_invite, user, `group`"
+            + " where to_user_id = ? and is_readed = 0 and from_user_id = user.user_id and msg_invite.group_id = `group`.group_id"
+            + " order by msg_time desc";
+    private static final String SQL_SET_INVITE_MSG_READ = "update msg_invite set is_readed = 1 where msg_id = ?";
 
     public List<Topic> getTopicMsgList(long userId) {
         return jdbcTemplate.query(SQL_SELECT_MSG_TOPIC_LIST, new Object[] {userId}, new RowMapper<Topic>() {
@@ -99,5 +107,37 @@ public class MessageDao extends BaseDao {
             }
         }, keyHolder);
         sysMsg.setMsgId(keyHolder.getKey().intValue());
+    }
+
+    public void insertInviteMsg(final InviteMsg msg) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+                PreparedStatement ps = conn.prepareStatement(SQL_INSERT_INVITE_MSG, Statement.RETURN_GENERATED_KEYS);
+                ps.setLong(1, msg.getFromUserId());
+                ps.setLong(2, msg.getToUserId());
+                ps.setLong(3, msg.getGroupId());
+                return ps;
+            }
+        }, keyHolder);
+        msg.setMsgId(keyHolder.getKey().intValue());
+    }
+    
+    public List<InviteMsg> getInviteMsgList(long userId) {
+        return jdbcTemplate.query(SQL_SELECT_MSG_INVITE_LIST, new Object[] {userId}, new RowMapper<InviteMsg>() {
+            public InviteMsg mapRow(ResultSet rs, int index) throws SQLException {
+                InviteMsg msg = new InviteMsg();
+                msg.setMsgId(rs.getLong("msg_id"));
+                msg.setFromUserId(rs.getLong("from_user_id"));
+                msg.setNickname(rs.getString("nickname"));
+                msg.setGroupId(rs.getLong("group_id"));
+                msg.setName(rs.getString("name"));
+                return msg;
+            }
+        });
+    }
+    
+    public void setReadInviteMsg(long msgId) {
+        jdbcTemplate.update(SQL_SET_INVITE_MSG_READ, msgId);
     }
 }

@@ -95,4 +95,8 @@ public class UserService {
     public void unforbid(long userId) {
         userDao.unforbid(userId);
     }
+
+    public List<User> getInviteWhoList(long userId, long groupId) {
+        return userDao.getInviteWhoList(userId, groupId);
+    }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import orz.wizard.mao.forum.entity.Comment;
+import orz.wizard.mao.forum.entity.InviteMsg;
 import orz.wizard.mao.forum.entity.SysMsg;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
@@ -77,6 +78,25 @@ public class MessageController {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             messageService.setReadSysMsg(msgId);
+            return "success";
+        }
+        return null;
+    }
+	
+	@RequestMapping(value = {"/invite"}, method = RequestMethod.GET)
+    public @ResponseBody List<InviteMsg> getInviteMsg(HttpSession session, Map<String, Object> model){
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            return messageService.getInviteMsgList(user.getUserId());
+        }
+        return null;
+    }
+    
+    @RequestMapping(value = {"/invite/read"})
+    public @ResponseBody String readInviteMsg(HttpSession session, @RequestParam long msgId){
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            messageService.setReadInviteMsg(msgId);
             return "success";
         }
         return null;
