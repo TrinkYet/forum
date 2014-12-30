@@ -29,7 +29,12 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         <c:choose>
-          <c:when test="${sessionScope.user != null}">
+          <c:when test="${sessionScope.user != null and sessionScope.user.status == 'admin' }">
+          <li>
+          	<a href="admin/home">管理员</a>
+          </li>
+          </c:when>
+          <c:when test="${sessionScope.user != null and sessionScope.user.status != 'admin'}">
           	<li class="dropdown">
           		<a id="msgreminder" href="#" class="dropdown-toggle" data-toggle="dropdown">
           			<span class="glyphicon glyphicon-comment"></span>
