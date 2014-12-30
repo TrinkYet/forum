@@ -12,6 +12,10 @@
 <%@ include file="/include/navbar.jsp" %>
 <link rel = "stylesheet" type="text/css" href = "css/userall.css" />
 <link rel="stylesheet" type="text/css" href="css/grouphome.css" />
+<link rel="stylesheet" type="text/css" href="css/dataTable.bootstrap.css">
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/datatable.bootstrap.js"></script>
+<script src="js/inittable.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${pageuser.nickname}</title>
 </head>
@@ -50,7 +54,8 @@
 	<div class="container bodybg">
 		<div class="row">
 			<div class="col-md-8" style="min-height:500px;padding-top:50px">
-				<table class="table">
+				<h3 class="text-muted">发表的话题</h3>
+				<table class="table dataTable">
 					<thead class="text-muted">
 						<tr>
 							<td>标题</td>

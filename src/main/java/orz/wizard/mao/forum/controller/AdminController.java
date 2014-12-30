@@ -106,7 +106,7 @@ public class AdminController {
         return "success";
     }
     
-    @RequestMapping(value = {"/del/comment/{commentId}"})
+    @RequestMapping(value = {"/del/comment/{commentId}"}, method = RequestMethod.POST)
     public @ResponseBody String delComment(@PathVariable long commentId, HttpSession session) {
         topicService.deleteCmt(commentId);
         return "success";
@@ -150,13 +150,13 @@ public class AdminController {
         return userService.count();
     }
     
-    @RequestMapping(value = {"/sendmsg/{userId}"})
+    @RequestMapping(value = {"/sendmsg/{userId}"}, method = RequestMethod.POST)
     public @ResponseBody String sendMsg(@PathVariable long userId, @RequestParam String content, HttpSession session) {
         messageService.sendMsgToUser(userId, content);
         return "success";
     }
     
-    @RequestMapping(value = {"/sendmsg"})
+    @RequestMapping(value = {"/sendmsg"}, method = RequestMethod.POST)
     public @ResponseBody long sendMsg(@RequestParam String content, HttpSession session) {
         return messageService.sendMsgToAll(content);
     }

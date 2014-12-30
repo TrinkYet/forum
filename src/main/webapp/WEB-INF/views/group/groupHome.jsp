@@ -11,6 +11,10 @@
 <%@ include file="/include/header.jsp" %>
 <%@ include file="/include/navbar.jsp" %>
 <link rel="stylesheet" type="text/css" href="css/grouphome.css" />
+<link rel="stylesheet" type="text/css" href="css/dataTable.bootstrap.css">
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/datatable.bootstrap.js"></script>
+<script src="js/inittable.js"></script>
 <c:if test="${founder.userId != sessionScope.user.userId }">
 <script>
 $(document).ready(function(){
@@ -62,7 +66,7 @@ $(document).ready(function(){
 					</div>
 					<c:choose>
 						<c:when test="${fn:length(topicList) != 0 }">
-							<table class="table">
+							<table class="table dataTable">
 								<thead>
 									<tr>
 										<td>标题</td>

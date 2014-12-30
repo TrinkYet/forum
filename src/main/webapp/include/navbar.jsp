@@ -23,7 +23,7 @@
       <form class="navbar-form navbar-left" action="group/search" method="get" role="search">
         <div class="form-group">
           <input type="hidden" name="cat" value="topic">
-          <input type="text" name="q" class="form-control" placeholder="小组、话题">
+          <input type="text" name="q" class="form-control" placeholder="小组、话题、用户">
         </div>
         <button type="submit" class="btn btn-default">搜索</button>
       </form>
@@ -64,3 +64,21 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Message</h4>
+				</div>
+				<div class="modal-body">
+					<p id="remindermessage"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+				</div>
+			</div>
+		</div>
+</div>

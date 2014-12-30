@@ -72,7 +72,7 @@ public class MessageController {
         return null;
     }
 	
-	@RequestMapping(value = {"/sys/read"})
+	@RequestMapping(value = {"/sys/read"}, method = RequestMethod.POST)
     public @ResponseBody String readSysMsg(HttpSession session, @RequestParam long msgId){
         User user = (User) session.getAttribute("user");
         if (user != null) {

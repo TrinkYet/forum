@@ -9,15 +9,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/include/header.jsp" %>
 <%@ include file="/include/navbar.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/dataTable.bootstrap.css">
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/datatable.bootstrap.js"></script>
+<script src="js/inittable.js"></script>
 <title>我的小组话题</title>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9">
-				<div class=""><h3>小组话题</h3></div>
+				<div class=""><h4>小组话题</h4></div>
 				<div>
-					<table class="table table-hover">
+					<table class="table table-hover dataTable">
 						<thead class="text-muted">
 							<tr>
 								<td>标题</td>

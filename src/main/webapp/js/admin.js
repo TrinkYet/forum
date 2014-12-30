@@ -1,9 +1,33 @@
 $(document).ready(function(e){
+	
+	$("#msgform").submit(function(e){
+		var href = $(this).attr("action");
+		$.post(href, $(this).serialize(), function(result){
+			$('#deletemessage').text(result);
+			$('#messageModal').modal('show');
+		});
+		e.preventDefault();
+	});
+	
+	
 	$("a[href *= '#']").each(function(e){
 				var href = $(this).attr('href');
 				$(this).attr("href", window.location.pathname+href);
 			});
 	
+	$("#msgsingleform").submit(function(e){
+		$.post($(this).attr("action"), $(this).serialize(), function(result){
+			$("#sendmsgModal").modal('hide');
+		});
+		e.preventDefault();
+	});
+	
+	$("a.sendmsgbtn").click(function(e){
+		var href = $(this).attr("href");
+		$("#msgsingleform").attr("action", href);
+		$("#sendmsgModal").modal('show');
+		e.preventDefault();
+	});
 	
 	$(".dataTable").DataTable({
 		  "language": {
@@ -16,7 +40,7 @@ $(document).ready(function(e){
 			      '<option value="100">100</option>'+
 			      '</select> 条记录</p>',
 			      "info": "<p class='text-muted'>第 _START_ 到 _END_ 条记录，共 _TOTAL_ 条</p>",
-			      "search": "搜索："
+			      "search": "<span class='text-muted'>搜索：</span>"
 		  	}
 	});
 	
@@ -41,6 +65,8 @@ $(document).ready(function(e){
 		var option = $(this).children(":nth(5)").children(":nth(0)").children(":nth(0)");
 		if(status.text() == "forbidden"){
 			option.addClass('fa-unlock');
+			var href = option.parent().attr("href");
+			option.parent().attr("href", "admin/unforbid/" + href.split("/")[2]);
 			status.addClass('red-bg');
 		}
 		else{

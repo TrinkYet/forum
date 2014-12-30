@@ -15,7 +15,6 @@
 <link rel="stylesheet" type="text/css" href="css/adminhome.css">
 <link rel="stylesheet" type="text/css" href="css/grouphome.css">
 <link rel="stylesheet" type="text/css" href="css/dataTable.bootstrap.css">
-<!-- <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"> -->
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/datatable.bootstrap.js"></script>
 <script src="js/jquery.countTo.js"></script>
@@ -96,7 +95,7 @@
 						</div>
 					</div>
 					<div>
-						<div class=""><h3>所有话题</h3></div>
+						<div class="text-muted"><h3>所有话题</h3></div>
 						<div>
 							<table id="alltopictable" class="table table-hover dataTable">
 								<thead class="text-muted">
@@ -126,7 +125,19 @@
 						</div>
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="messagepanel">messagepanel</div>
+				<div role="tabpanel" class="tab-pane" id="messagepanel">
+					<div class="col-md-5">
+						<h4 class="text-muted">全站消息</h4>
+						<form id="msgform" class="form form-horizontal" role="form" method="post" action="admin/sendmsg">
+							<div class="form-group">
+								<textarea class="form-control" name="content"></textarea>
+							</div>
+							<div class="form-group">
+								<input id="msgsend" class="form-control btn btn-info" type="submit" value="发送">
+							</div>
+						</form>
+					</div>
+				</div>
 				<div role="tabpanel" class="tab-pane" id="userlist">
 					<div class=""><h3>所有用户</h3></div>
 						<div>
@@ -157,6 +168,9 @@
 										    	<a href="admin/forbid/${cur.userId }" class="deletebutton">
 										    		<i class="fa"></i>
 										    	</a>
+										    	<a href="admin/sendmsg/${cur.userId }" class="sendmsgbtn">
+										    		<i class="fa fa-send"></i>
+										    	</a>
 										    </td>
 										</tr>
 									</c:forEach>
@@ -184,7 +198,7 @@
 										    <td class="text-muted">${group.mbrCount }</td>
 										    <td>${group.createTime }</td>
 										    <td>
-										    	<a href="admin/del/topic/${topic.topicId }" class="deletebutton">
+										    	<a href="admin/del/group/${group.groupId }" class="deletebutton">
 										    		<i class="fa fa-trash-o"></i>
 										    	</a>
 										    </td>
@@ -208,7 +222,7 @@
 					<h4 class="modal-title">Warning</h4>
 				</div>
 				<div class="modal-body">
-					<p>确定要删除吗？</p>
+					<p>确定要执行操作吗？</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -231,6 +245,36 @@
 				</div>
 				<div class="modal-footer">
 					<a href="admin/home" type="button" class="btn btn-primary">确认</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="sendmsgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">发送消息</h4>
+				</div>
+				<div class="modal-body row">
+					<p>
+					<div class="col-md-6 col-md-offset-3">
+					<form id="msgsingleform" class="form form-horizontal" role="form" method="post" action="">
+							<div class="form-group">
+								<textarea class="form-control" name="content"></textarea>
+							</div>
+							<div class="form-group">
+								<input id="msgsinglesend" class="form-control btn btn-info" type="submit" value="发送">
+							</div>
+					</form>
+					</div>
+					<div class="col-md-3"></div>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
 		</div>

@@ -38,11 +38,26 @@
 							      <img class="media-object" style="width:48px;height:48px" src="avatar/user/${comment.userId }.jpg" alt="...">
 							    </a>
 							    <div class="media-body container">
-							      <p class="bg-info media-heading">${comment.nickname }&nbsp;<span class="text-muted">${comment.commentTime }</span><span class="pull-right respond" ref="${comment.commentId }"><a href="#commentform">回应</a></span></p>
-							      <c:if test="${comment.toCommentId != 0 }">
+							      <p class="bg-info media-heading">${comment.nickname }&nbsp;&nbsp;<span class="text-muted">${comment.commentTime }</span><span class="pull-right respond" ref="${comment.commentId }">
+							      	<c:choose>
+							      		<c:when test = "${sessionScope.user.status == 'admin' }">
+							      			<a href="admin/del/comment/${comment.commentId }" class="deletebutton">删除</a>
+							      		</c:when>
+							      		<c:otherwise>
+							      			<a href="#commentform">回应</a>
+							      		</c:otherwise>
+							      	</c:choose>
+							      	</span>
+							      </p>
+							      <c:if test="${comment.toCommentId != 0 and cmtMap[comment.toCommentId] != null }">
 							      	<c:set var = "tocomment" value="${cmtMap[comment.toCommentId] }"></c:set>
 							      	<blockquote>
-							      		<p class="bg-info media-heading">${tocomment.nickname }&nbsp;<span class="text-muted">${tocomment.commentTime }</span><span class="pull-right respond" ref="${tocomment.commentId }"><a href="#commentform">回应</a></span></p>   		
+							      		<p class="bg-info media-heading">${tocomment.nickname }&nbsp;&nbsp;<span class="text-muted">${tocomment.commentTime }</span><span class="pull-right respond" ref="${tocomment.commentId }">
+							      		<c:choose>
+							      		<c:when test = "${sessionScope.user.status != 'admin' }">
+							      			<a href="#commentform">回应</a>
+							      		</c:when>
+							      		</c:choose></span></p>   		
 							      		<p>${tocomment.text }</p>
 							      	</blockquote>
 							      </c:if>
@@ -51,13 +66,76 @@
 							  </div>
 						  </c:forEach>
 						</div>
-						<div>
-							<input id = "tocommentid" type="hidden" value="">
-							<form id="commentform" action="topic/${topic.topicId }/post_comment" role="form" method="post">
-								<textarea name="text" rows="3" class = "form-control"></textarea>
-								<input id="submitcomment" type="submit" value="回应" class="btn btn-info">
-							</form>
+						<c:choose>
+						<c:when test = "${sessionScope.user.status != 'admin' }">
+							<div>
+								<input id = "tocommentid" type="hidden" value="">
+								<form id="commentform" action="topic/${topic.topicId }/post_comment" role="form" method="post">
+									<textarea name="text" rows="3" class = "form-control"></textarea>
+									<input id="submitcomment" type="submit" value="回应" class="btn btn-info">
+								</form>
+							</div>
+						</c:when>
+						<c:otherwise>
+						<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h4 class="modal-title">Warning</h4>
+									</div>
+									<div class="modal-body">
+										<p>确定要执行操作吗？</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+										<button id="confirmdelete" type="button" class="btn btn-primary">确认</button>
+									</div>
+								</div>
+							</div>
 						</div>
+						<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h4 class="modal-title">Message</h4>
+									</div>
+									<div class="modal-body">
+										<p id="deletemessage"></p>
+									</div>
+									<div class="modal-footer">
+										<a href="topic/${topic.topicId }" type="button" class="btn btn-primary">确认</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<script>
+							$(document).ready(function(e){
+								$(".deletebutton").click(function(e){
+									e.preventDefault();
+									$("#confirmdelete").attr("href", $(this).attr("href"));
+									$('#deleteModal').modal('show');
+									return false;
+								});
+								
+								$("#confirmdelete").click(function(e){
+									var link = $(this).attr("href");
+									$.post(link, {}, function(result){
+										$('#deleteModal').modal('hide');
+										$('#deletemessage').text(result);
+										$('#messageModal').modal('show');
+									});
+								});
+								
+							});
+						</script>
+						</c:otherwise>
+						</c:choose>
 					</div>
 					
 				</div>
@@ -112,7 +190,7 @@
 			    				   "<img class='media-object' src='${sessionScope.user.avatar }' style='width:48px;height:48px' alt='...'>"+
 			    		           "</a>"+
 			    		    	   "<div class='media-body container'>"+
-			    		           "<p class='media-heading bg-info'>"+"${sessionScope.user.nickname }"+"&nbsp;<span class='text-muted'>"+formatDate(new Date($.now()))+"</span>"+
+			    		           "<p class='media-heading bg-info'>"+"${sessionScope.user.nickname }"+"&nbsp;&nbsp;<span class='text-muted'>"+formatDate(new Date($.now()))+"</span>"+
 			    		           "<span class='pull-right respond' ref='"+result.commentId+"'><a href='#commentform'>回应</a></span></p>"+
 			    		           quote+
 			    		           "<p>"+result.text+"</p>"+
