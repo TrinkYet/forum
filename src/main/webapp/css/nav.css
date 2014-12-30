@@ -9,6 +9,15 @@
 #msgcontainer{
 	padding-left:10px;
 	padding-right:10px;
+	width: 250px;
+	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+}
+
+#msgcontainer>li>a{
+	display: inline;
+	padding: 0;
 }
 
 
@@ -24,4 +33,11 @@ div>table.table>tbody>tr>td{
 div>table.table>thead>tr>td{
 	border-top: 0;
 	border-bottom: 1px dashed #ddd;
+}
+
+.tdfirst{
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -33,7 +33,8 @@
           			<span class="glyphicon glyphicon-comment"></span>
           		</a>
           		<ul id="msgcontainer" class="dropdown-menu" role="menu" style="min-width:200px">
-          			
+          			<span class="text-muted">消息提醒</span>
+          			<li class="divider"></li>
           		</ul>
           	</li>
             <li class="dropdown">

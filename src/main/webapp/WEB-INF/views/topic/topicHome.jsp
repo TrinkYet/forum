@@ -33,7 +33,7 @@
 						<div id = "commentlist">
 						  <c:forEach var = "keyvalue" items="${cmtMap }">
 							  <c:set var = "comment" value="${keyvalue.value }"></c:set>
-							  <div class="media">
+							  <div class="media" id="cmt${comment.commentId }">
 							    <a class="media-left" href="user/${comment.userId }">
 							      <img class="media-object" style="width:48px;height:48px" src="avatar/user/${comment.userId }.jpg" alt="...">
 							    </a>
@@ -109,10 +109,10 @@
 			        	if(result){
 			        		$("#commentlist").append("<div class='media'>"+
 			     				   "<a class='media-left' href='#'>"+
-			    				   "<img src='${sessionScope.user.avatar }' alt='...'>"+
+			    				   "<img class='media-object' src='${sessionScope.user.avatar }' style='width:48px;height:48px' alt='...'>"+
 			    		           "</a>"+
 			    		    	   "<div class='media-body container'>"+
-			    		           "<p class='media-heading bg-info'>"+${sessionScope.user.nickname }+"&nbsp;<span class='text-muted'>"+formatDate(new Date($.now()))+"</span>"+
+			    		           "<p class='media-heading bg-info'>"+"${sessionScope.user.nickname }"+"&nbsp;<span class='text-muted'>"+formatDate(new Date($.now()))+"</span>"+
 			    		           "<span class='pull-right respond' ref='"+result.commentId+"'><a href='#commentform'>回应</a></span></p>"+
 			    		           quote+
 			    		           "<p>"+result.text+"</p>"+
