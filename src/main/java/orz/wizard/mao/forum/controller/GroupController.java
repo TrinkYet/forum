@@ -21,6 +21,7 @@ import orz.wizard.mao.forum.entity.Group;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
 import orz.wizard.mao.forum.service.GroupService;
+import orz.wizard.mao.forum.service.MessageService;
 import orz.wizard.mao.forum.service.TopicService;
 import orz.wizard.mao.forum.service.UserService;
 
@@ -34,6 +35,8 @@ public class GroupController {
     private TopicService topicService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private MessageService messageService;
     
     @RequestMapping(value = {""}, method = RequestMethod.GET)
     public String showGroupTopic(HttpSession session, Map<String, Object> model) {
@@ -126,6 +129,20 @@ public class GroupController {
     public @ResponseBody String quitGroup(@PathVariable long groupId, HttpSession session) {
         User user = (User) session.getAttribute("user");
         groupService.quitGroup(groupId, user.getUserId());
+        return "success";
+    }
+    
+    @RequestMapping(value = {"/{groupId}/invite"}, method = RequestMethod.GET)
+    public String showInvitePage(@PathVariable long groupId, HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        model.put("userList", userService.getInviteWhoList(user.getUserId(), groupId));
+        return "group/invite";
+    }
+    
+    @RequestMapping(value = {"/{groupId}/invite"}, method = RequestMethod.POST)
+    public @ResponseBody String sendInviteMsg(@PathVariable long groupId, @RequestParam String toUsers, HttpSession session, Map<String, Object> model) {
+        User user = (User) session.getAttribute("user");
+        messageService.sendInviteMsg(user.getUserId(), toUsers, groupId);
         return "success";
     }
     
