@@ -3,7 +3,9 @@
 <% request.setCharacterEncoding("UTF-8"); %>
 <link rel="stylesheet" type="text/css" href="css/nav.css">
 <script src="js/jquery-1.11.1.min.js"></script>
+<c:if test="${sessionScope.user != null and sessionScope.user.status != 'admin' }">
 <script src="js/message.js"></script>
+</c:if>
 <nav id="globalnav" class="navbar navbar-default" role="navigation" style="margin-bottom:50px;background-color: rgb(240, 246, 243);font-color: rgb(3, 123, 130);">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
