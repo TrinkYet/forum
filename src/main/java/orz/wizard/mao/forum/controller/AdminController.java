@@ -1,11 +1,9 @@
 package orz.wizard.mao.forum.controller;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -50,6 +48,20 @@ public class AdminController {
     	return "admin/login";
     }
     
+    @RequestMapping(value ={"/home"}, method = RequestMethod.GET)
+    public String showAdminPage(HttpSession session, Map<String, Object> model){
+    	User user = (User)session.getAttribute("user");
+    	if(user.getStatus() != "admin")
+    		return "redirect:login";
+    	List<User> allUser = userService.getAllUser();
+        List<Topic> allTopic = topicService.getAllTopic();
+        List<Group> allGroup = groupService.getAllGroup();
+        model.put("allUser", allUser);
+        model.put("allTopic", allTopic);
+        model.put("allGroup", allGroup);
+    	return "admin/adminhome";
+    }
+    
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
     public String doLogin(@RequestParam String username, @RequestParam String password, HttpSession session, Map<String, Object> model) {
         if (username == null || !username.equals("admin@fudangroup.com")) {
@@ -71,19 +83,19 @@ public class AdminController {
         return "admin/adminhome";
     }
     
-    @RequestMapping(value = {"/forbid/{userId}"})
+    @RequestMapping(value = {"/forbid/{userId}"}, method = RequestMethod.POST)
     public @ResponseBody String forbid(@PathVariable long userId, HttpSession session) {
         userService.forbid(userId);
         return "success";
     }
     
-    @RequestMapping(value = {"/del/topic/{topicId}"})
+    @RequestMapping(value = {"/del/topic/{topicId}"}, method = RequestMethod.POST)
     public @ResponseBody String delTopic(@PathVariable long topicId, HttpSession session) {
         topicService.delete(topicId);
         return "success";
     }
     
-    @RequestMapping(value = {"/del/group/{groupId}"})
+    @RequestMapping(value = {"/del/group/{groupId}"}, method = RequestMethod.POST)
     public @ResponseBody String delGroup(@PathVariable long groupId, HttpSession session) {
         groupService.delete(groupId);
         return "success";

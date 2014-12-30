@@ -42,16 +42,14 @@
 						<li role="presentation" class="active">
 							<a href="#home" data-toggle="tab"><i class="glyphicon glyphicon-home"></i> 全站概览</a>
 						</li>
-						<li><a href="#grouplist" data-toggle="tab"><i class="glyphicon glyphicon-cog"></i>
+						<li><a href="#grouplist" data-toggle="tab"><i class="fa fa-group"></i>
 								小组</a></li>
 						<li><a href="#messagepanel" data-toggle="tab"><i class="glyphicon glyphicon-comment"></i>
 								系统消息</a></li>
 						<li><a href="#userlist" data-toggle="tab"><i class="glyphicon glyphicon-user"></i>
 								用户</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-flag"></i>
-								Transactions</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-off"></i>
-								Logout</a></li>
+								登出</a></li>
 					</ul>
 				</li>
 			<hr>
@@ -116,7 +114,11 @@
 										    <td class="text-muted">${topic.cmtCount }</td>
 										    <td class="text-muted">${topic.publishTime }</td>
 										    <td><a href="group/${topic.groupId}">${topic.groupName }</a></td>
-										    <td>删除</td>
+										    <td>
+										    	<a href="admin/del/topic/${topic.topicId }" class="deletebutton" data-toggle="modal" data-target="#deleteModal">
+										    		<i class="fa fa-trash-o"></i>
+										    	</a>
+										    </td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -187,6 +189,60 @@
 		</div>
 	</div>
 </div>
-
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Warning</h4>
+				</div>
+				<div class="modal-body">
+					<p>确定要删除吗？</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button id="confirmdelete" type="button" class="btn btn-primary">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">Message</h4>
+				</div>
+				<div class="modal-body">
+					<p id="deletemessage"></p>
+				</div>
+				<div class="modal-footer">
+					<a href="admin/home" type="button" class="btn btn-primary">确认</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	$(document).ready(function(e){
+		$(".deletebutton").click(function(e){
+			$("#confirmdelete").attr("href", $(this).attr("href"));
+			e.preventDefault();
+		});
+		
+		$("#confirmdelete").click(function(e){
+			var link = $(this).attr("href");
+			$.post(link, {}, function(result){
+				$('#deleteModal').modal('hide');
+				$('#deletemessage').text(result);
+				$('#messageModal').modal('show');
+			});
+		});
+		
+	});
+	</script>
 </body>
 </html>
