@@ -55,6 +55,7 @@ public class TopicDao extends BaseDao {
     private static final String SQL_INSERT_MSG_TOPIC = "insert into msg_topic values(?, ?, 0, NOW())";
     private static final String SQL_INSERT_MSG_CMT = "insert into msg_cmt values(?, ?, 0, NOW())";
     private static final String SQL_SELECT_COMMENT_BY_ID = "select * from comment where comment_id = ?";
+    private static final String SQL_DELETE_COMMENT = "delete from comment where comment_id = ?";
 
     public List<Topic> getGroupTopicListByUserId(final long userId) {
         return jdbcTemplate.query(SQL_SELECT_GROUP_TOPIC_BY_USER_ID, new Object[] {userId}, new RowMapper<Topic>() {
@@ -235,5 +236,9 @@ public class TopicDao extends BaseDao {
 
     public void insertMsgCmt(long commentId, long userId) {
         jdbcTemplate.update(SQL_INSERT_MSG_CMT, commentId, userId);
+    }
+    
+    public void deleteCmt(long commentId) {
+        jdbcTemplate.update(SQL_DELETE_COMMENT, commentId);
     }
 }

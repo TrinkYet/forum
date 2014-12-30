@@ -37,6 +37,7 @@ public class UserDao extends BaseDao {
     private static final String SQL_FIND_CODE = "select count(*) from activation_code where user_id = ? and code = ?";
     private static final String SQL_UPDATE_USER_STATUS = "update user set status = 'activated' where user_id = ?";
     private static final String SQL_SELECT_CREATED_LIST = "select * from `group` where user_id = ?";
+    private static final String SQL_SET_FORBIDDEN = "update user set status = 'forbidden' where user_id = ?";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -198,5 +199,9 @@ public class UserDao extends BaseDao {
                 return group;
             }
         });
+    }
+
+    public void forbid(long userId) {
+        jdbcTemplate.update(SQL_SET_FORBIDDEN, userId);
     }
 }

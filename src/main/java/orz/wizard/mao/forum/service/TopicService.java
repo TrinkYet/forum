@@ -69,4 +69,8 @@ public class TopicService {
     public void delete(long topicId) {
         topicDao.delete(topicId);
     }
+    
+    public void deleteCmt(long commentId) {
+        topicDao.deleteCmt(commentId);
+    }
 }
