@@ -58,4 +58,12 @@ public class GroupService {
     public void delete(long groupId) {
         groupDao.delete(groupId);
     }
+
+    public List<Group> getAllGroup() {
+        return groupDao.getAllGroup();
+    }
+
+    public long count() {
+        return groupDao.count();
+    }
 }

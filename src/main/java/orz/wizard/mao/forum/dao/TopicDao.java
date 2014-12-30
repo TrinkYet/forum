@@ -55,6 +55,13 @@ public class TopicDao extends BaseDao {
     private static final String SQL_INSERT_MSG_TOPIC = "insert into msg_topic values(?, ?, 0, NOW())";
     private static final String SQL_INSERT_MSG_CMT = "insert into msg_cmt values(?, ?, 0, NOW())";
     private static final String SQL_SELECT_COMMENT_BY_ID = "select * from comment where comment_id = ?";
+    private static final String SQL_DELETE_COMMENT = "delete from comment where comment_id = ?";
+    private static final String SQL_SELECT_ALL_TOPIC = ""
+            + " select topic_id, title, cmt_count, publish_time, `group`.group_id as group_id, `name`, user.user_id as user_id, nickname"
+            + " from `group`, topic, user"
+            + " where `group`.group_id = topic.group_id and topic.user_id = user.user_id";
+    private static final String SQL_COUNT_TOPIC = "select count(*) from topic";
+    private static final String SQL_COUNT_COMMENT = "select count(*) from comment";
 
     public List<Topic> getGroupTopicListByUserId(final long userId) {
         return jdbcTemplate.query(SQL_SELECT_GROUP_TOPIC_BY_USER_ID, new Object[] {userId}, new RowMapper<Topic>() {
@@ -211,7 +218,25 @@ public class TopicDao extends BaseDao {
         });
 
     }
-
+    
+    public List<Topic> getAllTopic() {
+        return jdbcTemplate.query(SQL_SELECT_ALL_TOPIC, new RowMapper<Topic>() {
+            public Topic mapRow(ResultSet rs, int index) throws SQLException {
+                Topic topic = new Topic();
+                topic.setTopicId(rs.getLong("topic_id"));
+                topic.setTitle(rs.getString("title"));
+                //topic.setContent(rs.getString("content"));
+                topic.setUserId(rs.getLong("user_id"));
+                topic.setNickname(rs.getString("nickname"));
+                topic.setCmtCount(rs.getLong("cmt_count"));
+                topic.setGroupId(rs.getLong("group_id"));
+                topic.setGroupName(rs.getString("name"));
+                topic.setPublishTime(rs.getTimestamp("publish_time"));
+                return topic;
+            }
+        });
+    }
+    
     public void saveTopic(final Topic topic) {
       //  jdbcTemplate.update(SQL_UPDATE_TOPIC, topic.getTitle(), topic.getContent(), topic.getTopicId());
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -235,5 +260,19 @@ public class TopicDao extends BaseDao {
 
     public void insertMsgCmt(long commentId, long userId) {
         jdbcTemplate.update(SQL_INSERT_MSG_CMT, commentId, userId);
+    }
+    
+    public void deleteCmt(long commentId) {
+        jdbcTemplate.update(SQL_DELETE_COMMENT, commentId);
+    }
+
+    public long count() {
+        Long count = jdbcTemplate.queryForObject(SQL_COUNT_TOPIC, Long.class);
+        return count == null ? 0 : count;
+    }
+    
+    public long countComment() {
+        Long count = jdbcTemplate.queryForObject(SQL_COUNT_COMMENT, Long.class);
+        return count == null ? 0 : count;
     }
 }

@@ -88,4 +88,17 @@ public class TopicController {
         topicService.delete(topicId);
         return "success";
     }
+    
+    @RequestMapping(value = {"/comment/{commentId}/delete"})
+    public @ResponseBody String deleteCmt(@PathVariable long commentId, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "noPermission";
+        }
+        if (!user.getEmail().equals("admin@fudangroup.com")) {
+            return "noPermission";
+        }
+        topicService.deleteCmt(commentId);
+        return "success";
+    }
 }

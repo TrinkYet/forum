@@ -75,4 +75,16 @@ public class UserService {
     public List<Group> getCreatedList(long userId) {
         return userDao.getCreatedList(userId);
     }
+
+    public void forbid(long userId) {
+        userDao.forbid(userId);
+    }
+
+    public List<User> getAllUser() {
+        return userDao.getAllUser();
+    }
+
+    public long count() {
+        return userDao.count();
+    }
 }

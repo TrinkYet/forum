@@ -168,7 +168,7 @@ public class UserController {
         userService.cancelFollow(user.getUserId(), userId);
         return "success";
     }
-    
+
     @RequestMapping(value = {"/activate"})
     public String activate(@RequestParam String code, @RequestParam long userId) {
         if (userService.activate(userId, code)) {
