@@ -91,4 +91,8 @@ public class UserService {
     public List<User> searchUser(String q) {
         return userDao.searchUser(q);
     }
+
+    public void unforbid(long userId) {
+        userDao.unforbid(userId);
+    }
 }

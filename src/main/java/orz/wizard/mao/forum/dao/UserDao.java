@@ -38,6 +38,7 @@ public class UserDao extends BaseDao {
     private static final String SQL_UPDATE_USER_STATUS = "update user set status = 'activated' where user_id = ?";
     private static final String SQL_SELECT_CREATED_LIST = "select * from `group` where user_id = ?";
     private static final String SQL_SET_FORBIDDEN = "update user set status = 'forbidden' where user_id = ?";
+    private static final String SQL_SET_UNFORBIDDEN = "update user set status = 'activated' where user_id = ?";
     private static final String SQL_SELECT_ALL_USER = "select * from user";
     private static final String SQL_COUNT_USER = "select count(*) from user";
     private static final String SQL_SEARCH_USER_LIST = "select * from user where nickname like ?";
@@ -242,5 +243,9 @@ public class UserDao extends BaseDao {
                 return user;
             }
         });
+    }
+
+    public void unforbid(long userId) {
+        jdbcTemplate.update(SQL_SET_UNFORBIDDEN, userId);
     }
 }
