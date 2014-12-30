@@ -50,6 +50,8 @@ public class AdminController {
     
     @RequestMapping(value ={"/home"}, method = RequestMethod.GET)
     public String showAdminPage(HttpSession session, Map<String, Object> model){
+    	if(session.getAttribute("user") == null)
+    		return "redirect:login";
     	User user = (User)session.getAttribute("user");
     	if(user.getStatus() != "admin")
     		return "redirect:login";
@@ -84,9 +86,9 @@ public class AdminController {
     }
     
     @RequestMapping(value = {"/logout"})
-    public @ResponseBody String doLogout(HttpSession session) {
+    public String doLogout(HttpSession session) {
         session.removeAttribute("user");
-        return "redirect:admin/login";
+        return "redirect:login";
     }
     
 	@RequestMapping(value = {"/forbid/{userId}"}, method = RequestMethod.POST)

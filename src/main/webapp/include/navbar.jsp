@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 <link rel="stylesheet" type="text/css" href="css/nav.css">
-<script src="js/jquery-1.11.1.min.js"></script>
+
 <c:if test="${sessionScope.user != null and sessionScope.user.status != 'admin' }">
 <script src="js/message.js"></script>
 </c:if>

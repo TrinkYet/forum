@@ -48,7 +48,7 @@
 								系统消息</a></li>
 						<li><a href="#userlist" data-toggle="tab"><i class="glyphicon glyphicon-user"></i>
 								用户</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-off"></i>
+						<li><a href="admin/logout"><i class="glyphicon glyphicon-off"></i>
 								登出</a></li>
 					</ul>
 				</li>
@@ -115,7 +115,7 @@
 										    <td class="text-muted">${topic.publishTime }</td>
 										    <td><a href="group/${topic.groupId}">${topic.groupName }</a></td>
 										    <td>
-										    	<a href="admin/del/topic/${topic.topicId }" class="deletebutton" data-toggle="modal" data-target="#deleteModal">
+										    	<a href="admin/del/topic/${topic.topicId }" class="deletebutton">
 										    		<i class="fa fa-trash-o"></i>
 										    	</a>
 										    </td>
@@ -137,12 +137,13 @@
 										<td>用户名</td>
 										<td>账号</td>
 										<td>注册时间</td>
+										<td>状态</td>
 										<td>操作</td>
 									</tr>
 								</thead>
 								<tbody>
 									<c:forEach var = "cur" items="${allUser }">
-										<tr>
+										<tr class="usertr">
 											<td>
 												<div class="pic">
 												<img alt="头像" src="${cur.avatar }">
@@ -151,8 +152,12 @@
 											<td><a href="user/${cur.userId }">${cur.nickname }</a></td>
 										    <td class="text-muted">${cur.email }</td>
 										    <td class="text-muted">${cur.registerTime }</td>
-										    
-										    <td>封禁</td>
+										    <td><span class="label">${cur.status }</span></td>
+										    <td>
+										    	<a href="admin/forbid/${cur.userId }" class="deletebutton">
+										    		<i class="fa"></i>
+										    	</a>
+										    </td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -178,7 +183,11 @@
 										    <td class="text-muted">${group.category }</td>
 										    <td class="text-muted">${group.mbrCount }</td>
 										    <td>${group.createTime }</td>
-										    <td>删除</td>
+										    <td>
+										    	<a href="admin/del/topic/${topic.topicId }" class="deletebutton">
+										    		<i class="fa fa-trash-o"></i>
+										    	</a>
+										    </td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -226,23 +235,5 @@
 			</div>
 		</div>
 	</div>
-	<script>
-	$(document).ready(function(e){
-		$(".deletebutton").click(function(e){
-			$("#confirmdelete").attr("href", $(this).attr("href"));
-			e.preventDefault();
-		});
-		
-		$("#confirmdelete").click(function(e){
-			var link = $(this).attr("href");
-			$.post(link, {}, function(result){
-				$('#deleteModal').modal('hide');
-				$('#deletemessage').text(result);
-				$('#messageModal').modal('show');
-			});
-		});
-		
-	});
-	</script>
 </body>
 </html>

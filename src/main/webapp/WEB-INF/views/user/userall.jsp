@@ -125,7 +125,7 @@
 									<c:if test="${pageuser.userId == sessionScope.user.userId }">
 									<div class="col-md-6">
 										<a href="group/${team.groupId }/modify">修改</a>
-										<a href="group/${team.groupId }/delete" class="deletebutton" data-toggle="modal" data-target="#deleteModal">删除</a>
+										<a href="group/${team.groupId }/delete" class="deletebutton" >删除</a>
 									</div>
 									</c:if>
 								</li>
@@ -236,8 +236,10 @@
 	<script>
 	$(document).ready(function(e){
 		$(".deletebutton").click(function(e){
-			$("#confirmdelete").attr("href", $(this).attr("href"));
 			e.preventDefault();
+			$("#confirmdelete").attr("href", $(this).attr("href"));
+			$("#deleteModal").modal('show');
+			return false;
 		});
 		
 		$("#confirmdelete").click(function(e){

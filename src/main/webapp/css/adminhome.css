@@ -53,3 +53,16 @@
 .yellow-bg{
 	background-color:#f1c40f!important;
 }
+
+.label{
+	border-radius: 3px;
+	background-clip: padding-box;
+	font-size: 0.875em;
+	font-weight: 600;
+}
+.label-success{
+	background-color:#2ecc71;
+}
+
+
+

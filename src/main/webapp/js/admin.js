@@ -20,6 +20,42 @@ $(document).ready(function(e){
 		  	}
 	});
 	
+	$(".deletebutton").click(function(e){
+		e.preventDefault();
+		$("#confirmdelete").attr("href", $(this).attr("href"));
+		$('#deleteModal').modal('show');
+		return false;
+	});
+	
+	$("#confirmdelete").click(function(e){
+		var link = $(this).attr("href");
+		$.post(link, {}, function(result){
+			$('#deleteModal').modal('hide');
+			$('#deletemessage').text(result);
+			$('#messageModal').modal('show');
+		});
+	});
+	
+	$(".usertr").each(function(e){
+		var status = $(this).children(":nth(4)").children(":nth(0)");
+		var option = $(this).children(":nth(5)").children(":nth(0)").children(":nth(0)");
+		if(status.text() == "forbidden"){
+			option.addClass('fa-unlock');
+			status.addClass('red-bg');
+		}
+		else{
+			option.addClass('fa-ban');
+			if (status.text() == "activated"){
+				status.addClass('label-success');
+			}
+			else{
+				status.addClass('yellow-bg');
+			}
+		}
+	});
+	
+	
+	
 	
 	$('[data-toggle=collapse]').click(function(){
 	  	// toggle icon
