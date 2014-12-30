@@ -102,7 +102,7 @@
        }   
 	   $("#submitcomment").click(function(e){
 		   $.post($("#commentform").attr("action"),
-				   {userId:${sessionScope.user.userId }, 
+				   {userId:${sessionScope.user.userId }}, 
 			        text:$("textarea[name='text']").val(),
 			        toCommentId:$("#tocommentid").val()==""?0:parseInt($("#tocommentid").val())}, 
 			        function(result){
