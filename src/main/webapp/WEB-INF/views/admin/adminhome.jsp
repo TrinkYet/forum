@@ -13,6 +13,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="css/adminhome.css">
+<link rel="stylesheet" type="text/css" href="css/grouphome.css">
+<link rel="stylesheet" type="text/css" href="css/dataTable.bootstrap.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.min.css"> -->
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/datatable.bootstrap.js"></script>
 <script src="js/jquery.countTo.js"></script>
 <title>小组网站管理员</title>
 
@@ -45,7 +50,6 @@
 								用户</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-flag"></i>
 								Transactions</a></li>
-						<li><a href="#"><i class="glyphicon glyphicon-exclamation-sign"></i> Rules</a></li>
 						<li><a href="#"><i class="glyphicon glyphicon-off"></i>
 								Logout</a></li>
 					</ul>
@@ -94,32 +98,91 @@
 						</div>
 					</div>
 					<div>
-						<%-- <div class=""><h3>小组话题</h3></div>
+						<div class=""><h3>所有话题</h3></div>
 						<div>
-							<table class="table table-hover">
+							<table id="alltopictable" class="table table-hover dataTable">
 								<thead class="text-muted">
 									<tr>
 										<td>标题</td>
 										<td>回应</td>
 										<td>时间</td>
 										<td>小组</td>
+										<td>操作</td>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var = "topic" items="${groupTopicList }">
+									<c:forEach var = "topic" items="${allTopic }">
 										<tr><td><a href="topic/${topic.topicId }">${topic.title }</a></td>
 										    <td class="text-muted">${topic.cmtCount }</td>
-										    <td class="text-muted">${topic.lastCmtTime }</td>
-										    <td><a href="group/${topic.groupId}">${topic.groupName }</a></td></tr>
+										    <td class="text-muted">${topic.publishTime }</td>
+										    <td><a href="group/${topic.groupId}">${topic.groupName }</a></td>
+										    <td>删除</td>
+										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-						</div> --%>
+						</div>
 					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="messagepanel">messagepanel</div>
-				<div role="tabpanel" class="tab-pane" id="userlist">userlist</div>
-				<div role="tabpanel" class="tab-pane" id="grouplist">grouplist</div>
+				<div role="tabpanel" class="tab-pane" id="userlist">
+					<div class=""><h3>所有用户</h3></div>
+						<div>
+							<table id="allusertable" class="table table-hover dataTable">
+								<thead class="text-muted">
+									<tr>
+										<td>用户头像</td>
+										<td>用户名</td>
+										<td>账号</td>
+										<td>注册时间</td>
+										<td>操作</td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var = "cur" items="${allUser }">
+										<tr>
+											<td>
+												<div class="pic">
+												<img alt="头像" src="${cur.avatar }">
+												</div>
+											</td>
+											<td><a href="user/${cur.userId }">${cur.nickname }</a></td>
+										    <td class="text-muted">${cur.email }</td>
+										    <td class="text-muted">${cur.registerTime }</td>
+										    
+										    <td>封禁</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+				</div>
+				<div role="tabpanel" class="tab-pane" id="grouplist">
+					<div class=""><h3>小组列表</h3></div>
+						<div>
+							<table id="allgrouptable" class="table table-hover dataTable">
+								<thead class="text-muted">
+									<tr>
+										<td>小组名</td>
+										<td>类别</td>
+										<td>成员数</td>
+										<td>创建时间</td>
+										<td>操作</td>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var = "group" items="${allGroup }">
+										<tr><td><a href="group/${group.groupId }">${group.name }</a></td>
+										    <td class="text-muted">${group.category }</td>
+										    <td class="text-muted">${group.mbrCount }</td>
+										    <td>${group.createTime }</td>
+										    <td>删除</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+				</div>
 			</div>
 		</div>
 	</div>

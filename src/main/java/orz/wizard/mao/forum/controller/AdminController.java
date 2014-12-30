@@ -51,17 +51,24 @@ public class AdminController {
     }
     
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST)
-    public @ResponseBody String doLogin(@RequestParam String username, @RequestParam String password, HttpSession session) {
+    public String doLogin(@RequestParam String username, @RequestParam String password, HttpSession session, Map<String, Object> model) {
         if (username == null || !username.equals("admin@fudangroup.com")) {
-            return "failed";
+            return "redirect:login";
         }
         if (password == null || !password.equals("admin")) {
-            return "failed";
+            return "redirect:login";
         }
         User user = new User();
         user.setStatus("admin");
+        user.setNickname("管理员");
         session.setAttribute("user", user);
-        return "redirect:admin/home";
+        List<User> allUser = userService.getAllUser();
+        List<Topic> allTopic = topicService.getAllTopic();
+        List<Group> allGroup = groupService.getAllGroup();
+        model.put("allUser", allUser);
+        model.put("allTopic", allTopic);
+        model.put("allGroup", allGroup);
+        return "admin/adminhome";
     }
     
     @RequestMapping(value = {"/forbid/{userId}"})
