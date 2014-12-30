@@ -83,7 +83,13 @@ public class AdminController {
         return "admin/adminhome";
     }
     
-    @RequestMapping(value = {"/forbid/{userId}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/logout"})
+    public @ResponseBody String doLogout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:admin/login";
+    }
+    
+	@RequestMapping(value = {"/forbid/{userId}"}, method = RequestMethod.POST)
     public @ResponseBody String forbid(@PathVariable long userId, HttpSession session) {
         userService.forbid(userId);
         return "success";
