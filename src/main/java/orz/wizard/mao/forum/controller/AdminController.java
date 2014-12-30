@@ -85,6 +85,12 @@ public class AdminController {
         userService.forbid(userId);
         return "success";
     }
+	
+	@RequestMapping(value = {"/unforbid/{userId}"}, method = RequestMethod.POST)
+    public @ResponseBody String unforbid(@PathVariable long userId, HttpSession session) {
+        userService.unforbid(userId);
+        return "success";
+    }
     
     @RequestMapping(value = {"/del/topic/{topicId}"}, method = RequestMethod.POST)
     public @ResponseBody String delTopic(@PathVariable long topicId, HttpSession session) {
