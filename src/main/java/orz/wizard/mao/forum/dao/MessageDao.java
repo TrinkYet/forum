@@ -8,14 +8,13 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import orz.wizard.mao.forum.entity.Comment;
-import orz.wizard.mao.forum.entity.Group;
+import orz.wizard.mao.forum.entity.SysMsg;
 import orz.wizard.mao.forum.entity.Topic;
 import orz.wizard.mao.forum.entity.User;
 
@@ -34,6 +33,9 @@ public class MessageDao extends BaseDao {
             + " where to_user_id = ? and is_readed = 0 and cmt_id = comment_id and comment.topic_id = topic.topic_id and comment.user_id = user.user_id"
             + " order by msg_time desc";
     private static final String SQL_SET_CMT_READ = "update msg_cmt set is_readed = 1 where cmt_id = ? and to_user_id = ?";
+    private static final String SQL_SELECT_MSG_SYS_LIST = "select * from msg_sys where to_user_id = ? and is_readed = 0";
+    private static final String SQL_SET_SYS_MSG_READ = "update msg_sys set is_readed = 1 where msg_id = ?";
+    protected static final String SQL_INSERT_SYS_MSG = "insert into msg_sys values(null, ?, ?, 0, NOW())";
 
     public List<Topic> getTopicMsgList(long userId) {
         return jdbcTemplate.query(SQL_SELECT_MSG_TOPIC_LIST, new Object[] {userId}, new RowMapper<Topic>() {
@@ -67,5 +69,35 @@ public class MessageDao extends BaseDao {
 
     public void setReadCmt(long cmtId, long userId) {
         jdbcTemplate.update(SQL_SET_CMT_READ, cmtId, userId);
+    }
+
+    public List<SysMsg> getSysMsgList(long userId) {
+        return jdbcTemplate.query(SQL_SELECT_MSG_SYS_LIST, new Object[] {userId}, new RowMapper<SysMsg>() {
+            public SysMsg mapRow(ResultSet rs, int index) throws SQLException {
+                SysMsg sysMsg = new SysMsg();
+                sysMsg.setMsgId(rs.getLong("msg_id"));
+                sysMsg.setContent(rs.getString("content"));
+                sysMsg.setReaded(rs.getBoolean("is_readed"));
+                sysMsg.setMsgTime(rs.getTimestamp("msg_time"));
+                return sysMsg;
+            }
+        });
+    }
+    
+    public void setReadSysMsg(long msgId) {
+        jdbcTemplate.update(SQL_SET_SYS_MSG_READ, msgId);
+    }
+    
+    public void insertSysMsg(final SysMsg sysMsg) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+                PreparedStatement ps = conn.prepareStatement(SQL_INSERT_SYS_MSG, Statement.RETURN_GENERATED_KEYS);
+                ps.setLong(1, sysMsg.getToUserId());
+                ps.setString(2, sysMsg.getContent());
+                return ps;
+            }
+        }, keyHolder);
+        sysMsg.setMsgId(keyHolder.getKey().intValue());
     }
 }

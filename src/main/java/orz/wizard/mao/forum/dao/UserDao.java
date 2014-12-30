@@ -40,6 +40,7 @@ public class UserDao extends BaseDao {
     private static final String SQL_SET_FORBIDDEN = "update user set status = 'forbidden' where user_id = ?";
     private static final String SQL_SELECT_ALL_USER = "select * from user";
     private static final String SQL_COUNT_USER = "select count(*) from user";
+    private static final String SQL_SEARCH_USER_LIST = "select * from user where nickname like ?";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -226,5 +227,20 @@ public class UserDao extends BaseDao {
     public long count() {
         Long count = jdbcTemplate.queryForObject(SQL_COUNT_USER, Long.class);
         return count == null ? 0 : count;
+    }
+    
+    public List<User> searchUser(String q) {
+        return jdbcTemplate.query(SQL_SEARCH_USER_LIST, new Object[] {"%%"+q+"%%"}, new RowMapper<User>() {
+            public User mapRow(ResultSet rs, int index) throws SQLException {
+                User user = new User();
+                user.setUserId(rs.getLong("user_id"));
+                user.setEmail(rs.getString("email"));
+                user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setStatus(rs.getString("status"));
+                user.setRegisterTime(rs.getTimestamp("register_time"));
+                return user;
+            }
+        });
     }
 }

@@ -161,6 +161,8 @@ public class GroupController {
             model.put("result", groupService.searchGroup(qr));
         } else if (cat.endsWith("topic")) {
             model.put("result", topicService.searchTopic(qr));
+        } else if (cat.endsWith("user")) {
+            model.put("result", userService.searchUser(qr));
         }
         model.put("cat", cat);
         model.put("q", qr);
