@@ -23,7 +23,7 @@
     <intercept-url pattern="/user/login" access="permitAll"/>
     <!-- <intercept-url pattern="/user" access="hasRole('ROLE_USER')"/> -->
     <!-- <intercept-url pattern="/group" access="hasRole('ROLE_USER')"/> -->
-    <intercept-url pattern="/admin/**" access="isAuthenticated() and hasRole('ROLE_ADMIN')"/>
+    <!-- <intercept-url pattern="/admin/**" access="isAuthenticated() and hasRole('ROLE_ADMIN')"/> -->
     <remember-me key="forumKey"
         token-validity-seconds="2419200" />
     <session-management>

@@ -12,7 +12,7 @@
     <jdbc-user-service id="userService" 
        data-source-ref="dataSource"
        users-by-username-query=
-          "select email as username, password, true from user where email=?"
+          "select email as username, password, true from user where email=? and status='activated'"
        authorities-by-username-query=
           "select email as username,'ROLE_USER' from user where email=?" />
 <!--<end id="jdbc_user_service"/>-->

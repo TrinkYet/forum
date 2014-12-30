@@ -38,6 +38,8 @@ public class UserDao extends BaseDao {
     private static final String SQL_UPDATE_USER_STATUS = "update user set status = 'activated' where user_id = ?";
     private static final String SQL_SELECT_CREATED_LIST = "select * from `group` where user_id = ?";
     private static final String SQL_SET_FORBIDDEN = "update user set status = 'forbidden' where user_id = ?";
+    private static final String SQL_SELECT_ALL_USER = "select * from user";
+    private static final String SQL_COUNT_USER = "select count(*) from user";
     
     public User getUserById(final long userId) {
         final User user = new User();
@@ -156,6 +158,22 @@ public class UserDao extends BaseDao {
         });
     }
     
+    public List<User> getAllUser() {
+        return jdbcTemplate.query(SQL_SELECT_ALL_USER, new RowMapper<User>() {
+            public User mapRow(ResultSet rs, int index) throws SQLException {
+                User user = new User();
+                user.setUserId(rs.getLong("user_id"));
+                user.setEmail(rs.getString("email"));
+                //user.setPassword(rs.getString("password"));
+                user.setNickname(rs.getString("nickname"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setStatus(rs.getString("status"));
+                user.setRegisterTime(rs.getTimestamp("register_time"));
+                return user;
+            }
+        });
+    }
+    
     public int findFollow(long fromUserId, long toUserId) {
         Integer count = jdbcTemplate.queryForObject(SQL_FIND_FOLLOW, Integer.class, fromUserId, toUserId);
         return count == null ? 0 : count;
@@ -203,5 +221,10 @@ public class UserDao extends BaseDao {
 
     public void forbid(long userId) {
         jdbcTemplate.update(SQL_SET_FORBIDDEN, userId);
+    }
+    
+    public long count() {
+        Long count = jdbcTemplate.queryForObject(SQL_COUNT_USER, Long.class);
+        return count == null ? 0 : count;
     }
 }

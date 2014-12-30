@@ -168,13 +168,7 @@ public class UserController {
         userService.cancelFollow(user.getUserId(), userId);
         return "success";
     }
-    
-    @RequestMapping(value = {"/{userId}/forbid"})
-    public @ResponseBody String forbid(@PathVariable long userId, HttpSession session) {
-        userService.forbid(userId);
-        return "success";
-    }
-    
+
     @RequestMapping(value = {"/activate"})
     public String activate(@RequestParam String code, @RequestParam long userId) {
         if (userService.activate(userId, code)) {

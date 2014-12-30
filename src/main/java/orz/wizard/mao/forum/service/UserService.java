@@ -79,4 +79,12 @@ public class UserService {
     public void forbid(long userId) {
         userDao.forbid(userId);
     }
+
+    public List<User> getAllUser() {
+        return userDao.getAllUser();
+    }
+
+    public long count() {
+        return userDao.count();
+    }
 }

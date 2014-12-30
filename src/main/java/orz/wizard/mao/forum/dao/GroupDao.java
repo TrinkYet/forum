@@ -32,6 +32,8 @@ public class GroupDao extends BaseDao {
     private static final String SQL_SEARCH_GROUP_LIST = "select *, count(distinct(membership.`user_id`)) as mbr_count from `group` left join membership on `group`.group_id = membership.group_id where `group`.`name` like ? group by `group`.`group_id`";
     private static final String SQL_UPDATE_GROUP = "update `group` set name = ?, intro = ?, category = ?, avatar = ? where group_id = ?";
     private static final String SQL_DELETE_GROUP = "delete from `group` where group_id = ?";
+    private static final String SQL_SELECT_ALL_GROUP = "select * from `group`";
+    private static final String SQL_COUNT_GROUP = "select count(*) from `group`";
     
     public Group getGroupById(final long groupId) {
         final Group group = new Group();
@@ -48,6 +50,23 @@ public class GroupDao extends BaseDao {
             }
         });
         return group;
+    }
+    
+    public List<Group> getAllGroup() {
+        return jdbcTemplate.query(SQL_SELECT_ALL_GROUP, new RowMapper<Group>() {
+            public Group mapRow(ResultSet rs, int index) throws SQLException {
+                Group group = new Group();
+                group.setGroupId(rs.getLong("group_id"));
+                group.setName(rs.getString("name"));
+                group.setIntro(rs.getString("intro"));
+                group.setCategory(rs.getString("category"));
+                group.setAvatar(rs.getString("avatar"));
+                group.setMbrCount(rs.getLong("mbr_count"));
+                group.setUserId(rs.getLong("user_id"));
+                group.setCreateTime(rs.getTimestamp("create_time"));
+                return group;
+            }
+        });
     }
     
     public void insertGroup(final Group group) {
@@ -150,5 +169,10 @@ public class GroupDao extends BaseDao {
 
     public void delete(long groupId) {
         jdbcTemplate.update(SQL_DELETE_GROUP, groupId);
+    }
+    
+    public long count() {
+        Long count = jdbcTemplate.queryForObject(SQL_COUNT_GROUP, Long.class);
+        return count == null ? 0 : count;
     }
 }
