@@ -82,15 +82,30 @@ public class UserController {
     	    // 邮箱已被注册
     		return "redirect:/user/register";
     	}
-    	System.out.println("now in processRegister");
+    	//System.out.println("now in processRegister");
     	userService.insertUser(user);
     	session.setAttribute("user", user);
     	String code = GenerateLinkUtil.generateCode(user);
     	String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     	userService.insertCode(user.getUserId(), code);
     	String activeUrl = baseUrl + "/user/activate?code=" + code + "&userId=" + user.getUserId();
-    	mailUtil.send(user.getEmail(), "欢迎加入复旦小组，请尽快完成注册",
-    	       "<a href='" + activeUrl + "'>" + activeUrl + "</a>");
+    	String html = ""
+    	        + "<div align='center'>"
+    	        + "<table cellpadding='0' cellspacing='1' style='border:3px solid #d9e9f1;background:#7fbddd;text-align:left'>"
+    	        + "<tbody><tr><td style='padding:0'>"
+    	        + "<table cellpadding='30' cellspacing='0' style='border:1px solid #ffffff;background:#f7f7f7;width:500px'>"
+    	        + "<tbody><tr><td style='line-height:2;font-size:12px'>"
+    	        + "<div style='font-size:14px;margin-bottom:10px;font-weight:700'>Hi, " + user.getNickname() + "</div>"
+    	        + "<p style='color:#ff6600;margin:0'>请点击下面的链接完成激活：</p>"
+    	        + "<div style='padding:8px 10px;margin:10px 0 5px;background:#ffffff;border:1px solid #cbcbcb;word-break:break-all;word-wrap:break-word;line-height:1.5;font-size:14px'>"
+    	        + "<a href='" + activeUrl + "'>" + activeUrl + "</a>"
+    	        + "</div>"
+    	        + "<div style='color:#999999;margin-bottom:5px'>如果不能点击链接，请复制地址并粘贴到浏览器的地址输入框</div>"
+    	        + "激活后尽快删除此邮件，以免帐号信息泄漏"
+    	        + "<div style='border-top:1px solid #e2e2e2;background:#ffffff;overflow:hidden;min-height:1px;margin:10px 0'></div>"
+    	        + "欢迎您加入复旦小组"
+    	        + "</td></tr></tbody></table></td></tr></tbody></table></div>";
+    	mailUtil.send(user.getEmail(), "欢迎加入复旦小组，请尽快完成注册", html);
     	return "user/regsuc";
     }
     
