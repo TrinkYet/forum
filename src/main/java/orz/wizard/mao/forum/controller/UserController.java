@@ -100,23 +100,23 @@ public class UserController {
     }
     
     @RequestMapping(value = "/avatar", method = RequestMethod.POST)
-    public @ResponseBody String updateAvatar(HttpSession session, HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) throws Exception {
-        if (!avatar.isEmpty()) {
+    public String updateAvatar(HttpSession session, HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar) throws Exception {
+    	User user = (User) session.getAttribute("user");
+    	if (!avatar.isEmpty()) {
         	Integer x = Integer.valueOf(request.getParameter("x"));
         	Integer y = Integer.valueOf(request.getParameter("y"));
         	Integer w = Integer.valueOf(request.getParameter("w"));
         	Integer h = Integer.valueOf(request.getParameter("h"));
-            User user = (User) session.getAttribute("user");
+            
             BufferedImage image = ImageIO.read(avatar.getInputStream());
             BufferedImage image2 = ImageUtil.selectImageArea(image, x, y, w, h);
             String filePath = request.getSession().getServletContext().getRealPath("/") + "/avatar/user/" + user.getUserId() + ".jpg";
             ImageIO.write(image2, "jpg", new File(filePath));
             userService.updateAvatar(user.getUserId());
             user.setAvatar("avatar/user/" + user.getUserId() + ".jpg");
-            return "success";
-        } else {
-            return "fail";
+            return "redirect:/user/"+user.getUserId();
         }
+        return "redirect:/user/"+user.getUserId();
     }
     
     @RequestMapping(value = {"/userinfo"}, method = RequestMethod.GET)
