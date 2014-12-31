@@ -9,6 +9,7 @@ public class Comment implements Serializable {
     private String title;
     private long userId;
     private String nickname;
+    private String avatar;
     private long toCommentId;
     private String text;
     private Timestamp commentTime;
@@ -60,5 +61,11 @@ public class Comment implements Serializable {
     public void setCommentTime(Timestamp commentTime) {
         this.commentTime = commentTime;
     }
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
     
 }

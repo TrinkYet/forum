@@ -39,7 +39,7 @@ public class TopicDao extends BaseDao {
             + " from topic, user"
             + " where group_id = ? and topic.user_id = user.user_id";
     private static final String SQL_SELECT_COMMENT_LIST_BY_TOPIC_ID = ""
-            + " select comment_id, topic_id, comment.user_id as user_id, nickname, to_comment_id, text, comment_time"
+            + " select comment_id, topic_id, comment.user_id as user_id, nickname, avatar, to_comment_id, text, comment_time"
             + " from comment, user"
             + " where topic_id = ? and comment.user_id = user.user_id"
             + " order by comment_time";
@@ -165,6 +165,7 @@ public class TopicDao extends BaseDao {
                 comment.setTopicId(rs.getLong("topic_id"));
                 comment.setUserId(rs.getLong("user_id"));
                 comment.setNickname(rs.getString("nickname"));
+                comment.setAvatar(rs.getString("avatar"));
                 comment.setToCommentId(rs.getLong("to_comment_id"));
                 comment.setText(rs.getString("text"));
                 comment.setCommentTime(rs.getTimestamp("comment_time"));

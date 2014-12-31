@@ -35,7 +35,7 @@
 							  <c:set var = "comment" value="${keyvalue.value }"></c:set>
 							  <div class="media" id="cmt${comment.commentId }">
 							    <a class="media-left" href="user/${comment.userId }">
-							      <img class="media-object" style="width:48px;height:48px" src="avatar/user/${comment.userId }.jpg" alt="...">
+							      <img class="media-object" style="width:48px;height:48px" src="${comment.avatar }" alt="...">
 							    </a>
 							    <div class="media-body container">
 							      <p class="bg-info media-heading">${comment.nickname }&nbsp;&nbsp;<span class="text-muted">${comment.commentTime }</span><span class="pull-right respond" ref="${comment.commentId }">

@@ -6,7 +6,11 @@
 	font-style: normal;
 }
 
-body{
-	padding:15px;
-	
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #b4daf0;
+  background-image: url("../images/body_bg.jpg");
+  background-repeat: repeat-x;
+  background-position: center 0;
 }
